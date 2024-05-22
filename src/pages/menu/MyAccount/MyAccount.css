@@ -1,0 +1,26 @@
+
+.account-details-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.account-details-container .form-container {
+    width: 100%;
+}
+
+.account-details-container .form-container .form-control {
+    border: 0.5px solid #413E3E;
+}
+
+
+@media screen and (min-width: 768px) {
+    .account-details-container {
+        flex-direction: row;
+        column-gap: 2rem;
+    }
+
+    .account-details-container .form-container {
+        width: 60%;
+    }
+}
