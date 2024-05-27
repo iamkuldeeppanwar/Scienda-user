@@ -380,20 +380,20 @@ const MyAccount = () => {
               >
                 Cancel
               </button> */}
-              {!loading ? (
-                <button
-                  className="rounded-lg bg-color-primary text-white text-16 font-bold"
-                  style={{
-                    width: "9.2rem",
-                    height: "3rem",
-                    border: "1px solid var(--primary-color)",
-                    boxShadow: "0px 1px 2px 0px #1018280D",
-                  }}
-                >
-                  Save Changes
-                </button>
-              ) : (
-                <button
+
+              <button
+                className="rounded-lg bg-color-primary text-white text-16 font-bold"
+                style={{
+                  width: "9.2rem",
+                  height: "3rem",
+                  border: "1px solid var(--primary-color)",
+                  boxShadow: "0px 1px 2px 0px #1018280D",
+                }}
+              >
+                Save Changes
+              </button>
+
+              {/* <button
                   className="rounded-lg bg-color-primary text-white text-16 font-bold"
                   style={{
                     width: "9.2rem",
@@ -403,8 +403,7 @@ const MyAccount = () => {
                   }}
                 >
                   <Spinner />
-                </button>
-              )}
+                </button> */}
             </div>
           </Form>
         </div>
