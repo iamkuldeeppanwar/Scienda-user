@@ -43,7 +43,7 @@ const Registration = () => {
         email,
         password
       );
-      if (response.success) {
+      if (response.status) {
         localStorage.setItem("email", email);
         navigate("/user-otp");
         setLoading(false);
