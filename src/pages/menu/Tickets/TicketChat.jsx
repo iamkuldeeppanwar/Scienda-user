@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,6 +15,7 @@ import { getSingleTicket, postMessage } from "./apis/TicketApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setTicket } from "../../../features/ticketSlice";
 import { io } from "socket.io-client";
+import "./Tickets.css";
 
 const TicketChat = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const TicketChat = () => {
   const [loading, setLoading] = useState(false);
   const [socket, setSocket] = useState("");
   const [chat, setChat] = useState("");
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     getTicket();
@@ -52,6 +54,13 @@ const TicketChat = () => {
     });
     return () => socket.off("receiveMessage");
   }, [socket, dispatch, token, ticketId]);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [ticket.chats]);
 
   const getTicket = async () => {
     try {
@@ -160,11 +169,12 @@ const TicketChat = () => {
 
       <div className="p-4">
         <div
-          className="p-3 pt-5 bg-white rounded-xl"
+          className="p-3 pt-5 bg-white rounded-xl chat_box_container"
           style={{
             border: "1px solid #EFEFEF",
             boxShadow: "0px 4px 12px 0px #0000000A",
           }}
+          ref={chatContainerRef}
         >
           {ticket.status && ticket.chats.length > 0 ? (
             ticket.chats.map((data) => {
@@ -210,12 +220,47 @@ const TicketChat = () => {
               );
             })
           ) : (
-            <div className="text-center">No Chats</div>
+            <div className="text-center">No Chats Found!</div>
           )}
         </div>
       </div>
+      <div className=" rounded-xl">
+        {ticket && ticket.status === "Open" && (
+          <Form onSubmit={handleChat}>
+            <Form.Group className="px-4 mx-auto">
+              <Stack direction="horizontal" gap={3}>
+                <Form.Control
+                  type="text"
+                  value={chat}
+                  onChange={(e) => setChat(e.target.value)}
+                  placeholder="Write something here..."
+                  className="py-2 px-3"
+                  style={{
+                    border: "1px solid #8098F9",
+                  }}
+                />
 
-      <section className="sticky-bottom px-4 py-3 z-3">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  style={{
+                    backgroundColor: "var(--primary-color)",
+                    border: "none",
+                    minWidth: "max-content",
+                    padding: "0.5rem 0.75rem",
+                    borderRadius: "0.75rem",
+                  }}
+                >
+                  <span className="me-2">Send</span>
+                  <FlyingArrowIcon />
+                </Button>
+              </Stack>
+            </Form.Group>
+          </Form>
+        )}
+      </div>
+
+      {/* <section className="sticky-bottom px-4 py-3 z-3">
         <div className="bg-white py-3 rounded-xl">
           {ticket && ticket.status === "Open" && (
             <Form onSubmit={handleChat}>
@@ -252,7 +297,7 @@ const TicketChat = () => {
             </Form>
           )}
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

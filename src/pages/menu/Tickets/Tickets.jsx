@@ -48,25 +48,7 @@ const Tickets = () => {
     getAllTickets();
     subTopics();
     subAdmin();
-  }, []);
-
-  const subAdmin = async () => {
-    try {
-      const response = await getAllSubAdmin();
-      dispatch(setSubAdmins(response));
-    } catch (error) {
-      toast.error(getError(error));
-    }
-  };
-
-  const subTopics = async () => {
-    try {
-      const response = await getSubTopics(user.subdomain);
-      dispatch(setTopics(response));
-    } catch (error) {
-      toast.error(getError(error));
-    }
-  };
+  }, [dispatch, token]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -83,6 +65,24 @@ const Tickets = () => {
     if (e.target.files.length > 1) {
       toast.error("Please select only one file.");
       e.target.value = null;
+    }
+  };
+
+  const subAdmin = async () => {
+    try {
+      const response = await getAllSubAdmin();
+      dispatch(setSubAdmins(response));
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  };
+
+  const subTopics = async () => {
+    try {
+      const response = await getSubTopics(user.subdomain);
+      dispatch(setTopics(response));
+    } catch (error) {
+      toast.error(getError(error));
     }
   };
 
@@ -161,6 +161,7 @@ const Tickets = () => {
                     boxShadow: "0px 4px 12px 0px #0000000A",
                     width: "273px",
                     height: "151px",
+                    cursor: "pointer",
                   }}
                   onClick={() => navigate(`/menu/tickets/chat/${data._id}`)}
                 >

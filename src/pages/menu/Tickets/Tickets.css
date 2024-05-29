@@ -15,7 +15,6 @@
   background-color: white;
   border-radius: 12px;
   padding: 2rem;
-
   width: 100%;
 }
 
@@ -33,4 +32,10 @@
   .create-ticket-container .ticket-form {
     width: 60%;
   }
+}
+
+.chat_box_container {
+  position: relative;
+  height: 455px;
+  overflow-y: scroll;
 }
