@@ -57,7 +57,7 @@ const TicketChat = () => {
   const getTicket = async () => {
     try {
       const response = await getSingleTicket(token, ticketId);
-      // dispatch(setTicket(response));
+      dispatch(setTicket(response));
     } catch (error) {
       toast.error(getError(error));
     }
