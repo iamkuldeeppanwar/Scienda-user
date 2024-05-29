@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Authlogo from "./Utils/Login.png";
 import { Card, InputGroup, Form, Container, Spinner } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -18,6 +18,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/menu");
+    }
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();

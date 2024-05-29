@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Tickets.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
@@ -29,6 +29,7 @@ import { setSubAdmins } from "../../../features/subAdminSlice";
 
 const Tickets = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { user } = useSelector((state) => state.user);
   const { topics } = useSelector((state) => state.topics);
@@ -161,6 +162,7 @@ const Tickets = () => {
                     width: "273px",
                     height: "151px",
                   }}
+                  onClick={() => navigate(`/menu/tickets/chat/${data._id}`)}
                 >
                   <p
                     className="text-center text-12 font-normal"

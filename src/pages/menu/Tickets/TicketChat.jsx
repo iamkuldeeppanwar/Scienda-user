@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 
 import {
   InProgressIcon,
@@ -17,7 +16,6 @@ import { getSingleTicket, postMessage } from "./apis/TicketApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setTicket } from "../../../features/ticketSlice";
 import { io } from "socket.io-client";
-import { Spinner } from "react-bootstrap";
 
 const TicketChat = () => {
   const token = localStorage.getItem("token");
@@ -59,7 +57,7 @@ const TicketChat = () => {
   const getTicket = async () => {
     try {
       const response = await getSingleTicket(token, ticketId);
-      dispatch(setTicket(response));
+      // dispatch(setTicket(response));
     } catch (error) {
       toast.error(getError(error));
     }
@@ -169,7 +167,7 @@ const TicketChat = () => {
             boxShadow: "0px 4px 12px 0px #0000000A",
           }}
         >
-          {ticket.status &&
+          {ticket.status && ticket.chats.length > 0 ? (
             ticket.chats.map((data) => {
               return (
                 <div
@@ -211,7 +209,10 @@ const TicketChat = () => {
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className="text-center">No Chats</div>
+          )}
         </div>
       </div>
 
