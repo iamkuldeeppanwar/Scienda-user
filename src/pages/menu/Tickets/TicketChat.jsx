@@ -28,7 +28,7 @@ const TicketChat = () => {
 
   useEffect(() => {
     getTicket();
-  }, [dispatch, token, ticket]);
+  }, [dispatch, token, ticketId]);
 
   useEffect(() => {
     const newSocket = io("https://scienda-socket.onrender.com");
@@ -51,7 +51,7 @@ const TicketChat = () => {
       getTicket();
     });
     return () => socket.off("receiveMessage");
-  }, [socket, dispatch, token, ticket]);
+  }, [socket, dispatch, token, ticketId]);
 
   const getTicket = async () => {
     try {
