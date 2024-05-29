@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
 import {
   InProgressIcon,
   IssueResolvedIcon,
@@ -18,8 +17,8 @@ import { setTicket } from "../../../features/ticketSlice";
 import { io } from "socket.io-client";
 
 const TicketChat = () => {
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
   const { ticketId } = useParams();
   const { ticket } = useSelector((state) => state.tickets);
   const { user } = useSelector((state) => state.user);
@@ -29,7 +28,7 @@ const TicketChat = () => {
 
   useEffect(() => {
     getTicket();
-  }, []);
+  }, [dispatch, token, ticket]);
 
   useEffect(() => {
     const newSocket = io("https://scienda-socket.onrender.com");
@@ -52,7 +51,7 @@ const TicketChat = () => {
       getTicket();
     });
     return () => socket.off("receiveMessage");
-  }, [socket]);
+  }, [socket, dispatch, token, ticket]);
 
   const getTicket = async () => {
     try {
