@@ -10,7 +10,6 @@ const userGetProfile = async (token) => {
       const userData = await axiosInstance.get("/api/user/get-profile", {
         headers,
       });
-
       resolve(userData.data);
     } catch (error) {
       reject(error);
@@ -38,13 +37,13 @@ const userUpdateProfile = async (profile, token) => {
   });
 };
 
-const userUpdatePassword = async (passwords, token) => {
+const userChangePassword = async (passwords, token) => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   return new Promise(async (resolve, reject) => {
     try {
-      const userData = await axiosInstance.patch(
+      const userData = await axiosInstance.post(
         "/api/user/change-password",
         passwords,
         {
@@ -58,4 +57,4 @@ const userUpdatePassword = async (passwords, token) => {
   });
 };
 
-export { userGetProfile, userUpdateProfile, userUpdatePassword };
+export { userGetProfile, userUpdateProfile, userChangePassword };

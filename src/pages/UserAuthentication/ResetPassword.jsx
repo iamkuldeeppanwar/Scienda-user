@@ -11,21 +11,19 @@ import { ToastContainer, toast } from "react-toastify";
 
 export const ResetPassword = () => {
   const navigate = useNavigate();
+  const email = localStorage.getItem("email");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [check, setCheck] = useState(false);
-  const [checkConfirm, setCheckConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await userResetPassword(password, confirmPassword);
-      if (response.success) {
-        setLoading(false);
-        navigate("/");
-      }
+      const response = await userResetPassword({ email, password });
+      toast.success(response.message);
+      setLoading(false);
+      navigate("/");
     } catch (error) {
       toast.error(getError(error));
       setLoading(false);
@@ -50,6 +48,18 @@ export const ResetPassword = () => {
             </div>
 
             <Form onSubmit={submitHandler}>
+              <Form.Label>Email</Form.Label>
+              <Form.Group controlId="password" className="input-group mb-3">
+                <Form.Control
+                  placeholder="Confirm password"
+                  value={email}
+                  disabled
+                  type="email"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Label>Password</Form.Label>
               <Form.Group controlId="password" className="input-group mb-3">
                 <Form.Control
                   placeholder="Choose a password"
@@ -60,23 +70,6 @@ export const ResetPassword = () => {
                 />
                 <InputGroup.Text onClick={() => setCheck((p) => !p)}>
                   {!check ? (
-                    <FaEye style={{ cursor: "pointer" }} />
-                  ) : (
-                    <FaEyeSlash style={{ cursor: "pointer" }} />
-                  )}
-                </InputGroup.Text>
-              </Form.Group>
-
-              <Form.Group controlId="password" className="input-group mb-3">
-                <Form.Control
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  type={checkConfirm ? "text" : "password"}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-                <InputGroup.Text onClick={() => setCheckConfirm((p) => !p)}>
-                  {!confirmPassword ? (
                     <FaEye style={{ cursor: "pointer" }} />
                   ) : (
                     <FaEyeSlash style={{ cursor: "pointer" }} />

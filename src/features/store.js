@@ -21,12 +21,18 @@ import carouselSlice from "./carouselSlice";
 import contactSlice from "./contactSlice";
 import aboutSlice from "./aboutSlice";
 import freeVideoSlice from "./freeVideoSlice";
+import subTopic from "./subTopic";
+import ticketSlice from "./ticketSlice";
+import subAdminSlice from "./subAdminSlice";
 
 export default configureStore({
   reducer: {
     general: generalReducer,
     auth: authSlice,
     user: userSlice,
+    topics: subTopic,
+    tickets: ticketSlice,
+    subAdmin: subAdminSlice,
     transaction: transactionSlice,
     plan: planSlice,
     language: languageSlice,
@@ -45,6 +51,6 @@ export default configureStore({
     carousel: carouselSlice,
     contact: contactSlice,
     about: aboutSlice,
-    free_video: freeVideoSlice
+    free_video: freeVideoSlice,
   },
 });

@@ -85,17 +85,12 @@ const userForgetPassword = async (email) => {
   });
 };
 
-const userResetPassword = async (password, confirmPassword) => {
-  const change = {
-    password,
-    confirm_password: confirmPassword,
-  };
-  console.log(change);
+const userResetPassword = async (password) => {
   return new Promise(async (resolve, reject) => {
     try {
       const userData = await axiosInstance.post(
-        "/api/user/change-password",
-        change
+        "/api/user/reset-password",
+        password
       );
       resolve(userData.data);
     } catch (error) {

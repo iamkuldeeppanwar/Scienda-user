@@ -1,6 +1,6 @@
 import "../styles/SideNavBar.css";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 
 import {
@@ -17,7 +17,12 @@ import {
   BookLogo42,
   OpenMenuIcon,
 } from "./icons/sidenavbar-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { userGetProfile } from "../pages/menu/MyAccount/apis/UserProfileAPIs";
+import { toast } from "react-toastify";
+import { getError } from "../Utils/error";
+import { setUser } from "../features/userSlice";
 
 const menuBarOptions1 = [
   {
@@ -83,12 +88,34 @@ export default function SideNavbar({
   isSidebarExpanded,
   setIsSidebarExpanded,
 }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  //   console.log("side", user);
+  const token = localStorage.getItem("token");
   const location = useLocation();
   const pathname = location.pathname;
 
-  // console.log("sidebar render");
+  useEffect(() => {
+    getProfile(token);
+  }, []);
+
+  const getProfile = async () => {
+    try {
+      const response = await userGetProfile(token);
+      if (response.success) {
+        dispatch(setUser(response));
+      }
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  };
+
+  // console.log("sidebar render", user);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   const isActiveLink = (url) => {
     if (url === "/menu") {
@@ -181,7 +208,10 @@ export default function SideNavbar({
             <div className="w-100 d-flex justify-content-between align-items-center">
               <div className={isSidebarExpanded ? "d-flex gap-2" : "d-none"}>
                 <img
-                  src={user && user.profile_url}
+                  src={
+                    user &&
+                    `https://creative-story.s3.amazonaws.com${user.profile_url}`
+                  }
                   alt="profile"
                   height={40}
                   className="d-block user_profile"
@@ -194,9 +224,14 @@ export default function SideNavbar({
                 </div>
               </div>
 
-              <Link to="/" className={isSidebarExpanded ? "" : "w-100"}>
+              <button
+                onClick={handleLogout}
+                className={
+                  isSidebarExpanded ? "logout_btn" : "w-100 logout_btn"
+                }
+              >
                 <LogoutIcon />
-              </Link>
+              </button>
             </div>
           </div>
         </nav>

@@ -5,12 +5,12 @@ import "./MyAccount.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
 import {
   PasswordLockIcon,
-  ProfileIcon,
+  // ProfileIcon,
   UploadIcon,
 } from "./components/my-account-icons";
 import {
+  userChangePassword,
   userGetProfile,
-  userUpdatePassword,
   userUpdateProfile,
 } from "./apis/UserProfileAPIs";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,9 @@ const MyAccount = () => {
   const [dob, setDob] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
+  const [images, setImages] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -39,7 +41,7 @@ const MyAccount = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.type.startsWith("image/")) {
-        setProfile(file);
+        setImages(file);
       } else {
         toast.error("Please select a valid image file.");
         e.target.value = null;
@@ -55,13 +57,23 @@ const MyAccount = () => {
 
   useEffect(() => {
     getProfile();
-    setFirstName((user && user.first_name) || "");
-    setLastName((user && user.last_name) || "");
-    setMobile((user && user.mobile) || "");
-    setDob((user && user.dob) || "");
-    setEmail((user && user.email) || "");
-    setProfile(user && user.profile_url);
   }, [loading]);
+
+  useEffect(() => {
+    if (user && user.first_name) {
+      setFirstName(user.first_name || "");
+      setLastName(user.last_name || "");
+      setMobile(user.mobile || "");
+      setDob(user.dob || "");
+      setEmail(user.email || "");
+      setProfile(
+        user.profile_url ==
+          "https://tse4.mm.bing.net/th?id=OIP.eXWcaYbEtO2uuexHM8sAwwHaHa&pid=Api&P=0&h=180"
+          ? "https://tse4.mm.bing.net/th?id=OIP.eXWcaYbEtO2uuexHM8sAwwHaHa&pid=Api&P=0&h=180"
+          : `https://creative-story.s3.amazonaws.com${user.profile_url}`
+      );
+    }
+  }, [user]);
 
   const getProfile = async () => {
     try {
@@ -81,16 +93,14 @@ const MyAccount = () => {
     form.append("last_name", lastName);
     form.append("mobile", mobile);
     form.append("dob", dob);
-    form.append("image", profile);
+    form.append("image", images);
 
     try {
       setLoading(true);
       const response = await userUpdateProfile(form, token);
-      if (response.status) {
-        toast.success(response.status);
-        dispatch(setUser(response));
-        setLoading(false);
-      }
+      dispatch(setUser(response));
+      toast.success(response.status);
+      setLoading(false);
     } catch (error) {
       toast.error(getError(error));
       setLoading(false);
@@ -100,21 +110,20 @@ const MyAccount = () => {
   const updatePasswordHandler = async (e) => {
     e.preventDefault();
     const passwords = {
+      old_password: currentPassword,
       password: newPassword,
       confirm_password: confrimPassword,
     };
 
     try {
-      setLoading(true);
-      const response = await userUpdatePassword(passwords, token);
-      if (response.status) {
-        toast.success(response.status);
-        dispatch(setUser(response));
-        setLoading(false);
-      }
+      setPasswordLoading(true);
+      const response = await userChangePassword(passwords, token);
+      console.log(response);
+      toast.success(response.status);
+      setPasswordLoading(false);
     } catch (error) {
       toast.error(getError(error));
-      setLoading(false);
+      setPasswordLoading(false);
     }
   };
 
@@ -217,17 +226,6 @@ const MyAccount = () => {
             </div>
 
             <div className="d-flex justify-content-end align-items-center column-gap-3 mx-3 my-3">
-              {/* <button
-                className="rounded-lg bg-white text-color-primary text-16 font-normal"
-                style={{
-                  width: "9.2rem",
-                  height: "3rem",
-                  border: "1px solid var(--primary-color)",
-                  boxShadow: "0px 1px 2px 0px #1018280D",
-                }}
-              >
-                Cancel
-              </button> */}
               {!loading ? (
                 <button
                   className="rounded-lg bg-color-primary text-white text-16 font-bold"
@@ -333,6 +331,7 @@ const MyAccount = () => {
                     className="py-2 px-3"
                     type="password"
                     value={currentPassword}
+                    required
                     onChange={(e) => setCurrentPassword(e.target.value)}
                   />
                 </Form.Group>
@@ -348,6 +347,7 @@ const MyAccount = () => {
                       className="py-2 px-3 text-black"
                       type="password"
                       value={newPassword}
+                      required
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </Form.Group>
@@ -360,6 +360,7 @@ const MyAccount = () => {
                     <Form.Control
                       className="py-2 px-3"
                       type="password"
+                      required
                       value={confrimPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
@@ -369,31 +370,20 @@ const MyAccount = () => {
             </div>
 
             <div className="d-flex justify-content-end align-items-center column-gap-3 mx-2 my-3">
-              {/* <button
-                className="rounded-lg bg-white text-color-primary text-16 font-normal"
-                style={{
-                  width: "9.2rem",
-                  height: "3rem",
-                  border: "1px solid var(--primary-color)",
-                  boxShadow: "0px 1px 2px 0px #1018280D",
-                }}
-              >
-                Cancel
-              </button> */}
-
-              <button
-                className="rounded-lg bg-color-primary text-white text-16 font-bold"
-                style={{
-                  width: "9.2rem",
-                  height: "3rem",
-                  border: "1px solid var(--primary-color)",
-                  boxShadow: "0px 1px 2px 0px #1018280D",
-                }}
-              >
-                Save Changes
-              </button>
-
-              {/* <button
+              {!passwordLoading ? (
+                <button
+                  className="rounded-lg bg-color-primary text-white text-16 font-bold"
+                  style={{
+                    width: "9.2rem",
+                    height: "3rem",
+                    border: "1px solid var(--primary-color)",
+                    boxShadow: "0px 1px 2px 0px #1018280D",
+                  }}
+                >
+                  Save Changes
+                </button>
+              ) : (
+                <button
                   className="rounded-lg bg-color-primary text-white text-16 font-bold"
                   style={{
                     width: "9.2rem",
@@ -403,7 +393,8 @@ const MyAccount = () => {
                   }}
                 >
                   <Spinner />
-                </button> */}
+                </button>
+              )}
             </div>
           </Form>
         </div>
