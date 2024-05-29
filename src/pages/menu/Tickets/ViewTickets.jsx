@@ -20,6 +20,7 @@ import { getError } from "../../../Utils/error";
 import { setTickets } from "../../../features/ticketSlice";
 
 function CreateTicketModal(props) {
+  const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const { subAdmins } = useSelector((state) => state.subAdmin);
   const { topics } = useSelector((state) => state.topics);
@@ -50,7 +51,7 @@ function CreateTicketModal(props) {
 
   useEffect(() => {
     getAllTickets();
-  }, []);
+  }, [dispatch, token]);
 
   const getAllTickets = async () => {
     try {
@@ -204,7 +205,7 @@ function CreateTicketModal(props) {
   );
 }
 
-const CreateTicketButton = (props) => {
+const CreateTicketButton = () => {
   const [createTicketModalShow, setCreateTicketModalShow] =
     React.useState(false);
 
@@ -231,15 +232,15 @@ const CreateTicketButton = (props) => {
 };
 
 const ViewTickets = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { tickets } = useSelector((state) => state.tickets);
   const [ticketLoader, setTicketLoader] = useState(false);
 
   useEffect(() => {
     getAllTickets();
-  }, []);
+  }, [dispatch, token]);
 
   const getAllTickets = async () => {
     try {
