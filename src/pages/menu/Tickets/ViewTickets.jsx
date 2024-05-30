@@ -323,7 +323,7 @@ const ViewTickets = () => {
                     </p>
                   )}
                 </div>
-                <div className="d-flex justify-content-between align-items-start">
+                <div className="d-flex flex-wrap justify-content-between align-items-start">
                   <p
                     className="text-14 font-normal"
                     style={{ color: "#525252" }}

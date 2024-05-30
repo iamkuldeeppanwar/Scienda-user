@@ -1,17 +1,20 @@
-
 .membership-card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2rem;
 
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 @media screen and (min-width: 786px) {
-    .membership-card-container {
-        flex-direction: row;
-        justify-content: center;
-        column-gap: 3rem;
-    }
+  .membership-card-container {
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 3rem;
+  }
+}
+
+.custom-table-head th {
+  background-color: #e5e7eb;
 }
