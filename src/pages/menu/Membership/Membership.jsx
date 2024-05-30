@@ -11,14 +11,36 @@ import {
 } from "./components/membership-icons";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
-import { membershipPlans } from "./apis/MembershipAPIs";
+import { membershipPlans, upgradeNow } from "./apis/MembershipAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlans } from "../../../features/planSlice";
 import { Spinner } from "react-bootstrap";
 import { userGetProfile } from "../MyAccount/apis/UserProfileAPIs";
 import { setUser } from "../../../features/userSlice";
 
-const MembershipCard = ({ price, dayAccess }) => {
+const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
+  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+
+  const addPlan = async () => {
+    const planData = {
+      price,
+      validity: dayAccess,
+      planId,
+      subdomain,
+      userId,
+    };
+    try {
+      setLoading(true);
+      const response = await upgradeNow(planData, token);
+      setLoading(false);
+      window.location.href = response.url;
+    } catch (error) {
+      toast.error(getError(error));
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className="rounded-xl bg-white p-0"
@@ -79,9 +101,18 @@ const MembershipCard = ({ price, dayAccess }) => {
         </div>
 
         <div className="text-center mt-4">
-          <button className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold">
-            Upgrade Now
-          </button>
+          {!loading ? (
+            <button
+              onClick={addPlan}
+              className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold"
+            >
+              Upgrade Now
+            </button>
+          ) : (
+            <button className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold">
+              <Spinner />
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -285,8 +316,11 @@ const Membership = () => {
               return (
                 <MembershipCard
                   key={data._id}
-                  price={`£${data.price}`}
+                  price={`${data.price}`}
                   dayAccess={data.validity}
+                  planId={data._id}
+                  subdomain={user.subdomain}
+                  userId={user._id}
                 />
               );
             })
