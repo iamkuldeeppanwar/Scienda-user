@@ -68,7 +68,7 @@ const FogetPassword = () => {
                   </button>
                 ) : (
                   <button type="submit" className="auth_button">
-                    <Spinner />
+                    <Spinner size="sm" />
                   </button>
                 )}
               </div>

@@ -47,10 +47,8 @@ const OTP = ({ length = 4, onChange, onVerify, loading }) => {
 
   const resendOtpHandler = async () => {
     try {
-      const response = await userResendOtp(email);
-      if (response.success) {
-        toast.success("OTP sent to the mail");
-      }
+      await userResendOtp(email);
+      toast.success("OTP sent to the mail");
     } catch (error) {
       toast.error(getError(error));
     }
@@ -101,7 +99,7 @@ const OTP = ({ length = 4, onChange, onVerify, loading }) => {
                   className="auth_button"
                   onClick={handleVerifyClick}
                 >
-                  <Spinner />
+                  <Spinner size="sm" />
                 </button>
               )}
             </div>
@@ -137,32 +135,23 @@ const OTPComponent = () => {
     if (forget) {
       try {
         setLoading(true);
-        const otps = await userResetPasswordOtp(email, otp);
-        if (otps.success) {
-          localStorage.setItem("token", otps.token);
-          dispatch(setToken(otps));
-          setLoading(false);
-          navigate("/user-reset-password");
-        }
+        await userResetPasswordOtp(email, otp);
+        setLoading(false);
+        navigate("/user-reset-password");
       } catch (error) {
         setLoading(false);
-        toast.error(
-          getError(error, {
-            closeButton: true,
-          })
-        );
+        toast.error(getError(error));
       }
     } else {
       try {
         setLoading(true);
-        const otps = await userEmailVerifyOtp(email, otp);
-        if (otps.success) {
-          localStorage.setItem("token", otps.token);
-          dispatch(setUser(otps.user));
-          dispatch(setToken(otps));
-          setLoading(false);
-          navigate("/menu");
-        }
+        const response = await userEmailVerifyOtp(email, otp);
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("user", JSON.stringify(response.user));
+        dispatch(setUser(response.user));
+        dispatch(setToken(response));
+        setLoading(false);
+        navigate("/menu");
       } catch (error) {
         setLoading(false);
         toast.error(getError(error));

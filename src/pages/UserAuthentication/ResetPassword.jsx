@@ -8,6 +8,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import messageIcon from "./Utils/Message icon.png";
 import { userResetPassword } from "./apis/UserAPIs";
 import { ToastContainer, toast } from "react-toastify";
+import { getError } from "../../Utils/error";
 
 export const ResetPassword = () => {
   const navigate = useNavigate();
@@ -84,7 +85,7 @@ export const ResetPassword = () => {
                   </button>
                 ) : (
                   <button type="submit" className="auth_button">
-                    <Spinner />
+                    <Spinner size="sm" />
                   </button>
                 )}
               </div>

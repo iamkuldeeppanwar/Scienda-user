@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "./features/store.js";
 import { HashRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import "react-phone-input-2/lib/style.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

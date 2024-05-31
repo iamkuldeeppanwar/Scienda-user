@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userRegistration } from "./apis/UserAPIs";
 import { getError } from "../../Utils/error";
 import { ToastContainer, toast } from "react-toastify";
+import PhoneInput from "react-phone-input-2";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -30,24 +31,24 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
+    const phone = mobile.countryCode + mobile.mobile;
+    console.log(phone);
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await userRegistration(
+      await userRegistration(
         first_name,
         last_name,
         dob,
-        mobile,
+        phone,
         "66163046f9e2ecdb878291d5",
         "6626502ba686675750282c1e",
         email,
         password
       );
-      if (response.status) {
-        localStorage.setItem("email", email);
-        navigate("/user-otp");
-        setLoading(false);
-      }
+      localStorage.setItem("email", email);
+      navigate("/user-otp");
+      setLoading(false);
     } catch (error) {
       toast.error(getError(error));
       setLoading(false);
@@ -114,13 +115,40 @@ const Registration = () => {
                 <Col>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Mobile</Form.Label>
-                    <Form.Control
+                    <PhoneInput
+                      containerClass=""
+                      inputClass=" w-100 m-0 border-0"
+                      inputStyle={
+                        {
+                          // height: "2.7rem",
+                        }
+                      }
+                      buttonClass=" "
+                      // country={form?.countryIsoCode?.toLowerCase()}
+                      enableSearch={true}
+                      countryCodeEditable={false}
+                      // value={form?.mobile}
+                      onChange={(phone, code) => {
+                        console.log(phone, code);
+                        setMobile({
+                          mobile: phone,
+                          countryCode: code.countryCode,
+                          dialCode: code.dialCode,
+                        });
+                      }}
+                      inputProps={{
+                        name: "phone",
+                        required: true,
+                        autoFocus: true,
+                      }}
+                    />
+                    {/* <Form.Control
                       type="text"
                       value={mobile}
                       onChange={(e) => setMobile(e.target.value)}
                       placeholder="Enter your mobile number"
                       required
-                    />
+                    /> */}
                   </Form.Group>
                 </Col>
               </Row>
@@ -164,7 +192,7 @@ const Registration = () => {
                   </button>
                 ) : (
                   <button type="submit" className="auth_button">
-                    <Spinner />
+                    <Spinner size="sm" />
                   </button>
                 )}
               </div>

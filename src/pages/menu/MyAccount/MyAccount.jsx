@@ -248,7 +248,7 @@ const MyAccount = () => {
                     boxShadow: "0px 1px 2px 0px #1018280D",
                   }}
                 >
-                  <Spinner />
+                  <Spinner size="sm" />
                 </button>
               )}
             </div>
@@ -392,14 +392,14 @@ const MyAccount = () => {
                     boxShadow: "0px 1px 2px 0px #1018280D",
                   }}
                 >
-                  <Spinner />
+                  <Spinner size="sm" />
                 </button>
               )}
             </div>
           </Form>
         </div>
 
-        <div className="d-flex flex-grow-1 justify-content-center align-items-center">
+        {/* <div className="d-flex flex-grow-1 justify-content-center align-items-center">
           <div
             className="rounded-xl px-3 py-4 bg-white"
             style={{
@@ -436,7 +436,7 @@ const MyAccount = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </ModuleLayout>
   );

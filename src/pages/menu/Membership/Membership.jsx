@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 
 import "./Membership.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
-import { ViewEyeIcon } from "../Reports/components/reports-icons";
+// import { ViewEyeIcon } from "../Reports/components/reports-icons";
 import {
   CheckCircleIcon,
   CrownIcon,
@@ -53,7 +53,7 @@ const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
     >
       <div style={{ height: "114.27px" }} className="px-4 pt-4 pb-2">
         <h3 className="font-semibold text-32 text-color-secondary text-center">
-          {price}
+          £{price}
         </h3>
         <p
           style={{ color: "#424242" }}
@@ -110,7 +110,7 @@ const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
             </button>
           ) : (
             <button className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold">
-              <Spinner />
+              <Spinner size="sm" />
             </button>
           )}
         </div>
@@ -128,13 +128,13 @@ const Membership = () => {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (user.subdomain) {
       getUserPlans();
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   const getProfile = async () => {
     try {
@@ -328,7 +328,7 @@ const Membership = () => {
             ""
           )
         ) : (
-          <Spinner />
+          <Spinner size="sm" />
         )}
       </div>
     </ModuleLayout>

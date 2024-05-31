@@ -31,13 +31,12 @@ const Login = () => {
     try {
       setLoading(true);
       const response = await userLogin(email, password);
-      if (response.status) {
-        localStorage.setItem("token", response.token);
-        dispatch(setToken(response));
-        dispatch(setUser(response));
-        setLoading(false);
-        navigate("/menu");
-      }
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      dispatch(setToken(response));
+      dispatch(setUser(response));
+      setLoading(false);
+      navigate("/menu");
     } catch (error) {
       toast.error(getError(error));
       setLoading(false);
@@ -100,7 +99,7 @@ const Login = () => {
                   </button>
                 ) : (
                   <button type="submit" className="auth_button">
-                    <Spinner />
+                    <Spinner size="sm" />
                   </button>
                 )}
               </div>
