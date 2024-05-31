@@ -11,12 +11,17 @@ import {
 } from "./components/membership-icons";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
-import { membershipPlans, upgradeNow } from "./apis/MembershipAPIs";
+import {
+  getTransaction,
+  membershipPlans,
+  upgradeNow,
+} from "./apis/MembershipAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlans } from "../../../features/planSlice";
 import { Spinner } from "react-bootstrap";
 import { userGetProfile } from "../MyAccount/apis/UserProfileAPIs";
 import { setUser } from "../../../features/userSlice";
+import { setTransactions } from "../../../features/transactionSlice";
 
 const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
   const token = localStorage.getItem("token");
@@ -124,10 +129,13 @@ const Membership = () => {
   const token = localStorage.getItem("token");
   const { user } = useSelector((state) => state.user);
   const { plans } = useSelector((state) => state.plan);
+  const { transactions } = useSelector((state) => state.transaction);
   const [planLoader, setPlanLoader] = useState(false);
+  const [transactionLoading, setTransactionLoading] = useState(false);
 
   useEffect(() => {
     getProfile();
+    getTransactionPlans();
   }, [dispatch, token]);
 
   useEffect(() => {
@@ -155,6 +163,30 @@ const Membership = () => {
       toast.error(getError(error));
       setPlanLoader(false);
     }
+  };
+
+  const getTransactionPlans = async () => {
+    try {
+      setTransactionLoading(true);
+      const response = await getTransaction(token);
+      dispatch(setTransactions(response));
+      setTransactionLoading(false);
+    } catch (error) {
+      toast.error(getError(error));
+      setTransactionLoading(false);
+    }
+  };
+
+  console.log(transactions);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      weekday: "short", // "Mon"
+      day: "2-digit", // "23"
+      month: "short", // "May"
+      year: "numeric", // "2024"
+    });
   };
 
   return (
@@ -186,54 +218,59 @@ const Membership = () => {
           </tr>
         </thead>
         <tbody className="">
-          <tr className="border bg-white">
-            <td className="text-center">
-              <div className="p-4">
-                <button
-                  className="text-14 font-bold bg-color-light border-0 rounded px-3 py-2"
-                  style={{ backgroundColor: "#E0EAFF" }}
-                >
-                  Basic Plan
-                </button>
-              </div>
-            </td>
-            <td className="text-center">
-              <div className="p-4">
-                <span className="text-14 font-bold">1 Month</span>
-              </div>
-            </td>
-            <td className="text-center">
-              <div className="p-4">
-                <span className="text-14 font-bold text-color-secondary">
-                  ₹ 99 / -
-                </span>
-              </div>
-            </td>
-            <td className="text-center">
-              <div className="p-4">
-                <a href="" style={{ color: "#565656" }}>
-                  pay_Mw5IB2vZPhDMTW
-                </a>
-              </div>
-            </td>
-            <td className="w-15">
-              <div
-                className="w-80 mx-auto text-12 font-bold text-center px-3 py-3 rounded"
-                style={{ backgroundColor: "#DADADA96" }}
-              >
-                3 Nov, 2023
-              </div>
-            </td>
-            <td className="text-center">
-              <div className="p-4">
-                <button className="rounded-lg px-3 py-1 border-color-primary bg-white text-color-primary text-14 font-semibold">
-                  <div>
-                    View <ViewEyeIcon2 />
-                  </div>
-                </button>
-              </div>
-            </td>
-          </tr>
+          {transactions.transactions &&
+            transactions.transactions.map((data) => {
+              return (
+                <tr key={data._id} className="border bg-white">
+                  <td className="text-center">
+                    <div className="p-4">
+                      <button
+                        className="text-14 font-bold bg-color-light border-0 rounded px-3 py-2"
+                        style={{ backgroundColor: "#E0EAFF" }}
+                      >
+                        Basic Plan
+                      </button>
+                    </div>
+                  </td>
+                  <td className="text-center">
+                    <div className="p-4">
+                      <span className="text-14 font-bold">{data.validity}</span>
+                    </div>
+                  </td>
+                  <td className="text-center">
+                    <div className="p-4">
+                      <span className="text-14 font-bold text-color-secondary">
+                        £ {data.amount}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="text-center">
+                    <div className="p-4" style={{ color: "#565656" }}>
+                      {data.payment_id.slice(0, 20)}
+                    </div>
+                  </td>
+                  <td className="w-15">
+                    <div
+                      className="w-80 mx-auto text-12 font-bold text-center px-3 py-3 rounded"
+                      style={{ backgroundColor: "#DADADA96" }}
+                    >
+                      {formatDate(data.createdAt)}
+                    </div>
+                  </td>
+                  <td className="text-center">
+                    <div className="p-4">
+                      <button className="rounded-lg px-3 py-1 border-color-primary bg-white text-color-primary text-14 font-semibold">
+                        <a
+                          href={`https://creative-story.s3.amazonaws.com${data.invoice_url}`}
+                        >
+                          View <ViewEyeIcon2 />
+                        </a>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
 
@@ -257,7 +294,10 @@ const Membership = () => {
                 fontSize: "15px",
               }}
             >
-              Plan Expiring On : 3 Dec 2023
+              Plan Expiring On :{" "}
+              {formatDate(
+                transactions.subscription && transactions.subscription.expiry
+              )}
             </div>
           </div>
           <hr />
@@ -265,7 +305,8 @@ const Membership = () => {
             <div className="font-normal text-20">
               Active Plan :{" "}
               <span className="text-color-secondary font-bold">
-                ₹ 99 /Month
+                £{" "}
+                {transactions.subscription && transactions.subscription.amount}
               </span>
             </div>
             <div>

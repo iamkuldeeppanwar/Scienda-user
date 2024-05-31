@@ -32,7 +32,6 @@ const Registration = () => {
 
   const submitHandler = async (e) => {
     const phone = mobile.countryCode + mobile.mobile;
-    console.log(phone);
     e.preventDefault();
     try {
       setLoading(true);
@@ -129,7 +128,6 @@ const Registration = () => {
                       countryCodeEditable={false}
                       // value={form?.mobile}
                       onChange={(phone, code) => {
-                        console.log(phone, code);
                         setMobile({
                           mobile: phone,
                           countryCode: code.countryCode,

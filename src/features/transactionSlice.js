@@ -3,15 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const transactionSlice = createSlice({
   name: "transaction",
   initialState: {
-    transactions: [],
-    transactionCount: 0,
-    filteredTransactions: 0,
+    transactions: {},
   },
   reducers: {
     setTransactions: (state, action) => {
-      state.transactions = action.payload.transactions;
-      state.transactionCount = action.payload.transactionCount;
-      state.filteredTransactions = action.payload.filteredTransactions;
+      state.transactions = action.payload;
     },
   },
 });

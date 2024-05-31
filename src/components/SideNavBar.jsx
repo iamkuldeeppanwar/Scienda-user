@@ -210,7 +210,11 @@ export default function SideNavbar({
                 <img
                   src={
                     user &&
-                    `https://creative-story.s3.amazonaws.com${user.profile_url}`
+                    user?.profile_url &&
+                    user?.profile_url ==
+                      "https://tse4.mm.bing.net/th?id=OIP.eXWcaYbEtO2uuexHM8sAwwHaHa&pid=Api&P=0&h=180"
+                      ? "https://tse4.mm.bing.net/th?id=OIP.eXWcaYbEtO2uuexHM8sAwwHaHa&pid=Api&P=0&h=180"
+                      : `https://creative-story.s3.amazonaws.com${user?.profile_url}`
                   }
                   alt="profile"
                   height={40}

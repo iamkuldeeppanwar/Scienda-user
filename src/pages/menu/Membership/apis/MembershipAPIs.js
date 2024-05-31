@@ -13,6 +13,24 @@ const membershipPlans = async (domain) => {
   });
 };
 
+const getTransaction = async (token) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userData = await axiosInstance.get(
+        `/api/transaction/get-user-transactions`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      resolve(userData.data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const upgradeNow = async (planData, token) => {
   return new Promise(async (resolve, reject) => {
     const headers = {
@@ -33,4 +51,4 @@ const upgradeNow = async (planData, token) => {
   });
 };
 
-export { membershipPlans, upgradeNow };
+export { membershipPlans, upgradeNow, getTransaction };
