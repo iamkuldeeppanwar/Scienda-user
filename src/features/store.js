@@ -13,6 +13,7 @@ import carouselSlice from "./carouselSlice";
 import subTopic from "./subTopic";
 import ticketSlice from "./ticketSlice";
 import subAdminSlice from "./subAdminSlice";
+import TestSlice from "./TestSlice";
 
 export default configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export default configureStore({
     subAdmin: subAdminSlice,
     transaction: transactionSlice,
     plan: planSlice,
+    tests: TestSlice,
     url: getURLSlice,
     query: querySlice,
     page: pageSlice,
