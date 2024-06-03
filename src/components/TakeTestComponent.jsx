@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   DateCalendarIcon,
@@ -20,6 +20,7 @@ import {
   NoIdeaIcon,
 } from "./icons/take-test-icons";
 import { convertToTwoDigits } from "../lib/TakeTest";
+import { Carousel } from "react-bootstrap";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -114,7 +115,6 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
 
 const TakeTestComponent = (props) => {
   const currentQuestion = props.currentQuestion;
-  // console.log(currentQuestion);
 
   function convertMinutesToHHMM(minutes) {
     const hours = Math.floor(minutes / 60);
@@ -125,6 +125,63 @@ const TakeTestComponent = (props) => {
 
     return `${paddedHours}h:${paddedMinutes}min`;
   }
+
+  const localStorageKey = "timerTimeLeft";
+
+  // Function to get the initial time left from localStorage or props
+  const getInitialTime = () => {
+    const savedTime = localStorage.getItem(localStorageKey);
+
+    if (savedTime && !isNaN(savedTime)) {
+      const parsedTime = parseInt(savedTime, 10);
+      return parsedTime;
+    }
+
+    if (props.timeAlloted && !isNaN(props.timeAlloted)) {
+      const initialTime = props.timeAlloted * 60;
+      return initialTime;
+    }
+
+    return 0; // Fallback to 0 if no valid time is provided
+  };
+
+  const [timeLeft, setTimeLeft] = useState(getInitialTime());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(intervalId);
+          localStorage.removeItem(localStorageKey);
+          return 0;
+        }
+        const newTime = prevTime - 1;
+        localStorage.setItem(localStorageKey, newTime);
+        return newTime;
+      });
+    }, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
+  // Function to format the time left
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours < 10 ? "0" : ""}${hours}:${
+      minutes < 10 ? "0" : ""
+    }${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
+
+  useEffect(() => {
+    const initialTime = props.timeAlloted * 60;
+    setTimeLeft(initialTime);
+    localStorage.setItem(localStorageKey, initialTime);
+  }, [props.timeAlloted]);
+
+  // console.log(currentQuestion);
 
   return (
     <div>
@@ -184,7 +241,7 @@ const TakeTestComponent = (props) => {
                   className="text-12 font-medium"
                   style={{ color: "#FF3D00" }}
                 >
-                  00:02:12
+                  {formatTime(timeLeft)}
                 </span>
               </p>
             </div>
@@ -308,11 +365,33 @@ const TakeTestComponent = (props) => {
           <div>
             {currentQuestion && currentQuestion.explanation.description}
           </div>
-          <img
-            className="w-100"
-            src="/images/take-test-question.png"
-            alt="take-test-question"
-          />
+          <Carousel className="d-flex justify-content-center" fade>
+            {currentQuestion && currentQuestion.images.length > 0 ? (
+              currentQuestion.images.map((img) => {
+                return (
+                  <Carousel.Item>
+                    <img
+                      style={{
+                        height: "200px",
+                        width: "100%",
+                        objectFit: "contain",
+                      }}
+                      src={`https://creative-story.s3.amazonaws.com${img}`}
+                      alt="..."
+                    />
+                  </Carousel.Item>
+                );
+              })
+            ) : (
+              <img
+                className="w-100"
+                // src={`https://creative-story.s3.amazonaws.com${
+                //   currentQuestion && currentQuestion.images[0]
+                // }`}
+                alt="take-test-question"
+              />
+            )}
+          </Carousel>
 
           <section className="my-4">
             {currentQuestion &&

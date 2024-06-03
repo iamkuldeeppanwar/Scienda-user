@@ -129,6 +129,22 @@ const TicketChat = () => {
               {ticket.subject && ticket.subject}
             </span>
           </p>
+        </div>
+
+        <div className="d-flex flex-column justify-content-between">
+          <div className="text-end text-16">
+            <p className="my-0 font-semibold">
+              Raised On:{" "}
+              <span className="text-color-secondary">
+                {ticket.subject && formatDateTime(ticket.createdAt)}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 bg-color-light">
+        <div>
           <p className="text-16 font-medium">
             Description:
             <span
@@ -139,25 +155,19 @@ const TicketChat = () => {
             </span>
           </p>
         </div>
-        <div className="d-flex flex-column justify-content-between">
-          <div className="text-end text-16">
-            <p className="my-0 font-semibold">
-              Raised On:{" "}
-              <span className="text-color-secondary">
-                {ticket.subject && formatDateTime(ticket.createdAt)}
-              </span>
-            </p>
-            {/* <p className="my-0 font-normal">7:30 PM</p> */}
-          </div>
+
+        <div>
           {ticket.subject && ticket.status === "Closed" && (
             <p className="text-end text-12 font-normal text-color-progress">
               {ticket.status} <IssueResolvedIcon />
             </p>
           )}
           {ticket.subject && ticket.status === "Open" && (
-            <p className="text-end text-12 font-normal text-color-progress">
-              {ticket.status} <InProgressIcon />
-            </p>
+            <div>
+              <p className="text-end text-12 font-normal text-color-progress">
+                {ticket.status} <InProgressIcon />
+              </p>
+            </div>
           )}
           {ticket.subject && ticket.status === "Pending" && (
             <p className="text-end text-12 font-normal text-color-progress">
