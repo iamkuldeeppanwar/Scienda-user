@@ -1,7 +1,12 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
+import { getError } from "../../../../Utils/error";
+import { submitTest } from "../apis/TestAPIs";
 
 function TakeTestSubmitModal({
+  testID,
+  questions,
   testSubmitModalShow,
   closeTestSubmitModal,
   questionsLength,
@@ -10,6 +15,37 @@ function TakeTestSubmitModal({
   openCheckScoreModal,
   CheckTestScoreButton,
 }) {
+  const token = localStorage.getItem("token");
+
+  const handleSubmitTest = async (e) => {
+    const arr = questions.map((qnts) => {
+      let obj = {};
+      if (qnts.hasOwnProperty("confidence")) {
+        obj.comment = qnts.confidence;
+      } else {
+        obj.comment = "I KNOW IT";
+      }
+      if (qnts.hasOwnProperty("questionFlagged")) {
+        obj.flag = qnts.questionFlagged;
+      } else {
+        obj.flag = false;
+      }
+
+      obj.selected = qnts.options[qnts.selectedOption];
+
+      return obj;
+    });
+
+    try {
+      const response = await submitTest(arr, testID, token);
+      console.log(response);
+      localStorage.setItem("reportID", response.reportcard);
+      // closeTestSubmitModal
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  };
+
   return (
     <Modal
       show={testSubmitModalShow}
@@ -81,7 +117,7 @@ function TakeTestSubmitModal({
                   height: "56px",
                   boxShadow: "0px 1px 2px 0px #1018280D",
                 }}
-                onClick={closeTestSubmitModal}
+                onClick={handleSubmitTest}
               >
                 Submit Now
               </button>

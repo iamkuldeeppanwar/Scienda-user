@@ -20,7 +20,7 @@ import {
   NoIdeaIcon,
 } from "./icons/take-test-icons";
 import { convertToTwoDigits } from "../lib/TakeTest";
-import { Carousel } from "react-bootstrap";
+import { Button, Carousel } from "react-bootstrap";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -126,77 +126,93 @@ const TakeTestComponent = (props) => {
     return `${paddedHours}h:${paddedMinutes}min`;
   }
 
-  const localStorageKey = "timerTimeLeft";
+  // const localStorageKey = "timerTimeLeft";
 
-  // Function to get the initial time left from localStorage or props
-  const getInitialTime = () => {
-    const savedTime = localStorage.getItem(localStorageKey);
+  // // Function to get the initial time left from localStorage or props
+  // const getInitialTime = () => {
+  //   const savedTime = localStorage.getItem(localStorageKey);
 
-    if (savedTime && !isNaN(savedTime)) {
-      const parsedTime = parseInt(savedTime, 10);
-      return parsedTime;
-    }
+  //   if (savedTime && !isNaN(savedTime)) {
+  //     const parsedTime = parseInt(savedTime, 10);
+  //     return parsedTime;
+  //   }
 
-    if (props.timeAlloted && !isNaN(props.timeAlloted)) {
-      const initialTime = props.timeAlloted * 60;
-      return initialTime;
-    }
+  //   if (props.timeAlloted && !isNaN(props.timeAlloted)) {
+  //     const initialTime = props.timeAlloted * 60;
+  //     return initialTime;
+  //   }
 
-    return 0; // Fallback to 0 if no valid time is provided
+  //   return 0; // Fallback to 0 if no valid time is provided
+  // };
+
+  // const [timeLeft, setTimeLeft] = useState(getInitialTime());
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setTimeLeft((prevTime) => {
+  //       if (prevTime <= 1) {
+  //         clearInterval(intervalId);
+  //         localStorage.removeItem(localStorageKey);
+  //         return 0;
+  //       }
+  //       const newTime = prevTime - 1;
+  //       localStorage.setItem(localStorageKey, newTime);
+  //       return newTime;
+  //     });
+  //   }, 1000);
+
+  //   // Clean up the interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  // // Function to format the time left
+  // const formatTime = (seconds) => {
+  //   const hours = Math.floor(seconds / 3600);
+  //   const minutes = Math.floor((seconds % 3600) / 60);
+  //   const remainingSeconds = seconds % 60;
+  //   return `${hours < 10 ? "0" : ""}${hours}:${
+  //     minutes < 10 ? "0" : ""
+  //   }${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  // };
+
+  // useEffect(() => {
+  //   const initialTime = props.timeAlloted * 60;
+  //   setTimeLeft(initialTime);
+  //   localStorage.setItem(localStorageKey, initialTime);
+  // }, [props.timeAlloted]);
+
+  // ========= current date and time ==========
+  const formatDate = (date) => {
+    const options = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+    return date.toLocaleString("en-GB", options).replace(",", "");
   };
 
-  const [timeLeft, setTimeLeft] = useState(getInitialTime());
+  const now = new Date();
+  const formattedDate = formatDate(now);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(intervalId);
-          localStorage.removeItem(localStorageKey);
-          return 0;
-        }
-        const newTime = prevTime - 1;
-        localStorage.setItem(localStorageKey, newTime);
-        return newTime;
-      });
-    }, 1000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
-
-  // Function to format the time left
-  const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    return `${hours < 10 ? "0" : ""}${hours}:${
-      minutes < 10 ? "0" : ""
-    }${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-  };
-
-  useEffect(() => {
-    const initialTime = props.timeAlloted * 60;
-    setTimeLeft(initialTime);
-    localStorage.setItem(localStorageKey, initialTime);
-  }, [props.timeAlloted]);
-
-  console.log("current question", currentQuestion);
+  // console.log("current question", currentQuestion);
 
   return (
     <div>
       <header
-        className="d-flex justify-content-between align-items-center px-4 py-1"
+        className="d-flex flex-wrap justify-content-between align-items-center px-4 py-1"
         style={{ backgroundColor: "#C3D3FF33" }}
       >
         <h5 className="text-20 font-semibold">{props.subDomain} Test</h5>
         <p className="text-14 font-semibold">
           <DateCalendarIcon /> Date:{" "}
           <span className="text-12 font-medium text-color-primary">
-            6 Feb 2024, 03:24 PM
+            {formattedDate}
           </span>
         </p>
-        <div className="d-flex justify-content-end gap-3">
+        <div className="d-flex flex-wrap justify-content-end gap-3">
           <div
             className="bg-white"
             style={{
@@ -241,7 +257,7 @@ const TakeTestComponent = (props) => {
                   className="text-12 font-medium"
                   style={{ color: "#FF3D00" }}
                 >
-                  {formatTime(timeLeft)}
+                  {/* {formatTime(timeLeft)} */}
                 </span>
               </p>
             </div>
@@ -264,8 +280,8 @@ const TakeTestComponent = (props) => {
       </header>
 
       <div className="px-4 py-2">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex justify-content-start align-items-center gap-4">
+        <div className="d-flex flex-wrap justify-content-between align-items-center">
+          <div className="d-flex flex-wrap justify-content-start align-items-center gap-4">
             <h5 className="text-18 font-bold" style={{ color: "#2B3674" }}>
               Question No. {props.currentQuestionIndex + 1}
             </h5>
@@ -274,16 +290,16 @@ const TakeTestComponent = (props) => {
             ) : (
               <UnFlaggedOption toggleQuestionFlag={props.toggleQuestionFlag} />
             )}
-            {props.randomFill && (
+            {/* {props.randomFill && (
               <button onClick={props.randomFill}>Random Fill</button>
-            )}
+            )} */}
             {props.goToLastQuestion && (
-              <button onClick={props.goToLastQuestion}>
+              <Button onClick={props.goToLastQuestion}>
                 Go to last question
-              </button>
+              </Button>
             )}
           </div>
-          <div className="d-flex justify-content-end align-items-center gap-3">
+          <div className="d-flex flex-wrap justify-content-end align-items-center gap-3">
             <div
               className="d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
               style={{
@@ -367,9 +383,9 @@ const TakeTestComponent = (props) => {
           </div>
           <Carousel className="d-flex justify-content-center" fade>
             {currentQuestion && currentQuestion.images.length > 0 ? (
-              currentQuestion.images.map((img) => {
+              currentQuestion.images.map((img, idx) => {
                 return (
-                  <Carousel.Item>
+                  <Carousel.Item key={idx}>
                     <img
                       style={{
                         height: "200px",
@@ -415,33 +431,37 @@ const TakeTestComponent = (props) => {
       </div>
 
       <footer
-        className="sticky-bottom d-flex justify-content-between align-items-center p-4 bg-white rounded-top"
+        className="sticky-bottom d-flex flex-wrap justify-content-between align-items-center p-4 bg-white rounded-top"
         style={{
           border: "1px solid #6D94FF33",
         }}
       >
-        <div className="d-flex justify-content-start align-items-end gap-3">
+        <div className="d-flex flex-wrap justify-content-start align-items-end gap-3">
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded-lg text-14 font-semibold text-color-primary cursor-pointer"
             style={{ border: "1px solid #007C23" }}
+            onClick={() => props.confidenceMeter("I KNOW IT")}
           >
             <IKnowItIcon /> I KNOW IT
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={{ border: "1px solid #F1F1F1" }}
+            onClick={() => props.confidenceMeter("THINK SO")}
           >
             <ThinkSoIcon /> THINK SO
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={{ border: "1px solid #F1F1F1" }}
+            onClick={() => props.confidenceMeter("NOT SURE")}
           >
             <NotSureIcon /> NOT SURE
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={{ border: "1px solid #F1F1F1" }}
+            onClick={() => props.confidenceMeter("NO IDEA")}
           >
             <NoIdeaIcon /> NO IDEA
           </div>

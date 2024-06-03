@@ -43,8 +43,6 @@ export default function TakeTest() {
     }
   };
 
-  // console.log(test);
-
   const goToPrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((p) => p - 1);
@@ -66,7 +64,10 @@ export default function TakeTest() {
       if (currentQuestionIndex !== idx) {
         return question;
       }
-      const updatedQuestion = { ...question, selectedOption: optionNumber };
+      const updatedQuestion = {
+        ...question,
+        selectedOption: optionNumber,
+      };
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
@@ -77,22 +78,29 @@ export default function TakeTest() {
       if (currentQuestionIndex !== idx) {
         return question;
       }
-      const updatedQuestion = question;
+      const updatedQuestion = {
+        ...question,
+      };
       updatedQuestion.questionFlagged = !updatedQuestion.questionFlagged;
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
   };
 
-  const randomFill = () => {
+  const confidenceLevel = (level) => {
     const updatedQuestions = questions.map((question, idx) => {
-      const updatedQuestion = question;
-      updatedQuestion.selectedOption = Math.floor(Math.random() * 4);
-      updatedQuestion.questionFlagged = Math.random() < 0.5;
+      if (currentQuestionIndex !== idx) {
+        return question;
+      }
+      const updatedQuestion = {
+        ...question,
+      };
+
+      updatedQuestion.confidence = level;
+
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
-    setCurrentQuestionIndex(questions.length - 1);
   };
 
   useEffect(() => {
@@ -106,6 +114,17 @@ export default function TakeTest() {
     setMissingQuestionsCount(questions.length - count);
     setAttemptQuestionsCount(count);
   }, [questions]);
+
+  // const randomFill = () => {
+  //   const updatedQuestions = questions.map((question, idx) => {
+  //     const updatedQuestion = question;
+  //     updatedQuestion.selectedOption = Math.floor(Math.random() * 4);
+  //     updatedQuestion.questionFlagged = Math.random() < 0.5;
+  //     return updatedQuestion;
+  //   });
+  //   setQuestions(updatedQuestions);
+  //   setCurrentQuestionIndex(questions.length - 1);
+  // };
 
   const SubmitButton = () => {
     const [testSubmitModalShow, setTestSubmitModalShow] = useState(false);
@@ -136,6 +155,8 @@ export default function TakeTest() {
           Submit
         </button>
         <TakeTestSubmitModal
+          testID={testID}
+          questions={questions}
           questionsLength={questions.length}
           missingQuestions={getMissingQuestionsCount}
           attemptedQuestions={getAttemptQuestionsCount}
@@ -172,8 +193,9 @@ export default function TakeTest() {
       goToNextQuestion={goToNextQuestion}
       onUncheckedOptionClick={onUncheckedOptionClick}
       toggleQuestionFlag={toggleQuestionFlag}
+      confidenceMeter={confidenceLevel}
       SubmitButton={SubmitButton}
-      randomFill={randomFill}
+      // randomFill={randomFill}
       goToLastQuestion={goToLastQuestion}
     />
   );

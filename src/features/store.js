@@ -14,6 +14,7 @@ import subTopic from "./subTopic";
 import ticketSlice from "./ticketSlice";
 import subAdminSlice from "./subAdminSlice";
 import TestSlice from "./TestSlice";
+import reportSlice from "./reportSlice";
 
 export default configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export default configureStore({
     transaction: transactionSlice,
     plan: planSlice,
     tests: TestSlice,
+    reports: reportSlice,
     url: getURLSlice,
     query: querySlice,
     page: pageSlice,
