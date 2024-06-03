@@ -181,7 +181,7 @@ const TakeTestComponent = (props) => {
     localStorage.setItem(localStorageKey, initialTime);
   }, [props.timeAlloted]);
 
-  // console.log(currentQuestion);
+  console.log("current question", currentQuestion);
 
   return (
     <div>
