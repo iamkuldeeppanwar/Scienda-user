@@ -40,10 +40,10 @@ const TicketChat = () => {
   }, []);
 
   useEffect(() => {
-    if (user._id && socket) {
-      socket.emit("login", { _id: user._id });
+    if (ticket._id && socket) {
+      socket.emit("login", { _id: ticket._id });
     }
-  }, [socket, user]);
+  }, [socket, ticket]);
 
   useEffect(() => {
     if (!socket) return;

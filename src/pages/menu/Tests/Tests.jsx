@@ -38,11 +38,15 @@ const TestCard = ({
   };
   const closeTestStartModal = () => setTestStartModalShow(false);
 
-  const formatTime = (time) => {
-    const hours = Math.floor(time / 60);
-    const minutes = time % 60;
-    console.log(hours, minutes);
-  };
+  function convertMinutesToHHMM(minutes) {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    const paddedHours = String(hours).padStart(2, "0");
+    const paddedMinutes = String(mins).padStart(2, "0");
+
+    return `${paddedHours}h:${paddedMinutes}min`;
+  }
 
   return (
     <div
@@ -61,7 +65,9 @@ const TestCard = ({
           <div className="d-flex justify-content-between align-items-center gap-1 text-12 font-semibold">
             <TimerIcon /> Time Allotted:
           </div>
-          <div className="text-12 font-light">{timeAlloted}min</div>
+          <div className="text-12 font-light">
+            {convertMinutesToHHMM(timeAlloted)}
+          </div>
         </div>
         {completedOn && (
           <div className="d-flex justify-content-between align-items-center">

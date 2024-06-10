@@ -90,14 +90,15 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
   const questionMap = ["A", "B", "C", "D"];
 
   return (
-    <div className="d-flex justify-content-between px-2 py-2">
-      <div className="d-flex align-items-center flex-grow-1 gap-3 text-16">
+    <div className="d-flex justify-content-between flex-wrap px-2 py-2">
+      <div className="d-flex align-items-center flex-wrap flex-grow-1 gap-3 text-16">
         <span className="font-bold text-color-primary">{`${questionMap[optionNumber]}]`}</span>
         <p
           className="m-0 font-normal"
           style={{
             maxWidth: "75%",
             textWrap: "stable",
+            overflowX: "hidden",
           }}
         >
           {option}
@@ -375,7 +376,14 @@ const TakeTestComponent = (props) => {
         <hr />
 
         <div>
-          <p className="text-16 font-semibold">
+          <p
+            className="text-16 font-semibold"
+            style={{
+              maxWidth: "75%",
+              textWrap: "stable",
+              overflowX: "hidden",
+            }}
+          >
             {currentQuestion && currentQuestion.question}
           </p>
           <div>
