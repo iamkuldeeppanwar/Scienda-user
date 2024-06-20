@@ -279,13 +279,7 @@ const MyAccount = () => {
                 />
               </div>
             </div>
-            <div
-              style={{ backgroundColor: "#F1F1F1", marginTop: "-1rem" }}
-              className="pt-4 w-100"
-            >
-              <p className=" text-12 font-bold text-center">
-                SVG, PNG, JPG or GIF (max. 800x400px)
-              </p>
+            <div style={{ backgroundColor: "#F1F1F1" }} className="pt-4 w-100">
               <Stack
                 className="d-flex justify-content-center"
                 direction="horizontal"
@@ -330,6 +324,7 @@ const MyAccount = () => {
                   <Form.Control
                     className="py-2 px-3"
                     type="password"
+                    placeholder="**************"
                     value={currentPassword}
                     required
                     onChange={(e) => setCurrentPassword(e.target.value)}
@@ -347,6 +342,7 @@ const MyAccount = () => {
                       className="py-2 px-3 text-black"
                       type="password"
                       value={newPassword}
+                      placeholder="**************"
                       required
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
@@ -361,6 +357,7 @@ const MyAccount = () => {
                       className="py-2 px-3"
                       type="password"
                       required
+                      placeholder="**************"
                       value={confrimPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />

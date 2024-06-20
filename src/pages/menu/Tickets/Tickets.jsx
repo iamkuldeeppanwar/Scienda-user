@@ -50,6 +50,12 @@ const Tickets = () => {
     subAdmin();
   }, [dispatch, token]);
 
+  useEffect(() => {
+    if (subAdmins.length > 0) {
+      setProf(subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name);
+    }
+  }, [subAdmins]);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -100,6 +106,7 @@ const Tickets = () => {
 
   const createTicketHandler = async (e) => {
     e.preventDefault();
+
     const createTicket = {
       to: prof,
       subject: subject,
@@ -107,6 +114,7 @@ const Tickets = () => {
       topic: topicName,
       image: ticketImage,
     };
+    // console.log(createTicket);
     try {
       setLoading(true);
       await createTickets(createTicket, token);
@@ -127,6 +135,8 @@ const Tickets = () => {
       year: "numeric", // "2024"
     });
   };
+
+  // console.log(subAdmins);
 
   return (
     <ModuleLayout>
@@ -169,18 +179,18 @@ const Tickets = () => {
                     className="text-center text-12 font-normal"
                     style={{ color: "#475467" }}
                   >
-                    {formatDate(data.createdAt.split("T")[0])}
+                    {formatDate(data?.createdAt.split("T")[0])}
                   </p>
                   <p
-                    className="w-85 mx-auto text-center text-14 font-medium"
+                    className="w-85 mx-auto text-center text-14 font-medium text-truncate"
                     style={{ color: "#525252" }}
                   >
-                    {data.description}
+                    {data?.description}
                   </p>
-                  {data.status === "Pending" && (
+                  {data?.status === "Pending" && (
                     <div className="mb-1 d-flex justify-content-end align-items-center gap-1">
                       <span className="text-12 font-normal text-color-secondary">
-                        {data.status}
+                        {data?.status}
                       </span>
                       <span className="">
                         <InProgressIcon />{" "}
@@ -188,10 +198,10 @@ const Tickets = () => {
                     </div>
                   )}
 
-                  {data.status === "Closed" && (
+                  {data?.status === "Closed" && (
                     <div className="mb-1 d-flex justify-content-end align-items-center gap-1">
                       <span className="text-12 font-normal text-color-secondary">
-                        {data.status}
+                        {data?.status}
                       </span>
                       <span className="">
                         <IssueResolvedIcon />{" "}
@@ -199,10 +209,10 @@ const Tickets = () => {
                     </div>
                   )}
 
-                  {data.status === "Open" && (
+                  {data?.status === "Open" && (
                     <div className="mb-1 d-flex justify-content-end align-items-center gap-1">
                       <span className="text-12 font-normal text-color-secondary">
-                        {data.status}
+                        {data?.status}
                       </span>
                       <span className="">
                         <UnResolvedIcon />{" "}
@@ -234,22 +244,14 @@ const Tickets = () => {
           <div className="ticket-form">
             <Form.Group className="text-14 font-medium mt-2">
               <Form.Label>To</Form.Label>
-              <Form.Select
-                onChange={(e) => setProf(e.target.value)}
-                className="text-14 font-medium"
+              <Form.Control
+                disabled
+                type="text"
+                className="text-12 font-light"
+                value={subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name}
+                placeholder="Enter subject"
                 required
-                aria-label="Default select example"
-              >
-                <option disabled>Select topic</option>
-                {subAdmins.length > 0 &&
-                  subAdmins.map((data) => {
-                    return (
-                      <option value={data._id} key={data._id}>
-                        {data.name}
-                      </option>
-                    );
-                  })}
-              </Form.Select>
+              />
             </Form.Group>
 
             <Form.Group className="text-14 font-medium mt-2">
@@ -265,7 +267,7 @@ const Tickets = () => {
                   topics.map((topic) => {
                     return (
                       <option value={topic._id} key={topic._id}>
-                        {topic.topic_name}
+                        {topic?.topic_name}
                       </option>
                     );
                   })}
