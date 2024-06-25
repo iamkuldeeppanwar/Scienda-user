@@ -30,7 +30,7 @@ const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
   const addPlan = async () => {
     const planData = {
       price,
-      validity: dayAccess,
+      plan_type: dayAccess,
       planId,
       subdomain,
       userId,
@@ -177,7 +177,7 @@ const Membership = () => {
     }
   };
 
-  console.log(transactions);
+  // console.log(plans);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

@@ -32,6 +32,7 @@ const getTransaction = async (token) => {
 };
 
 const upgradeNow = async (planData, token) => {
+  console.log(planData);
   return new Promise(async (resolve, reject) => {
     const headers = {
       Authorization: `Bearer ${token}`,

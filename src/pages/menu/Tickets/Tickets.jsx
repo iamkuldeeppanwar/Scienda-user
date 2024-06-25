@@ -224,7 +224,7 @@ const Tickets = () => {
             })
           ) : (
             <div className="d-flex justify-content-center">
-              <Spinner />
+              <Spinner size="sm" />
             </div>
           )}
         </div>
@@ -329,7 +329,7 @@ const Tickets = () => {
                 </button>
               ) : (
                 <button className="border-0 rounded-lg bg-color-primary px-3 py-2 text-16 font-bold text-white">
-                  <Spinner />
+                  <Spinner size="sm" />
                 </button>
               )}
               {/* <CreateTicketSuccessModal /> */}

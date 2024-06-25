@@ -116,6 +116,7 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
 
 const TakeTestComponent = (props) => {
   const currentQuestion = props.currentQuestion;
+  const [active, setActive] = useState(0);
 
   function convertMinutesToHHMM(minutes) {
     const hours = Math.floor(minutes / 60);
@@ -300,12 +301,14 @@ const TakeTestComponent = (props) => {
               </Button>
             )}
           </div>
+
           <div className="d-flex flex-wrap justify-content-end align-items-center gap-3">
             <div
               className="d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
               style={{
                 width: "5rem",
                 height: "4rem",
+                cursor: "pointer",
               }}
             >
               <CalculatorIcon />
@@ -318,11 +321,13 @@ const TakeTestComponent = (props) => {
                 Calculator
               </span>
             </div>
+
             <div
               className="d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
               style={{
                 width: "5rem",
                 height: "4rem",
+                cursor: "pointer",
               }}
             >
               <TakeNotesIcon />
@@ -335,6 +340,7 @@ const TakeTestComponent = (props) => {
                 Take Notes
               </span>
             </div>
+
             <div
               className="d-flex justify-content-center align-items-center"
               style={{
@@ -446,32 +452,56 @@ const TakeTestComponent = (props) => {
       >
         <div className="d-flex flex-wrap justify-content-start align-items-end gap-3">
           <div
-            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded-lg text-14 font-semibold text-color-primary cursor-pointer"
-            style={{ border: "1px solid #007C23" }}
-            onClick={() => props.confidenceMeter("I KNOW IT")}
+            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded-lg text-14 text-color-primary cursor-pointer"
+            style={
+              active === 1
+                ? { border: "1px solid #007C23" }
+                : { border: "1px solid #F1F1F1" }
+            }
+            onClick={() => {
+              props.confidenceMeter("I KNOW IT"), setActive(1);
+            }}
           >
-            <IKnowItIcon /> I KNOW IT
+            {active === 1 ? <IKnowItIcon /> : <ThinkSoIcon />} I KNOW IT
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
-            style={{ border: "1px solid #F1F1F1" }}
-            onClick={() => props.confidenceMeter("THINK SO")}
+            style={
+              active === 2
+                ? { border: "1px solid #007C23" }
+                : { border: "1px solid #F1F1F1" }
+            }
+            onClick={() => {
+              props.confidenceMeter("THINK SO"), setActive(2);
+            }}
           >
-            <ThinkSoIcon /> THINK SO
+            {active === 2 ? <IKnowItIcon /> : <ThinkSoIcon />} THINK SO
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
-            style={{ border: "1px solid #F1F1F1" }}
-            onClick={() => props.confidenceMeter("NOT SURE")}
+            style={
+              active === 3
+                ? { border: "1px solid #007C23" }
+                : { border: "1px solid #F1F1F1" }
+            }
+            onClick={() => {
+              props.confidenceMeter("NOT SURE"), setActive(3);
+            }}
           >
-            <NotSureIcon /> NOT SURE
+            {active === 3 ? <IKnowItIcon /> : <NotSureIcon />} NOT SURE
           </div>
           <div
             className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
-            style={{ border: "1px solid #F1F1F1" }}
-            onClick={() => props.confidenceMeter("NO IDEA")}
+            style={
+              active === 4
+                ? { border: "1px solid #007C23" }
+                : { border: "1px solid #F1F1F1" }
+            }
+            onClick={() => {
+              props.confidenceMeter("NO IDEA"), setActive(4);
+            }}
           >
-            <NoIdeaIcon /> NO IDEA
+            {active === 4 ? <IKnowItIcon /> : <NoIdeaIcon />} NO IDEA
           </div>
         </div>
         <div className="d-flex gap-3">

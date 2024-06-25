@@ -17,6 +17,7 @@ export default function TakeTest() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.tests);
+  // console.log(test);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion =
@@ -178,13 +179,13 @@ export default function TakeTest() {
     <TakeTestComponent
       testID={testID}
       questionsLength={
-        test.questions_reference && test.questions_reference.length
+        test?.questions_reference && test.questions_reference.length
       }
-      dateAndtime={test.questions_reference && test.createdAt}
+      dateAndtime={test?.questions_reference && test.createdAt}
       subDomain={
-        test.questions_reference && test.subdomain_reference.sub_domain_name
+        test?.questions_reference && test?.subdomain_reference?.sub_domain_name
       }
-      timeAlloted={test.questions_reference && test.duration_in_mins}
+      timeAlloted={test?.questions_reference && test?.duration_in_mins}
       currentQuestionIndex={currentQuestionIndex}
       currentQuestion={currentQuestion}
       missingQuestions={getMissingQuestionsCount}

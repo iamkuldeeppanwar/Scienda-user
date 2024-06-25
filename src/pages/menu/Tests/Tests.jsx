@@ -38,15 +38,16 @@ const TestCard = ({
   };
   const closeTestStartModal = () => setTestStartModalShow(false);
 
-  function convertMinutesToHHMM(minutes) {
+  const formatDuration = (minutes) => {
     const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
+    const remainingMinutes = minutes % 60;
 
-    const paddedHours = String(hours).padStart(2, "0");
-    const paddedMinutes = String(mins).padStart(2, "0");
+    if (hours === 0) {
+      return `${remainingMinutes}min`;
+    }
 
-    return `${paddedHours}h:${paddedMinutes}min`;
-  }
+    return `${hours}h : ${remainingMinutes}min`;
+  };
 
   return (
     <div
@@ -66,7 +67,7 @@ const TestCard = ({
             <TimerIcon /> Time Allotted:
           </div>
           <div className="text-12 font-light">
-            {convertMinutesToHHMM(timeAlloted)}
+            {formatDuration(timeAlloted)}
           </div>
         </div>
         {completedOn && (
@@ -149,11 +150,11 @@ const Tests = () => {
           {!testsLoading ? (
             tests.map((test, idx) => (
               <TestCard
-                key={test._id}
-                testId={test._id}
-                testName={test.test_name}
-                timeAlloted={test.duration_in_mins}
-                noOfQuestions={test.questions_reference.length}
+                key={test?._id}
+                testId={test?._id}
+                testName={test?.test_name}
+                timeAlloted={test?.duration_in_mins}
+                noOfQuestions={test?.questions_reference.length}
                 info="Test your knowledge with this MCQ."
                 btnText="Take Exam"
                 isActivePlan={user.is_active_plan}

@@ -15,6 +15,7 @@ import ticketSlice from "./ticketSlice";
 import subAdminSlice from "./subAdminSlice";
 import TestSlice from "./TestSlice";
 import reportSlice from "./reportSlice";
+import proficiencySlice from "./proficiencySlice";
 
 export default configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export default configureStore({
     plan: planSlice,
     tests: TestSlice,
     reports: reportSlice,
+    proficiency: proficiencySlice,
     url: getURLSlice,
     query: querySlice,
     page: pageSlice,
