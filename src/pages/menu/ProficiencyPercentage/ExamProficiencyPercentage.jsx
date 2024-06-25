@@ -79,17 +79,19 @@ const ExamProficiencyPercentage = () => {
       </div>
 
       <Stack gap={4} className="px-5 py-5">
-        {!loading ? (
-          proficiency?.topic_wise?.map((data, idx) => {
-            return (
-              <div className="d-flex gap-3" key={idx}>
+        <div className="d-flex flex-wrap gap-3 w-100">
+          {!loading ? (
+            proficiency?.topic_wise?.map((data, idx) => {
+              return (
                 <div
-                  className="flex-1 bg-white rounded-xl p-3"
+                  key={idx}
+                  className=" bg-white rounded-xl p-3"
                   style={{
                     border: "0.82px solid #F3F3F3",
+                    width: "540px",
                   }}
                 >
-                  <div className="d-flex justify-content-between align-items-center gap-3">
+                  <div className="d-flex justify-content-between flex-wrap align-items-center gap-3 px-3">
                     <p
                       className="my-0 text-16 font-normal"
                       style={{ minWidth: "max-content" }}
@@ -101,7 +103,11 @@ const ExamProficiencyPercentage = () => {
                     </p>
                     <ProficiencyProgressBar
                       labelColor="black"
-                      current={data?.percent}
+                      current={
+                        data?.percent !== 0
+                          ? parseFloat(data?.percent).toFixed(2)
+                          : 0
+                      }
                     />
                   </div>
                   <hr />
@@ -125,66 +131,21 @@ const ExamProficiencyPercentage = () => {
                           {subTopic?.subtopic}
                         </div>
                         <div className="text-14 font-bold text-color-primary">
-                          {subTopic?.percent}%
+                          {parseFloat(subTopic?.percent).toFixed(2)}%
                         </div>
                       </div>
                     ))}
                   </Stack>
                 </div>
+              );
+            })
+          ) : (
+            <div className="d-flex justify-content-center">
+              <Spinner size="sm" />
+            </div>
+          )}
 
-                {/* <div
-          className="flex-1 bg-white rounded-xl p-3"
-          style={{
-            border: "0.82px solid #F3F3F3",
-          }}
-        >
-          <div className="d-flex justify-content-between align-items-center gap-3">
-            <p
-              className="my-0 text-16 font-normal"
-              style={{ minWidth: "max-content" }}
-            >
-              Topic Name:{" "}
-              <span className="font-medium text-color-primary">
-                Robotics Engineering
-              </span>
-            </p>
-            <ProficiencyProgressBar labelColor="black" current={55} />
-          </div>
-          <hr />
-          <p className="text-14 font-semibold">Subtopics Proficiency:</p>
-          <hr />
-          <Stack gap={2}>
-            {[12, 4, 8, 4, 2].map((percentage, idx) => (
-              <div
-                key={idx}
-                className="d-flex justify-content-between align-items-center"
-              >
-                <div
-                  className="py-2 px-3 w-75"
-                  style={{
-                    borderLeft: "0.82px solid #3538CD",
-                    background: "#F9FAFB",
-                  }}
-                >
-                  Subtopic 1
-                </div>
-                <div className="text-14 font-bold text-color-primary">
-                  {percentage}%
-                </div>
-              </div>
-            ))}
-          </Stack>
-        </div> */}
-              </div>
-            );
-          })
-        ) : (
-          <div className="d-flex justify-content-center">
-            <Spinner size="sm" />
-          </div>
-        )}
-
-        {/* <div className="d-flex gap-3">
+          {/* <div className="d-flex gap-3">
           <div
             className="flex-1 bg-white rounded-xl p-3"
             style={{
@@ -273,6 +234,7 @@ const ExamProficiencyPercentage = () => {
             </Stack>
           </div>
         </div> */}
+        </div>
       </Stack>
     </div>
   );
