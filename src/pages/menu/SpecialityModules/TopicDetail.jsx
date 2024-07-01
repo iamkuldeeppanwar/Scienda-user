@@ -30,7 +30,7 @@ const TopicDetail = () => {
     }
   };
 
-  console.log(speciality);
+  // console.log(speciality);
 
   return (
     <>
@@ -44,8 +44,8 @@ const TopicDetail = () => {
             <Stack direction="horizontal" gap={2} className="align-items-start">
               <div>
                 <Carousel className="d-flex justify-content-center" fade>
-                  {speciality?.images.length > 0 ? (
-                    speciality?.images.map((img, idx) => {
+                  {speciality?.images?.length > 0 ? (
+                    speciality?.images?.map((img, idx) => {
                       return (
                         <Carousel.Item key={idx}>
                           <img
