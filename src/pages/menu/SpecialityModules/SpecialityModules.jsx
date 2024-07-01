@@ -146,7 +146,7 @@ const SpecialityModules = () => {
         </Stack>
       </div>
 
-      <div className="d-flex flex-wrap row-gap-3 gap-2">
+      <div className="d-flex flex-wrap row-gap-3 gap-2 w-100">
         {!loading ? (
           specialities?.map((data) => (
             <TopicCard
@@ -165,13 +165,13 @@ const SpecialityModules = () => {
         )}
       </div>
 
-      <h5 className="text-22 font-medium py-3">Topic Completed</h5>
+      {/* <h5 className="text-22 font-medium py-3">Topic Completed</h5>
 
       <div className="d-flex flex-wrap row-gap-3 justify-content-between">
         {[...Array(4)].map((num, idx) => (
           <TopicCard key={idx} topicNumber={idx + 9} />
         ))}
-      </div>
+      </div> */}
     </ModuleLayout>
   );
 };
