@@ -44,8 +44,8 @@ const TopicDetail = () => {
             <Stack direction="horizontal" gap={2} className="align-items-start">
               <div>
                 <Carousel className="d-flex justify-content-center" fade>
-                  {speciality.images.length > 0 ? (
-                    speciality.images.map((img, idx) => {
+                  {speciality?.images.length > 0 ? (
+                    speciality?.images.map((img, idx) => {
                       return (
                         <Carousel.Item key={idx}>
                           <img
@@ -146,7 +146,7 @@ const TopicDetail = () => {
               {speciality?.subtopics?.map((subTopics, idx) => {
                 return (
                   <>
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between" key={idx}>
                       <p className="m-0 text-14 font-normal">
                         <span className="font-semibold">
                           Subtopic {idx + 1}:{" "}
