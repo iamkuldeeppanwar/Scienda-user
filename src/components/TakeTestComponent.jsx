@@ -21,6 +21,7 @@ import {
 } from "./icons/take-test-icons";
 import { convertToTwoDigits } from "../lib/TakeTest";
 import { Button, Carousel } from "react-bootstrap";
+import CreateMarkup from "../Utils/CreateMarkup";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -390,10 +391,16 @@ const TakeTestComponent = (props) => {
               overflowX: "hidden",
             }}
           >
-            {currentQuestion && currentQuestion.question}
+            {currentQuestion && (
+              <CreateMarkup content={currentQuestion?.question} />
+            )}
           </p>
           <div>
-            {currentQuestion && currentQuestion.explanation.description}
+            {currentQuestion && (
+              <CreateMarkup
+                content={currentQuestion?.explanation?.description}
+              />
+            )}
           </div>
           <Carousel className="d-flex justify-content-center" fade>
             {currentQuestion && currentQuestion.images.length > 0 ? (
