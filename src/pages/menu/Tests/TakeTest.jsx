@@ -30,8 +30,11 @@ export default function TakeTest() {
   }, []);
 
   useEffect(() => {
-    if (test.questions_reference) {
-      setQuestions(test.questions_reference);
+    if (test?.questions_reference) {
+      setQuestions(test?.questions_reference);
+    }
+    if (localStorage.getItem(testID)) {
+      setQuestions(JSON.parse(localStorage.getItem(testID)));
     }
   }, [test]);
 
@@ -72,6 +75,7 @@ export default function TakeTest() {
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
+    localStorage.setItem(testID, JSON.stringify(updatedQuestions));
   };
 
   const toggleQuestionFlag = () => {
@@ -86,6 +90,7 @@ export default function TakeTest() {
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
+    localStorage.setItem(testID, JSON.stringify(updatedQuestions));
   };
 
   const confidenceLevel = (level) => {
@@ -98,10 +103,10 @@ export default function TakeTest() {
       };
 
       updatedQuestion.confidence = level;
-
       return updatedQuestion;
     });
     setQuestions(updatedQuestions);
+    localStorage.setItem(testID, JSON.stringify(updatedQuestions));
   };
 
   useEffect(() => {

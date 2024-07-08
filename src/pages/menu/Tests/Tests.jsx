@@ -148,18 +148,20 @@ const Tests = () => {
         <h4 className="text-22 font-semibold">Exams</h4>
         <div className="d-flex flex-wrap gap-3">
           {!testsLoading ? (
-            tests.map((test, idx) => (
-              <TestCard
-                key={test?._id}
-                testId={test?._id}
-                testName={test?.test_name}
-                timeAlloted={test?.duration_in_mins}
-                noOfQuestions={test?.questions_reference.length}
-                info="Test your knowledge with this MCQ."
-                btnText="Take Exam"
-                isActivePlan={user.is_active_plan}
-              />
-            ))
+            tests
+              ?.filter((test) => test?.status === "Active")
+              ?.map((test, idx) => (
+                <TestCard
+                  key={test?._id}
+                  testId={test?._id}
+                  testName={test?.test_name}
+                  timeAlloted={test?.duration_in_mins}
+                  noOfQuestions={test?.questions_reference.length}
+                  info="Test your knowledge with this MCQ."
+                  btnText="Take Exam"
+                  isActivePlan={user.is_active_plan}
+                />
+              ))
           ) : (
             <div className="d-flex justify-content-center w-100">
               <Spinner size="sm" />

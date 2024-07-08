@@ -116,8 +116,22 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
 };
 
 const TakeTestComponent = (props) => {
-  const currentQuestion = props.currentQuestion;
-  const [active, setActive] = useState(0);
+  const currentQuestion = props?.currentQuestion;
+  const [active, setActive] = useState(1);
+
+  useEffect(() => {
+    if (currentQuestion?.confidence === "I KNOW IT") {
+      setActive(1);
+    } else if (currentQuestion?.confidence === "THINK SO") {
+      setActive(2);
+    } else if (currentQuestion?.confidence === "NOT SURE") {
+      setActive(3);
+    } else if (currentQuestion?.confidence === "NO IDEA") {
+      setActive(4);
+    } else {
+      setActive(1);
+    }
+  }, [props]);
 
   function convertMinutesToHHMM(minutes) {
     const hours = Math.floor(minutes / 60);
@@ -129,60 +143,67 @@ const TakeTestComponent = (props) => {
     return `${paddedHours}h:${paddedMinutes}min`;
   }
 
-  // const localStorageKey = "timerTimeLeft";
+  const localStorageKey = "timerTimeLeft";
 
-  // // Function to get the initial time left from localStorage or props
-  // const getInitialTime = () => {
-  //   const savedTime = localStorage.getItem(localStorageKey);
+  // Function to get the initial time left from localStorage or props
+  const getInitialTime = () => {
+    const savedTime = localStorage.getItem(localStorageKey);
 
-  //   if (savedTime && !isNaN(savedTime)) {
-  //     const parsedTime = parseInt(savedTime, 10);
-  //     return parsedTime;
-  //   }
+    if (savedTime && !isNaN(savedTime)) {
+      const parsedTime = parseInt(savedTime, 10);
+      return parsedTime;
+    }
 
-  //   if (props.timeAlloted && !isNaN(props.timeAlloted)) {
-  //     const initialTime = props.timeAlloted * 60;
-  //     return initialTime;
-  //   }
+    if (props.timeAlloted && !isNaN(props.timeAlloted)) {
+      const initialTime = props.timeAlloted * 60;
+      return initialTime;
+    }
 
-  //   return 0; // Fallback to 0 if no valid time is provided
-  // };
+    return 0;
+  };
 
-  // const [timeLeft, setTimeLeft] = useState(getInitialTime());
+  const [timeLeft, setTimeLeft] = useState(getInitialTime());
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setTimeLeft((prevTime) => {
-  //       if (prevTime <= 1) {
-  //         clearInterval(intervalId);
-  //         localStorage.removeItem(localStorageKey);
-  //         return 0;
-  //       }
-  //       const newTime = prevTime - 1;
-  //       localStorage.setItem(localStorageKey, newTime);
-  //       return newTime;
-  //     });
-  //   }, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(intervalId);
+          localStorage.removeItem(localStorageKey);
+          return 0;
+        }
+        const newTime = prevTime - 1;
+        if (newTime !== NaN) {
+          localStorage.setItem(localStorageKey, newTime);
+        }
+        return newTime;
+      });
+    }, 1000);
 
-  //   // Clean up the interval on component unmount
-  //   return () => clearInterval(intervalId);
-  // }, []);
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
-  // // Function to format the time left
-  // const formatTime = (seconds) => {
-  //   const hours = Math.floor(seconds / 3600);
-  //   const minutes = Math.floor((seconds % 3600) / 60);
-  //   const remainingSeconds = seconds % 60;
-  //   return `${hours < 10 ? "0" : ""}${hours}:${
-  //     minutes < 10 ? "0" : ""
-  //   }${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-  // };
+  // Function to format the time left
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours < 10 ? "0" : ""}${hours}:${
+      minutes < 10 ? "0" : ""
+    }${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
-  // useEffect(() => {
-  //   const initialTime = props.timeAlloted * 60;
-  //   setTimeLeft(initialTime);
-  //   localStorage.setItem(localStorageKey, initialTime);
-  // }, [props.timeAlloted]);
+  useEffect(() => {
+    const initialTime = props?.timeAlloted * 60;
+    setTimeLeft(initialTime);
+    if (
+      !localStorage.getItem(localStorageKey) &&
+      localStorage.getItem(localStorageKey) !== NaN
+    ) {
+      localStorage.setItem(localStorageKey, initialTime);
+    }
+  }, [props?.timeAlloted]);
 
   // ========= current date and time ==========
   const formatDate = (date) => {
@@ -199,8 +220,6 @@ const TakeTestComponent = (props) => {
 
   const now = new Date();
   const formattedDate = formatDate(now);
-
-  // console.log("current question", currentQuestion);
 
   return (
     <div>
@@ -260,7 +279,7 @@ const TakeTestComponent = (props) => {
                   className="text-12 font-medium"
                   style={{ color: "#FF3D00" }}
                 >
-                  {/* {formatTime(timeLeft)} */}
+                  {formatTime(timeLeft)}
                 </span>
               </p>
             </div>
@@ -420,13 +439,7 @@ const TakeTestComponent = (props) => {
                 );
               })
             ) : (
-              <img
-                className="w-100"
-                // src={`https://creative-story.s3.amazonaws.com${
-                //   currentQuestion && currentQuestion.images[0]
-                // }`}
-                alt="take-test-question"
-              />
+              <></>
             )}
           </Carousel>
 
