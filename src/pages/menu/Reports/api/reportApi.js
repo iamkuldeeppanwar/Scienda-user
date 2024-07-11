@@ -51,4 +51,28 @@ const getReportConfidenceGraph = async (token) => {
   });
 };
 
-export { getReportGraph, getReportPieGraph, getReportConfidenceGraph };
+const getReportQuestionGraph = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userData = await axiosInstance.get(
+        "/api/user/get-user-question-data",
+        {
+          headers,
+        }
+      );
+      resolve(userData.data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export {
+  getReportGraph,
+  getReportPieGraph,
+  getReportConfidenceGraph,
+  getReportQuestionGraph,
+};
