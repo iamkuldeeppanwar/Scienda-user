@@ -184,8 +184,8 @@ const Reports = () => {
           </Col>
         </Row>
 
-        <Row className="mt-4">
-          <Col md={6}>
+        <Row className="mt-4 g-3">
+          <Col>
             <Card>
               <Card.Body>
                 <h4
@@ -238,7 +238,7 @@ const Reports = () => {
                       color: "rgba(97, 114, 243, 1)",
                     }}
                   >
-                    No. Of Questions
+                    No. Of Questions Attempted
                   </h4>
                   <BarChart
                     sx={{ marginLeft: "-50px" }}
