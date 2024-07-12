@@ -39,7 +39,9 @@ const Tickets = () => {
   const [loading, setLoading] = useState(false);
   const [ticketLoader, setTicketLoader] = useState(false);
   const [prof, setProf] = useState("");
-  const [topicName, setTopicName] = useState("");
+  const [topicName, setTopicName] = useState(
+    topics?.length > 0 ? topics[0]._id : ""
+  );
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [ticketImage, setTicketImage] = useState("");
@@ -108,7 +110,7 @@ const Tickets = () => {
     e.preventDefault();
 
     const createTicket = {
-      to: prof,
+      to: subAdmins[0]?._id,
       subject: subject,
       description: description,
       topic: topicName,
