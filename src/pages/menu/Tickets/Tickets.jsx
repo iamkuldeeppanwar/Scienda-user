@@ -39,9 +39,7 @@ const Tickets = () => {
   const [loading, setLoading] = useState(false);
   const [ticketLoader, setTicketLoader] = useState(false);
   const [prof, setProf] = useState("");
-  const [topicName, setTopicName] = useState(
-    topics?.length > 0 ? topics[0]._id : ""
-  );
+  const [topicName, setTopicName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [ticketImage, setTicketImage] = useState("");
@@ -113,7 +111,7 @@ const Tickets = () => {
       to: subAdmins[0]?._id,
       subject: subject,
       description: description,
-      topic: topicName,
+      topic: !topicName ? topics[0]?._id : topicName,
       image: ticketImage,
     };
     // console.log(createTicket);
@@ -138,7 +136,7 @@ const Tickets = () => {
     });
   };
 
-  // console.log(subAdmins);
+  // console.log(topics);
 
   return (
     <ModuleLayout>
