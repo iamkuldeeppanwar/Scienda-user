@@ -68,7 +68,7 @@ function CreateTicketModal(props) {
       to: prof,
       subject: subject,
       description: description,
-      topic: topicName,
+      topic: !topicName ? topics[0]?._id : topicName,
       image: ticketImage,
     };
     try {
@@ -82,6 +82,8 @@ function CreateTicketModal(props) {
       setLoading(false);
     }
   };
+
+  // console.log(topics);
 
   return (
     <Modal
@@ -108,10 +110,10 @@ function CreateTicketModal(props) {
               >
                 <option disabled>Select topic</option>
                 {subAdmins.length > 0 &&
-                  subAdmins.map((data) => {
+                  subAdmins?.map((data) => {
                     return (
-                      <option value={data._id} key={data._id}>
-                        {data.name}
+                      <option value={data?._id} key={data?._id}>
+                        {data?.name}
                       </option>
                     );
                   })}
@@ -128,10 +130,10 @@ function CreateTicketModal(props) {
               >
                 <option disabled>Select topic</option>
                 {topics.length > 0 &&
-                  topics.map((topic) => {
+                  topics?.map((topic) => {
                     return (
-                      <option value={topic._id} key={topic._id}>
-                        {topic.topic_name}
+                      <option value={topic?._id} key={topic?._id}>
+                        {topic?.topic_name}
                       </option>
                     );
                   })}
@@ -278,7 +280,7 @@ const ViewTickets = () => {
 
         <Stack gap={3}>
           {!ticketLoader ? (
-            tickets.map((ticket, idx) => (
+            tickets?.map((ticket, idx) => (
               <div
                 key={idx}
                 className="pb-2 pt-3 px-4 bg-white rounded-xl d-flex flex-column cursor-pointer"
@@ -286,17 +288,17 @@ const ViewTickets = () => {
                   border: "1px solid #EFEFEF",
                   boxShadow: "0px 4px 12px 0px #0000000A",
                 }}
-                onClick={() => navigate(`/menu/tickets/chat/${ticket._id}`)}
+                onClick={() => navigate(`/menu/tickets/chat/${ticket?._id}`)}
               >
                 <div className="d-flex justify-content-between align-items-center">
                   <p
                     className="text-14 font-semibold"
                     style={{ color: "#525252" }}
                   >
-                    {ticket.topic.topic_name}
+                    {ticket?.topic?.topic_name}
                   </p>
 
-                  {ticket.status === "Closed" && (
+                  {ticket?.status === "Closed" && (
                     <p className="text-color-secondary text-12 font-normal">
                       Issue Resolved{" "}
                       <span>
@@ -305,7 +307,7 @@ const ViewTickets = () => {
                     </p>
                   )}
 
-                  {ticket.status === "Pending" && (
+                  {ticket?.status === "Pending" && (
                     <p className="text-color-progress text-12 font-normal">
                       In Progress{" "}
                       <span>
@@ -314,7 +316,7 @@ const ViewTickets = () => {
                     </p>
                   )}
 
-                  {ticket.status === "Open" && (
+                  {ticket?.status === "Open" && (
                     <p className="text-secondary text-12 font-normal">
                       Issue Not Resolved{" "}
                       <span>
@@ -328,13 +330,13 @@ const ViewTickets = () => {
                     className="text-14 font-normal"
                     style={{ color: "#525252" }}
                   >
-                    {ticket.description}
+                    {ticket?.description}
                   </p>
                   <p
                     className="text-12 font-normal"
                     style={{ color: "#475467" }}
                   >
-                    {formatDate(ticket.createdAt.split("T")[0])}
+                    {formatDate(ticket?.createdAt.split("T")[0])}
                   </p>
                 </div>
               </div>
