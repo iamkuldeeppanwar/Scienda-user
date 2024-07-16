@@ -40,16 +40,14 @@ const TicketChat = () => {
   }, []);
 
   useEffect(() => {
-    if (ticket._id && socket) {
-      socket.emit("login", { _id: ticket._id });
+    if (ticket?._id && socket) {
+      socket.emit("login", { _id: ticket?._id });
     }
   }, [socket, ticket]);
 
   useEffect(() => {
     if (!socket) return;
     socket.on("receiveMessage", (message) => {
-      // setChat(message);
-      console.log(message);
       getTicket();
     });
     return () => socket.off("receiveMessage");
@@ -93,8 +91,8 @@ const TicketChat = () => {
       await postMessage(token, { message: chat }, ticketId);
       socket.emit("sendMessage", {
         chat,
-        to: ticket.to,
-        from: user._id,
+        to: ticket?.to,
+        from: user?._id,
         ticket: ticketId,
       });
       setChat("");
@@ -117,7 +115,7 @@ const TicketChat = () => {
               className="text-14 font-semibold"
               style={{ color: "#525252" }}
             >
-              {ticket.subject && ticket.topic.topic_name}
+              {ticket?.subject && ticket?.topic?.topic_name}
             </span>
           </p>
           <p className="text-16 font-medium">
@@ -126,7 +124,7 @@ const TicketChat = () => {
               className="text-14 font-semibold"
               style={{ color: "#525252" }}
             >
-              {ticket.subject && ticket.subject}
+              {ticket?.subject && ticket?.subject}
             </span>
           </p>
         </div>
@@ -136,7 +134,7 @@ const TicketChat = () => {
             <p className="my-0 font-semibold">
               Raised On:{" "}
               <span className="text-color-secondary">
-                {ticket.subject && formatDateTime(ticket.createdAt)}
+                {ticket?.subject && formatDateTime(ticket?.createdAt)}
               </span>
             </p>
           </div>
@@ -151,27 +149,27 @@ const TicketChat = () => {
               className="text-14 font-normal ms-2"
               style={{ color: "#525252" }}
             >
-              {ticket.subject && ticket.description}
+              {ticket?.subject && ticket?.description}
             </span>
           </p>
         </div>
 
         <div>
-          {ticket.subject && ticket.status === "Closed" && (
+          {ticket?.subject && ticket?.status === "Closed" && (
             <p className="text-end text-12 font-normal text-color-progress">
-              {ticket.status} <IssueResolvedIcon />
+              {ticket?.status} <IssueResolvedIcon />
             </p>
           )}
-          {ticket.subject && ticket.status === "Open" && (
+          {ticket?.subject && ticket?.status === "Open" && (
             <div>
               <p className="text-end text-12 font-normal text-color-progress">
-                {ticket.status} <InProgressIcon />
+                {ticket?.status} <InProgressIcon />
               </p>
             </div>
           )}
-          {ticket.subject && ticket.status === "Pending" && (
+          {ticket?.subject && ticket?.status === "Pending" && (
             <p className="text-end text-12 font-normal text-color-progress">
-              {ticket.status} <UnResolvedIcon />
+              {ticket?.status} <UnResolvedIcon />
             </p>
           )}
         </div>
@@ -186,31 +184,39 @@ const TicketChat = () => {
           }}
           ref={chatContainerRef}
         >
-          {ticket.status && ticket.chats.length > 0 ? (
-            ticket.chats.map((data) => {
+          {ticket?.status && ticket?.chats?.length > 0 ? (
+            ticket?.chats?.map((data) => {
               return (
                 <div
+                  key={data?._id}
                   className={`${
-                    data.from === user._id
+                    data?.from === user?._id
                       ? "d-flex flex-row-reverse"
                       : "d-flex flex-row-start"
                   } mt-3`}
                 >
-                  <div
-                    className="me-2"
-                    // style={{ width: "35%", minWidth: "24rem" }}
-                  >
+                  <div className="me-2">
                     <p
                       className="my-0 p-4"
-                      style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 400,
-                        backgroundColor: "#EEEEEE",
-                        borderRadius: "22px",
-                        borderTopRightRadius: "4px",
-                      }}
+                      style={
+                        data?.from === user?._id
+                          ? {
+                              borderTopRightRadius: "4px",
+                              fontSize: "0.75rem",
+                              fontWeight: 400,
+                              backgroundColor: "#EEEEEE",
+                              borderRadius: "22px",
+                            }
+                          : {
+                              borderTopLeftRadius: "4px",
+                              fontSize: "0.75rem",
+                              fontWeight: 400,
+                              backgroundColor: "#EEEEEE",
+                              borderRadius: "22px",
+                            }
+                      }
                     >
-                      {data.message}
+                      {data?.message}
                     </p>
                     <p
                       className="my-1 text-end"
@@ -222,7 +228,7 @@ const TicketChat = () => {
                     >
                       Sent at :{" "}
                       <span style={{ fontWeight: 300 }}>
-                        {formatDateTime(data.date)}
+                        {formatDateTime(data?.date)}
                       </span>
                     </p>
                   </div>
@@ -235,7 +241,7 @@ const TicketChat = () => {
         </div>
       </div>
       <div className=" rounded-xl">
-        {ticket && ticket.status === "Open" && (
+        {ticket && ticket?.status === "Open" && (
           <Form onSubmit={handleChat}>
             <Form.Group className="px-4 mx-auto">
               <Stack direction="horizontal" gap={3}>
@@ -269,45 +275,6 @@ const TicketChat = () => {
           </Form>
         )}
       </div>
-
-      {/* <section className="sticky-bottom px-4 py-3 z-3">
-        <div className="bg-white py-3 rounded-xl">
-          {ticket && ticket.status === "Open" && (
-            <Form onSubmit={handleChat}>
-              <Form.Group className="w-75 mx-auto">
-                <Stack direction="horizontal" gap={3}>
-                  <Form.Control
-                    // disabled={currentTicket[0].status === 'Closed'}
-                    type="text"
-                    value={chat}
-                    onChange={(e) => setChat(e.target.value)}
-                    placeholder="Write something here..."
-                    className="py-2 px-3"
-                    style={{
-                      border: "1px solid #8098F9",
-                    }}
-                  />
-
-                  <Button
-                    type="submit"
-                    disabled={loading}
-                    style={{
-                      backgroundColor: "var(--primary-color)",
-                      border: "none",
-                      minWidth: "max-content",
-                      padding: "0.5rem 0.75rem",
-                      borderRadius: "0.75rem",
-                    }}
-                  >
-                    <span className="me-2">Send</span>
-                    <FlyingArrowIcon />
-                  </Button>
-                </Stack>
-              </Form.Group>
-            </Form>
-          )}
-        </div>
-      </section> */}
     </div>
   );
 };

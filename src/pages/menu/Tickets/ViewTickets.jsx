@@ -24,7 +24,7 @@ function CreateTicketModal(props) {
   const token = localStorage.getItem("token");
   const { subAdmins } = useSelector((state) => state.subAdmin);
   const { topics } = useSelector((state) => state.topics);
-  const [prof, setProf] = useState("");
+  // const [prof, setProf] = useState("");
   const [topicName, setTopicName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
@@ -51,7 +51,7 @@ function CreateTicketModal(props) {
 
   useEffect(() => {
     getAllTickets();
-  }, [dispatch, token]);
+  }, [dispatch, token, loading]);
 
   const getAllTickets = async () => {
     try {
@@ -65,7 +65,7 @@ function CreateTicketModal(props) {
   const createTicketHandler = async (e) => {
     e.preventDefault();
     const createTicket = {
-      to: prof,
+      to: subAdmins[0]?._id,
       subject: subject,
       description: description,
       topic: !topicName ? topics[0]?._id : topicName,
@@ -82,8 +82,6 @@ function CreateTicketModal(props) {
       setLoading(false);
     }
   };
-
-  // console.log(topics);
 
   return (
     <Modal
@@ -102,6 +100,15 @@ function CreateTicketModal(props) {
           <div className="ticket-form-modal">
             <Form.Group className="text-14 font-medium mt-2">
               <Form.Label>To</Form.Label>
+              <Form.Control
+                disabled
+                type="text"
+                className="text-12 font-light"
+                value={subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name}
+                placeholder="Enter subject"
+                required
+              />
+              {/* <Form.Label>To</Form.Label>
               <Form.Select
                 onChange={(e) => setProf(e.target.value)}
                 className="text-14 font-medium"
@@ -117,7 +124,7 @@ function CreateTicketModal(props) {
                       </option>
                     );
                   })}
-              </Form.Select>
+              </Form.Select> */}
             </Form.Group>
 
             <Form.Group className="text-14 font-medium mt-2">

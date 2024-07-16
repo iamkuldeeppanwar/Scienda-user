@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { Link, useNavigate } from "react-router-dom";
-
 import "./Tickets.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
 import {
@@ -12,7 +11,6 @@ import {
   RightArrowOutlinedIcon,
   UnResolvedIcon,
 } from "./components/tickets-icons";
-// import CreateTicketSuccessModal from "./components/CreateTicketSuccessModal";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { getError } from "../../../Utils/error";
@@ -35,7 +33,6 @@ const Tickets = () => {
   const { topics } = useSelector((state) => state.topics);
   const { subAdmins } = useSelector((state) => state.subAdmin);
   const { tickets } = useSelector((state) => state.tickets);
-
   const [loading, setLoading] = useState(false);
   const [ticketLoader, setTicketLoader] = useState(false);
   const [prof, setProf] = useState("");
@@ -114,7 +111,7 @@ const Tickets = () => {
       topic: !topicName ? topics[0]?._id : topicName,
       image: ticketImage,
     };
-    // console.log(createTicket);
+
     try {
       setLoading(true);
       await createTickets(createTicket, token);
@@ -135,8 +132,6 @@ const Tickets = () => {
       year: "numeric", // "2024"
     });
   };
-
-  // console.log(topics);
 
   return (
     <ModuleLayout>
@@ -161,10 +156,10 @@ const Tickets = () => {
         <div className="d-flex justify-content-center flex-wrap gap-2">
           {!ticketLoader ? (
             tickets.length > 0 &&
-            tickets.slice(0, 4).map((data) => {
+            tickets.slice(0, 4)?.map((data) => {
               return (
                 <div
-                  key={data._id}
+                  key={data?._id}
                   className="px-2 pt-2 rounded-xl bg-white d-flex flex-column justify-content-between"
                   style={{
                     border: "1px solid #EFEFEF",
@@ -173,7 +168,7 @@ const Tickets = () => {
                     height: "151px",
                     cursor: "pointer",
                   }}
-                  onClick={() => navigate(`/menu/tickets/chat/${data._id}`)}
+                  onClick={() => navigate(`/menu/tickets/chat/${data?._id}`)}
                 >
                   <p
                     className="text-center text-12 font-normal"
@@ -264,9 +259,9 @@ const Tickets = () => {
               >
                 <option disabled>Select topic</option>
                 {topics.length > 0 &&
-                  topics.map((topic) => {
+                  topics?.map((topic) => {
                     return (
-                      <option value={topic._id} key={topic._id}>
+                      <option value={topic?._id} key={topic?._id}>
                         {topic?.topic_name}
                       </option>
                     );

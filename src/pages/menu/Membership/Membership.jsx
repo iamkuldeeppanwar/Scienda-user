@@ -177,8 +177,6 @@ const Membership = () => {
     }
   };
 
-  // console.log(plans);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -218,10 +216,10 @@ const Membership = () => {
           </tr>
         </thead>
         <tbody className="">
-          {transactions.transactions &&
-            transactions.transactions.map((data) => {
+          {transactions?.transactions &&
+            transactions?.transactions?.map((data) => {
               return (
-                <tr key={data._id} className="border bg-white">
+                <tr key={data?._id} className="border bg-white">
                   <td className="text-center">
                     <div className="p-4">
                       <button
@@ -234,19 +232,21 @@ const Membership = () => {
                   </td>
                   <td className="text-center">
                     <div className="p-4">
-                      <span className="text-14 font-bold">{data.validity}</span>
+                      <span className="text-14 font-bold">
+                        {data?.validity}
+                      </span>
                     </div>
                   </td>
                   <td className="text-center">
                     <div className="p-4">
                       <span className="text-14 font-bold text-color-secondary">
-                        £ {data.amount}
+                        £ {data?.amount}
                       </span>
                     </div>
                   </td>
                   <td className="text-center">
                     <div className="p-4" style={{ color: "#565656" }}>
-                      {data.payment_id.slice(0, 20)}
+                      {data?.payment_id.slice(0, 20)}
                     </div>
                   </td>
                   <td className="w-15">
@@ -254,14 +254,14 @@ const Membership = () => {
                       className="w-80 mx-auto text-12 font-bold text-center px-3 py-3 rounded"
                       style={{ backgroundColor: "#DADADA96" }}
                     >
-                      {formatDate(data.createdAt)}
+                      {formatDate(data?.createdAt)}
                     </div>
                   </td>
                   <td className="text-center">
                     <div className="p-4">
                       <button className="rounded-lg px-3 py-1 border-color-primary bg-white text-color-primary text-14 font-semibold">
                         <a
-                          href={`https://creative-story.s3.amazonaws.com${data.invoice_url}`}
+                          href={`https://creative-story.s3.amazonaws.com${data?.invoice_url}`}
                         >
                           View <ViewEyeIcon2 />
                         </a>
@@ -296,7 +296,7 @@ const Membership = () => {
             >
               Plan Expiring On :{" "}
               {formatDate(
-                transactions.subscription && transactions.subscription.expiry
+                transactions?.subscription && transactions?.subscription.expiry
               )}
             </div>
           </div>
@@ -306,7 +306,8 @@ const Membership = () => {
               Active Plan :{" "}
               <span className="text-color-secondary font-bold">
                 £{" "}
-                {transactions.subscription && transactions.subscription.amount}
+                {transactions?.subscription &&
+                  transactions?.subscription.amount}
               </span>
             </div>
             <div>

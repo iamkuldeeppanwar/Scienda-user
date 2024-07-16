@@ -38,7 +38,7 @@ import PaymentFailed from "./pages/menu/Membership/PaymentFailed";
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Redirecting...</div>}>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user-signup" element={<Registration />} />

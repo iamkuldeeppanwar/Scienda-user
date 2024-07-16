@@ -29,7 +29,6 @@ const getAllSubAdmin = async () => {
 };
 
 const createTickets = async (data, token) => {
-  console.log(data);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
