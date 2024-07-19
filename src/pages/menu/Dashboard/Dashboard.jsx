@@ -27,39 +27,6 @@ const Dashboard = () => {
     }
   };
 
-  //   const tickets = [
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //     {
-  //       subject: "subject in ticket",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //       createdAt: "2024-05-31T11:56:39.213Z",
-  //     },
-  //   ];
-
   const colors = [
     "rgba(255, 160, 18, 1)",
     "rgba(44, 217, 186, 1)",
@@ -91,6 +58,8 @@ const Dashboard = () => {
       return `${minutes}min`;
     }
   };
+
+  console.log(dashboard);
 
   return (
     <ModuleLayout>
@@ -352,7 +321,7 @@ const Dashboard = () => {
                     fontWeight: 600,
                   }}
                 >
-                  Recently Created Mechanical Engineering Tests
+                  Recently Created Tests
                 </div>
                 <div
                   style={{
@@ -395,8 +364,23 @@ const Dashboard = () => {
                           <td className="text-center">
                             {test?.updatedAt.split("T")[0]}
                           </td>
-                          <td className="text-center">
-                            {formatDuration(test?.duration_in_mins)}
+                          <td
+                            className="text-center px-2 py-1"
+                            style={
+                              test?.status === "Active"
+                                ? {
+                                    borderRadius: "20px",
+                                    backgroundColor: "rgba(240, 253, 249, 1)",
+                                    color: "rgba(21, 183, 158, 1)",
+                                  }
+                                : {
+                                    borderRadius: "20px",
+                                    backgroundColor: "rgba(240, 253, 249, 1)",
+                                    color: "rgba(255, 156, 7, 1)",
+                                  }
+                            }
+                          >
+                            {test?.status}
                           </td>
                           <td className="text-center">
                             <IoEyeOutline />

@@ -64,7 +64,7 @@ const Registration = () => {
         <Card className="card_css">
           <Card.Body>
             <div className="text-center">
-              <h3 className="wlcm_text">Registeration</h3>
+              <h3 className="wlcm_text">Registration</h3>
               <p>To continue please enter your details</p>
             </div>
 
