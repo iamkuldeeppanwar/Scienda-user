@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
-
 import ModuleLayout from "../../../layout/ModuleLayout";
 import CustomDropdown from "./components/custom-dropdown";
 import SearchableDropdown from "../../../components/SearchableDropdown";
@@ -93,7 +92,11 @@ const Recharge = () => {
     try {
       setLoading(true);
       const res = await getReacharge(token);
-      navigate(`/menu/tests/take-test/${res?.testId}`);
+      if (res?.testId) {
+        navigate(`/menu/tests/take-test/${res?.testId}`);
+      } else {
+        toast.error("Test not found");
+      }
       setLoading(false);
     } catch (error) {
       toast.error(getError(error));

@@ -1,222 +1,483 @@
-
-import { useState } from 'react'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-
-import ModuleLayout from '../../../layout/ModuleLayout'
-import { ArrowLeft, ArrowRight, CalendarIcon, ThreeDotsIcon } from './components/dashboard-icons';
-import Pie from './components/Pie';
-import './Dashboard.css';
-import Calendar from './components/Calendar';
-
-const MODULE_REPORTS = [
-    { id: 1, name: 'Machine Learning', completed: 76, total: 100 },
-    { id: 2, name: 'Mechatronics', completed: 65, total: 100 },
-    { id: 3, name: 'Aerodynamics', completed: 56, total: 100 },
-]
-
-const TopicCard = ({ topicName, completedTopics, totalTopics }) => {
-    const percentage = (completedTopics / totalTopics) * 100;
-    const text = completedTopics + "/" + totalTopics;
-    return (
-        <div
-            className='d-flex justify-content-center align-items-center'
-            style={{
-                boxShadow: '0px 4px 24px 2px #8098F91A',
-                border: '0.5px solid #8098F9',
-                padding: '0.25rem 0.5rem',
-                borderRadius: '0.5rem'
-            }}
-        >
-            <h6 className='text-12 m-0 p-0 w-50'>{topicName}</h6>
-            <Pie percentage={percentage} colour="var(--secondary-color)" radius={25}>
-                {text}
-            </Pie>
-        </div>
-    )
-}
+import { Card, Col, Container, Row, Table } from "react-bootstrap";
+import ModuleLayout from "../../../layout/ModuleLayout";
+import "./Dashboard.css";
+import { useEffect, useState } from "react";
+import { getError } from "../../../Utils/error";
+import { toast } from "react-toastify";
+import { getDashboardData } from "./api/dashboardapi";
+import { TotalExamSVG, TotalQuizVG, TotalTestVG } from "./Icons";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Dashboard = () => {
-    const [selectedTopicCategory, setSelectedTopicCategory] = useState('ongoing');
-    const [showCalendar, setShowCalendar] = useState(false)
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [dashboard, setDashboard] = useState("");
 
-    return (
-        <ModuleLayout>
-            <h3 className='text-color-secondary text-22 font-semibold'>Your Dashboard</h3>
+  useEffect(() => {
+    dashboardData();
+  }, []);
 
-            <div className='w-100 d-flex justify-content-between gap-4 mt-3' style={{ marginBottom: '4.5rem'}}>
-                <div
-                    className='w-60 rounded-xl p-4 bg-white'
-                    style={{
-                        boxShadow: '0px 4px 12px 0px #8B8B8B1F'
-                    }}
-                >
-                    <div className='d-flex gap-3 mb-3' style={{ marginLeft: '1.9rem' }}>
-                        <h5
-                            onClick={() => setSelectedTopicCategory('ongoing')}
-                            className={`text-16 cursor-pointer ${selectedTopicCategory === 'ongoing' ? 'font-semibold text-color-highlighted' : 'font-light  text-color-unhighlighted'}`}
-                        >Ongoing Topics</h5>
-                        <h5
-                            onClick={() => setSelectedTopicCategory('completed')}
-                            className={`text-16 cursor-pointer ${selectedTopicCategory === 'completed' ? 'font-semibold text-color-highlighted' : 'font-light text-color-unhighlighted'}`}
-                        >Completed Topics</h5>
+  const dashboardData = async () => {
+    try {
+      const res = await getDashboardData(token, user?.subdomain);
+      setDashboard(res?.data);
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  };
+
+  //   const tickets = [
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //     {
+  //       subject: "subject in ticket",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //       createdAt: "2024-05-31T11:56:39.213Z",
+  //     },
+  //   ];
+
+  const colors = [
+    "rgba(255, 160, 18, 1)",
+    "rgba(44, 217, 186, 1)",
+    "rgba(131, 111, 255, 1)",
+    "rgba(255, 64, 125, 1)",
+    "rgba(250, 197, 21, 1)",
+    "rgba(61, 178, 255, 1)",
+  ];
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: "numeric", month: "short", year: "numeric" };
+    return date.toLocaleDateString("en-GB", options);
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    const options = { hour: "numeric", minute: "numeric", hour12: true };
+    return date.toLocaleTimeString("en-US", options).toLowerCase();
+  };
+
+  const formatDuration = (durationInMinutes) => {
+    const hours = Math.floor(durationInMinutes / 60);
+    const minutes = durationInMinutes % 60;
+
+    if (hours > 0) {
+      return `${hours}h:${minutes}min`;
+    } else {
+      return `${minutes}min`;
+    }
+  };
+
+  return (
+    <ModuleLayout>
+      <Container>
+        <h3
+          style={{ color: "rgba(33, 52, 70, 1)", fontWeight: 400 }}
+          className="text-color-secondary text-22 font-semibold"
+        >
+          Welcome Back{" "}
+          <span
+            style={{
+              fontWeight: 600,
+            }}
+          >
+            {user?.first_name + user?.last_name + " " + "!!!"}
+          </span>
+        </h3>
+
+        <Row className="g-3">
+          <Col>
+            <Card
+              style={{
+                borderLeft: "10px solid rgba(251, 168, 52, 1)",
+                borderRadius: "10px",
+              }}
+            >
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center">
+                  <TotalExamSVG />
+                  <div>
+                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                      Total Exams
                     </div>
-                    {selectedTopicCategory === 'ongoing' &&
-                        <div className='d-flex justify-content-between align-items-center gap-3'>
-                            <ArrowLeft />
-                            <TopicCard topicName={"Robotics & It’s Application"} completedTopics={2} totalTopics={20} />
-                            <TopicCard topicName={"Robotics & It’s Application"} completedTopics={2} totalTopics={20} />
-                            <TopicCard topicName={"Mechatronics & It’s use"} completedTopics={5} totalTopics={12} />
-                            <ArrowRight />
-                        </div>
-                    }
-                    {selectedTopicCategory === 'completed' &&
-                        <div className='d-flex justify-content-between align-items-center gap-3'>
-                            <ArrowLeft />
-                            <TopicCard topicName={"Robotics & It’s Application"} completedTopics={20} totalTopics={20} />
-                            <TopicCard topicName={"Robotics & It’s Application"} completedTopics={20} totalTopics={20} />
-                            <TopicCard topicName={"Mechatronics & It’s use"} completedTopics={12} totalTopics={12} />
-                            <ArrowRight />
-                        </div>
-                    }
-                </div>
-                <div
-                    className='w-40 rounded-xl p-4 bg-white'
-                    style={{
-                        boxShadow: '0px 4px 12px 0px #8B8B8B1F'
-                    }}
-                >
-                    <div className='d-flex justify-content-between'>
-                        <h5 className='text-16 text-color-highlighted'>Upcoming Events</h5>
-                        <ThreeDotsIcon />
-                    </div>
-                    <div className='d-flex justify-content-between rounded py-2 px-3 mt-3'
-                        style={{
-                            border: '0.5px solid #6DB5DE',
-                            color: '#555555'
-                        }}
+                    <div
+                      className="text-end"
+                      style={{ fontWeight: 600, fontSize: "24px" }}
                     >
-                        <p className='m-0 p-0'>Your Timeline</p>
-                        <div className='position-relative'>
-                            <div className='position-absolute'
-                                style={{
-                                    right: '2rem',
-                                    bottom: '-400%',
-                                    visibility: !showCalendar && 'hidden'
-                                }}
-                            >
-                                <Calendar />
-                            </div>
-                            <div className='cursor-pointer' onClick={() => setShowCalendar(p => !p)}><CalendarIcon /></div>
-                        </div>
+                      {dashboard?.totalExam}
                     </div>
+                  </div>
                 </div>
-            </div>
+              </Card.Body>
+            </Card>
+          </Col>
 
-            <div className='my-5'>
-                <Row>
-                    <Col sm={12} md={6} lg={4} className='my-2'>
-                        <div
-                            className='bg-white rounded-xl p-3'
+          <Col>
+            <Card
+              style={{
+                borderLeft: "10px solid rgba(131, 111, 255, 1)",
+                borderRadius: "10px",
+              }}
+            >
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center">
+                  <TotalTestVG />
+                  <div>
+                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                      Total Tests
+                    </div>
+                    <div
+                      className="text-end"
+                      style={{ fontWeight: 600, fontSize: "24px" }}
+                    >
+                      {dashboard?.examCount}
+                    </div>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col>
+            <Card
+              style={{
+                borderLeft: "10px solid rgba(155, 207, 83, 1)",
+                borderRadius: "10px",
+              }}
+            >
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center">
+                  <TotalQuizVG />
+                  <div>
+                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                      Total Quizs
+                    </div>
+                    <div
+                      className="text-end"
+                      style={{ fontWeight: 600, fontSize: "24px" }}
+                    >
+                      {dashboard?.quizCount}
+                    </div>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="g-3 mt-2">
+          <Col md={8}>
+            <Card style={{ height: "400px" }}>
+              <div className="d-flex align-items-center justify-content-between px-3">
+                <div
+                  className="mt-2"
+                  style={{
+                    color: "rgba(97, 114, 243, 1)",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Recently Completed Exams
+                </div>
+                <div
+                  style={{
+                    color: "rgba(153, 153, 153, 1)",
+                    fontWeight: 600,
+                    fontSize: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  View All <IoIosArrowForward />
+                </div>
+              </div>
+              <Card.Body>
+                <Table responsive>
+                  <thead className="p-4 mb-4 custom-table-head">
+                    <tr
+                      className="rounded-xl border"
+                      style={{
+                        fontSize: "16px",
+                        color: "rgba(33, 52, 70, 1)",
+                      }}
+                    >
+                      <th className="text-center border-0">Exam Name</th>
+                      <th className="text-center border-0">Type of Test</th>
+                      <th className="text-center border-0">No. of Questions</th>
+                      <th className="text-center border-0">Completed On</th>
+                      <th className="text-center border-0">Score</th>
+                      <th className="text-center border-0">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dashboard?.reports?.map((report) => {
+                      return (
+                        <tr key={report?._id}>
+                          <td className="text-center">
+                            {report?.test?.test_name}
+                          </td>
+                          <td className="text-center">
+                            {report?.test?.test_type}
+                          </td>
+                          <td className="text-center">
+                            {report?.test?.number_of_questions}
+                          </td>
+                          <td className="text-center">
+                            {report?.test?.updatedAt.split("T")[0]}
+                          </td>
+                          <td className="text-center">
+                            {report?.correct_answers}
+                          </td>
+                          <td className="text-center">
+                            <IoEyeOutline />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col>
+            <Card style={{ height: "530px", overflowY: "scroll" }}>
+              <Card.Body>
+                <div
+                  style={{
+                    color: "rgba(97, 114, 243, 1)",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                  }}
+                >
+                  New Tickets {dashboard?.tickets?.length}
+                </div>
+
+                {dashboard?.tickets?.map((ticket, index) => {
+                  const color = colors[index % colors.length];
+                  return (
+                    <Card
+                      key={ticket._id}
+                      className="mt-2"
+                      style={{
+                        borderLeft: `5px solid ${color}`,
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div
+                            className="w-25 text-truncate"
                             style={{
-                                border: '0.95px solid #E6E6E6',
-                                boxShadow: '0px 0.95px 1.89px 0px #1018280F',
-                                minHeight: '10.5rem'
+                              color: "rgba(82, 82, 82, 1)",
+                              fontWeight: 600,
+                              fontSize: "14px",
                             }}
-                        >
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <h6 className='text-14 text-color-secondary font-bold'>Module Reports</h6>
-                                <span className='text-12 text-color-primary font-bold d-flex justify-content-end align-items-center gap-1 cursor-pointer'>View All
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4.5 9L7.5 6L4.5 3" stroke="#00008B" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </span>
-                            </div>
-
-                            {MODULE_REPORTS.map((module) => <div
-                                className='d-flex justify-content-between align-items-center my-2'
-                            >
-                                <span className='text-12 font-medium text-decoration-underline' style={{ color: '#6E6E6E' }}>{module.name}</span>
-                                <span className='text-12 text-color-secondary rounded-full px-3 py-1' style={{ backgroundColor: '#EEF4FF' }}>{module.completed}/{module.total}</span>
-                            </div>)}
-                        </div>
-                    </Col>
-                    <Col sm={12} md={6} lg={4} className='my-2'>
-                        <div
-                            className='bg-white rounded-xl p-3'
+                          >
+                            {ticket?.subject}
+                          </div>
+                          <div
+                            className="text-end"
                             style={{
-                                border: '0.95px solid #E6E6E6',
-                                boxShadow: '0px 0.95px 1.89px 0px #1018280F',
-                                minHeight: '10.5rem'
+                              fontWeight: 400,
+                              fontSize: "12px",
+                              color: "rgba(108, 108, 108, 1)",
                             }}
-                        >
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <h6 className='text-14 text-color-secondary font-bold'>Your Membership Plan</h6>
-                                <ThreeDotsIcon />
-                            </div>
-
-                            <div className='d-flex justify-content-between align-items-center mt-3 mb-3'>
-                                <span className='text-12 font-medium rounded-full py-1 px-2' style={{ color: '#15B79E', backgroundColor: '#F0FDF9' }}>Active Plan</span><span>
-                                </span>
-                                <span
-                                    className='font-bold text-color-secondary'
-                                    style={{
-                                        fontSize: '28px'
-                                    }}
-                                >£ 25/Month</span>
-                            </div>
-
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className='m-0 ms-3 text-12 font-medium d-flex gap-3'>Expires on: 
-                                    <span className='text-12' style={{ color: '#AA3E01' }}>20 Dec 2023</span></p>
-                                <button
-                                    className='text-14 font-medium text-white bg-color-primary rounded px-3 py-1'
-                                >Renew Plan</button>
-                            </div>
-
+                          >
+                            {formatDate(ticket?.createdAt)}
+                          </div>
                         </div>
-                    </Col>
-                    <Col sm={12} md={6} lg={4} className='my-2'>
-                        <div
-                            className='bg-white rounded-xl p-3'
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div
                             style={{
-                                border: '0.95px solid #E6E6E6',
-                                boxShadow: '0px 0.95px 1.89px 0px #1018280F',
-                                minHeight: '10.5rem'
+                              color: "rgba(82, 82, 82, 1)",
+                              fontWeight: 600,
+                              fontSize: "12px",
                             }}
-                        >
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <h6 className='text-14 text-color-secondary font-bold'>Issue Tracking / Ticket System</h6>
-                            </div>
-
-                            <div className='text-12 mt-3 mb-3' style={{ color: '#505051' }}>
-                                View and track your raised complaints/tickets here for quick updates and resolution.
-                            </div>
-
-                            <div className='d-flex justify-content-end align-items-center'>
-                                <button
-                                    className='text-14 font-medium text-white bg-color-primary rounded px-4 py-1'
-                                >View</button>
-                            </div>
-
+                          >
+                            Recived new message
+                          </div>
+                          <div
+                            className="text-end"
+                            style={{
+                              fontWeight: 400,
+                              fontSize: "10px",
+                              color: "rgba(108, 108, 108, 1)",
+                            }}
+                          >
+                            {formatTime(ticket?.createdAt)}
+                          </div>
                         </div>
-                    </Col>
-                </Row>
-            </div>
+                      </Card.Body>
+                    </Card>
+                  );
+                })}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
 
-            <div className='d-flex justify-content-between align-items-center'>
-                <h6 className='text-16 font-semibold'>Mechanical Engineering Tests</h6>
-                <span className='text-16 font-medium text-color-primary cursor-pointer'>
-                    View All
-                    <svg className='mb-1 ms-1' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.5 15L12.5 10L7.5 5" stroke="#00008B" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </span>
-            </div>
+        <Row className="g-3 mt-2">
+          <Col className="recent-test-created" md={8}>
+            <Card style={{ height: "400px" }}>
+              <div className="d-flex align-items-center justify-content-between px-3">
+                <div
+                  className="mt-2"
+                  style={{
+                    color: "rgba(97, 114, 243, 1)",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Recently Created Mechanical Engineering Tests
+                </div>
+                <div
+                  style={{
+                    color: "rgba(153, 153, 153, 1)",
+                    fontWeight: 600,
+                    fontSize: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  View All <IoIosArrowForward />
+                </div>
+              </div>
+              <Card.Body>
+                <Table responsive>
+                  <thead className="p-4 mb-4 custom-table-head">
+                    <tr
+                      className="rounded-xl border"
+                      style={{
+                        fontSize: "16px",
+                        color: "rgba(33, 52, 70, 1)",
+                      }}
+                    >
+                      <th className="text-center border-0">Exam Name</th>
+                      <th className="text-center border-0">Type of Test</th>
+                      <th className="text-center border-0">No. of Questions</th>
+                      <th className="text-center border-0">Time alloted</th>
+                      <th className="text-center border-0">Status</th>
+                      <th className="text-center border-0">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dashboard?.tests?.map((test) => {
+                      return (
+                        <tr key={test?._id}>
+                          <td className="text-center">{test?.test_name}</td>
+                          <td className="text-center">{test?.test_type}</td>
+                          <td className="text-center">
+                            {test?.number_of_questions}
+                          </td>
+                          <td className="text-center">
+                            {test?.updatedAt.split("T")[0]}
+                          </td>
+                          <td className="text-center">
+                            {formatDuration(test?.duration_in_mins)}
+                          </td>
+                          <td className="text-center">
+                            <IoEyeOutline />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
 
-        </ModuleLayout>
-    )
-}
+          <Col>
+            <Card style={{ height: "270px" }}>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div
+                    style={{
+                      color: "rgba(97, 114, 243, 1)",
+                      fontWeight: 600,
+                      fontSize: "12px",
+                    }}
+                  >
+                    Your Membership Plan
+                  </div>
 
-export default Dashboard
+                  <div
+                    className="py-1 px-2"
+                    style={{
+                      fontSize: "10px",
+                      color: "rgba(21, 183, 158, 1)",
+                      backgroundColor: "rgba(240, 253, 249, 1)",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    Active plan
+                  </div>
+                </div>
+
+                <div
+                  className="text-center mt-4"
+                  style={{
+                    fontSize: "28px",
+                    color: "rgba(97, 114, 243, 1)",
+                    fontWeight: 700,
+                  }}
+                >
+                  £ {dashboard?.subscription?.amount} / Month
+                </div>
+
+                <div className="d-flex justify-content-center mt-4">
+                  <button
+                    className="px-3 py-1"
+                    style={{
+                      backgroundColor: "rgba(0, 0, 139, 1)",
+                      border: "none",
+                      borderRadius: "5px",
+                      color: "white",
+                    }}
+                  >
+                    Upgrade
+                  </button>
+                </div>
+
+                <div
+                  className="mt-4"
+                  style={{ fontSize: "12px", textAlign: "center" }}
+                >
+                  Membership Expires on:{" "}
+                  <span style={{ color: "rgba(255, 68, 64, 1)" }}>
+                    {formatDate(dashboard?.subscription?.expiry)}
+                  </span>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </ModuleLayout>
+  );
+};
+
+export default Dashboard;
