@@ -139,6 +139,7 @@ export default function TakeTest() {
     const closeTestSubmitModal = () => setTestSubmitModalShow(false);
 
     const { testID } = useParams();
+    console.log(testID);
     const [checkScoreModalShow, setCheckScoreModalShow] = React.useState(false);
 
     const openCheckScoreModal = () => setCheckScoreModalShow(true);

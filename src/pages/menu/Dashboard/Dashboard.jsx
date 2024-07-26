@@ -59,7 +59,7 @@ const Dashboard = () => {
     }
   };
 
-  console.log(dashboard);
+  // console.log(dashboard);
 
   return (
     <ModuleLayout>
@@ -362,12 +362,12 @@ const Dashboard = () => {
                             {test?.number_of_questions}
                           </td>
                           <td className="text-center">
-                            {test?.updatedAt.split("T")[0]}
+                            {formatDuration(test?.duration_in_mins)}
                           </td>
                           <td
-                            className="text-center px-2 py-1"
+                            className="text-center px-2"
                             style={
-                              test?.status === "Active"
+                              test?.attempted
                                 ? {
                                     borderRadius: "20px",
                                     backgroundColor: "rgba(240, 253, 249, 1)",
@@ -375,12 +375,12 @@ const Dashboard = () => {
                                   }
                                 : {
                                     borderRadius: "20px",
-                                    backgroundColor: "rgba(240, 253, 249, 1)",
-                                    color: "rgba(255, 156, 7, 1)",
+                                    backgroundColor: "#FF9C07",
+                                    color: "#FF9C07",
                                   }
                             }
                           >
-                            {test?.status}
+                            {test?.attempted ? "Attempted" : "Not Attempted"}
                           </td>
                           <td className="text-center">
                             <IoEyeOutline />

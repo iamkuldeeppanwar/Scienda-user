@@ -97,7 +97,7 @@ const Reports = () => {
 
       <Container>
         <Row className="g-3">
-          <Col>
+          <Col lg={6}>
             <Card>
               <Card.Body>
                 <div className="d-flex flex-column align-items-center">
@@ -124,7 +124,7 @@ const Reports = () => {
             </Card>
           </Col>
 
-          <Col>
+          <Col lg={6}>
             <Card>
               <Card.Body>
                 <div className="d-flex flex-column align-items-center">
@@ -185,7 +185,7 @@ const Reports = () => {
         </Row>
 
         <Row className="mt-4 g-3">
-          <Col>
+          <Col lg={6}>
             <Card>
               <Card.Body>
                 <h4
@@ -226,7 +226,7 @@ const Reports = () => {
             </Card>
           </Col>
 
-          <Col>
+          <Col lg={6}>
             <Card>
               <Card.Body>
                 <div className="d-flex flex-column align-items-center">

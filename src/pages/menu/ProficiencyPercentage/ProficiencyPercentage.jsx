@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
 import { userProciencys } from "./api/proficiencyAPI";
 import { setProficiencies } from "../../../features/proficiencySlice";
-import { Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 
 const ProficiencyPercentageCard = ({
   timeAlloted,
@@ -132,7 +132,7 @@ const ProficiencyPercentage = () => {
     try {
       setLoading(true);
       const res = await userProciencys(token);
-      dispatch(setProficiencies(res.reports));
+      dispatch(setProficiencies(res?.reports));
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -142,28 +142,30 @@ const ProficiencyPercentage = () => {
 
   return (
     <ModuleLayout>
-      <ToastContainer />
-      <div className="d-flex flex-wrap gap-4 my-3">
-        {!loading ? (
-          proficiencies?.map((obj) => (
-            <div key={obj?._id} style={{ width: "23%" }}>
-              <ProficiencyPercentageCard
-                timeAlloted={obj?.test?.duration_in_mins}
-                noOfQuestions={obj?.total}
-                correctAnswers={obj?.correct_answers}
-                completedOn={obj?.createdAt}
-                examId={obj?._id}
-                examName={obj?.test?.test_name}
-                percentage={obj?.percentage}
-              />
+      <Container>
+        <Row className="mt-4 g-3">
+          {!loading ? (
+            proficiencies?.map((obj) => (
+              <Col lg={4} key={obj?._id}>
+                <ProficiencyPercentageCard
+                  timeAlloted={obj?.test?.duration_in_mins}
+                  noOfQuestions={obj?.total}
+                  correctAnswers={obj?.correct_answers}
+                  completedOn={obj?.createdAt}
+                  examId={obj?._id}
+                  examName={obj?.test?.test_name}
+                  percentage={obj?.percentage}
+                />
+              </Col>
+            ))
+          ) : (
+            <div className="text-center">
+              <Spinner size="sm" />
             </div>
-          ))
-        ) : (
-          <div className="text-center">
-            <Spinner size="sm" />
-          </div>
-        )}
-      </div>
+          )}
+        </Row>
+      </Container>
+      <ToastContainer />
     </ModuleLayout>
   );
 };

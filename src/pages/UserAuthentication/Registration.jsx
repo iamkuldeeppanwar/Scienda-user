@@ -23,8 +23,6 @@ const Registration = () => {
   const [last_name, setLastName] = useState("");
   const [dob, setDob] = useState("");
   const [mobile, setMobile] = useState("");
-  const [domain, setDomain] = useState("");
-  const [subdomain, setSubDomain] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
@@ -105,7 +103,6 @@ const Registration = () => {
                       type="date"
                       value={dob}
                       onChange={(e) => setDob(e.target.value)}
-                      // placeholder="Enter your last name"
                       required
                     />
                   </Form.Group>
@@ -140,13 +137,6 @@ const Registration = () => {
                         autoFocus: true,
                       }}
                     />
-                    {/* <Form.Control
-                      type="text"
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
-                      placeholder="Enter your mobile number"
-                      required
-                    /> */}
                   </Form.Group>
                 </Col>
               </Row>

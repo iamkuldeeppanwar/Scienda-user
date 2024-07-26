@@ -1,13 +1,13 @@
 import axiosInstance from "../../../../Utils/axiosUtils";
 
-const getSpecialityModules = async (token, subdomain) => {
+const getSpecialityModules = async (token, subdomain, query) => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   return new Promise(async (resolve, reject) => {
     try {
       const userData = await axiosInstance.get(
-        `api/user/get-topics/${subdomain}`,
+        `api/user/get-topics/${subdomain}?key=${query}`,
         {
           headers,
         }

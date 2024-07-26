@@ -6,6 +6,7 @@ import { getError } from "../../../Utils/error";
 import { getSpecialityModule } from "./apis/specialityAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setSpeciality } from "../../../features/specialityModuleSlice";
+import CreateMarkup from "../../../Utils/CreateMarkup";
 
 const TopicDetail = () => {
   const dispatch = useDispatch();
@@ -41,34 +42,41 @@ const TopicDetail = () => {
               {speciality?.topic_name}
             </h4>
             <hr className="my-4" />
-            <Stack direction="horizontal" gap={2} className="align-items-start">
-              <div>
-                <Carousel className="d-flex justify-content-center" fade>
-                  {speciality?.images?.length > 0 ? (
-                    speciality?.images?.map((img, idx) => {
-                      return (
-                        <Carousel.Item key={idx}>
-                          <img
-                            style={{
-                              height: "200px",
-                              width: "100%",
-                              objectFit: "contain",
-                            }}
-                            src={`https://creative-story.s3.amazonaws.com${img}`}
-                            alt="..."
-                          />
-                        </Carousel.Item>
-                      );
-                    })
-                  ) : (
-                    <img
-                      className="w-100"
-                      src={`/images/topic-detail.png`}
-                      alt="..."
-                    />
-                  )}
-                </Carousel>
-              </div>
+            <div className="d-flex flex-wrap gap-3 align-items-center">
+              <Carousel
+                style={{ maxWidth: "300px" }}
+                className="d-flex justify-content-center"
+                fade
+              >
+                {speciality?.images?.length > 0 ? (
+                  speciality?.images?.map((img, idx) => {
+                    return (
+                      <Carousel.Item style={{ width: "300px" }} key={idx}>
+                        <img
+                          style={{
+                            height: "200px",
+                            width: "300px",
+                            objectFit: "contain",
+                          }}
+                          src={`https://creative-story.s3.amazonaws.com${img}`}
+                          alt="..."
+                        />
+                      </Carousel.Item>
+                    );
+                  })
+                ) : (
+                  <img
+                    style={{
+                      height: "200px",
+                      width: "300px",
+                      objectFit: "contain",
+                    }}
+                    src={`/images/topic-detail.png`}
+                    alt="..."
+                  />
+                )}
+              </Carousel>
+
               <div className="flex-1">
                 <h3 className="text-color-primary">{speciality?.topic_name}</h3>
                 <hr style={{ border: "2.37px solid #0000001F" }} />
@@ -130,10 +138,10 @@ const TopicDetail = () => {
                   </Stack>
                 </Stack>
               </div>
-            </Stack>
+            </div>
 
             <p className="my-3" style={{ color: "#292929" }}>
-              {speciality?.description}
+              <CreateMarkup content={speciality?.description} />
             </p>
 
             <div
@@ -146,12 +154,15 @@ const TopicDetail = () => {
               {speciality?.subtopics?.map((subTopics, idx) => {
                 return (
                   <>
-                    <div className="d-flex justify-content-between" key={idx}>
-                      <p className="m-0 text-14 font-normal">
+                    <div
+                      className="d-flex justify-content-between gap-2 align-items-start"
+                      key={idx}
+                    >
+                      <p className="m-0 text-14 font-normal w-75">
                         <span className="font-semibold">
                           Subtopic {idx + 1}:{" "}
                         </span>
-                        {subTopics?.description}
+                        {<CreateMarkup content={subTopics?.description} />}
                       </p>
                       <div
                         className="bg-color-light text-12 font-semibold px-2 py-1 rounded"

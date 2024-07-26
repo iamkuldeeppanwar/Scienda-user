@@ -3,11 +3,7 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import "./MyAccount.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
-import {
-  PasswordLockIcon,
-  // ProfileIcon,
-  UploadIcon,
-} from "./components/my-account-icons";
+import { PasswordLockIcon, UploadIcon } from "./components/my-account-icons";
 import {
   userChangePassword,
   userGetProfile,
@@ -18,6 +14,7 @@ import { setUser } from "../../../features/userSlice";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
+import PhoneInput from "react-phone-input-2";
 
 const MyAccount = () => {
   const token = localStorage.getItem("token");
@@ -32,7 +29,6 @@ const MyAccount = () => {
   const [images, setImages] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confrimPassword, setConfirmPassword] = useState("");
@@ -88,10 +84,12 @@ const MyAccount = () => {
 
   const profileUpdateHandler = async (e) => {
     e.preventDefault();
+    const phone = mobile.countryCode + mobile.mobile;
+
     const form = new FormData();
     form.append("first_name", firstName);
     form.append("last_name", lastName);
-    form.append("mobile", mobile);
+    form.append("mobile", phone);
     form.append("dob", dob);
     form.append("image", images);
 
@@ -118,8 +116,7 @@ const MyAccount = () => {
     try {
       setPasswordLoading(true);
       const response = await userChangePassword(passwords, token);
-      console.log(response);
-      toast.success(response.status);
+      // toast.success(response.status);
       setPasswordLoading(false);
     } catch (error) {
       toast.error(getError(error));
@@ -142,7 +139,6 @@ const MyAccount = () => {
                   src={profile}
                   alt="myaccount-profile"
                 />
-                {/* <ProfileIcon /> */}
               </span>
               <p className="m-0 text-18 font-semibold">Account Details</p>
             </div>
@@ -185,12 +181,28 @@ const MyAccount = () => {
                     <Form.Label className="text-14 font-normal">
                       Phone No.
                     </Form.Label>
-                    <Form.Control
-                      className="py-2 px-3"
-                      type="text"
-                      required
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
+                    <PhoneInput
+                      containerClass=""
+                      inputClass=" w-100 m-0 border-0"
+                      inputStyle={{
+                        height: "2.7rem",
+                      }}
+                      buttonClass=" "
+                      enableSearch={true}
+                      countryCodeEditable={false}
+                      // value={mobile}
+                      onChange={(phone, code) => {
+                        setMobile({
+                          mobile: phone,
+                          countryCode: code.countryCode,
+                          dialCode: code.dialCode,
+                        });
+                      }}
+                      inputProps={{
+                        name: "phone",
+                        required: true,
+                        autoFocus: true,
+                      }}
                     />
                   </Form.Group>
                 </Col>
@@ -291,7 +303,6 @@ const MyAccount = () => {
                     <input
                       type="file"
                       className="file_upload"
-                      // style={{ display: "none" }}
                       onChange={handleFileChange}
                     />
                     <span>

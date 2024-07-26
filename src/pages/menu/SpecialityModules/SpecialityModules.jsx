@@ -7,12 +7,13 @@ import { QuestionsIcon } from "../Tests/components/test-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getError } from "../../../Utils/error";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getSpecialityModules } from "./apis/specialityAPI";
 import { setSpecialitys } from "../../../features/specialityModuleSlice";
-import { Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
+import CreateMarkup from "../../../Utils/CreateMarkup";
 
-const SearchTopics = () => {
+const SearchTopics = ({ onChange }) => {
   return (
     <div className="d-flex column-gap-3">
       <div
@@ -27,6 +28,7 @@ const SearchTopics = () => {
       >
         <SearchIcon />
         <input
+          onChange={(e) => onChange(e.target.value)}
           type="text"
           placeholder="Search Topics"
           className="border-0 mx-2 mt-1 w-75"
@@ -35,7 +37,7 @@ const SearchTopics = () => {
           }}
         />
       </div>
-      <button
+      {/* <button
         className="border-0 d-block text-white rounded-2"
         style={{
           boxShadow: "0px 4px 4px 0px #0000000A",
@@ -47,7 +49,7 @@ const SearchTopics = () => {
         }}
       >
         Search
-      </button>
+      </button> */}
     </div>
   );
 };
@@ -63,7 +65,7 @@ const TopicCard = ({
     <div
       className="rounded-lg bg-white p-3 "
       style={{
-        width: "24.35%",
+        // width: "24.35%",
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
       }}
@@ -84,12 +86,12 @@ const TopicCard = ({
         <QuestionsIcon /> No. of questions:{" "}
         <span className="font-light">{questionCount} Questions</span>
       </p>
-      {/* <p
+      <p
         className="text-center text-12 font-light "
         style={{ color: "#475467" }}
       >
-        {description}
-      </p> */}
+        <CreateMarkup content={description} />
+      </p>
       <div className="text-center">
         <Link
           to={`topic-detail/${idx}`}
@@ -106,6 +108,7 @@ const TopicCard = ({
 const SpecialityModules = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
   const token = localStorage.getItem("token");
   const { user } = useSelector((state) => state.user);
   const { specialities } = useSelector((state) => state.speciality);
@@ -115,12 +118,12 @@ const SpecialityModules = () => {
     if (user?.subdomain) {
       getAllSpecialityModules();
     }
-  }, []);
+  }, [user?.subdomain, query]);
 
   const getAllSpecialityModules = async () => {
     try {
       setLoading(true);
-      const res = await getSpecialityModules(token, user?.subdomain);
+      const res = await getSpecialityModules(token, user?.subdomain, query);
       dispatch(setSpecialitys(res));
       setLoading(false);
     } catch (error) {
@@ -129,49 +132,42 @@ const SpecialityModules = () => {
     }
   };
 
-  //   console.log(specialities);
-
   return (
     <ModuleLayout>
-      <div className="my-4 d-flex justify-content-between align-items-start">
-        <h5 className="text-20 font-medium text-color-secondary">
-          Mechanical Engineering
-        </h5>
-        <Stack direction="horizontal" gap={3}>
-          <ViewSummaryBtn
-            text={"View Summary"}
-            onClick={() => navigate("view-summary")}
-          />
-          <SearchTopics />
-        </Stack>
-      </div>
-
-      <div className="d-flex flex-wrap row-gap-3 gap-2 w-100">
-        {!loading ? (
-          specialities?.map((data) => (
-            <TopicCard
-              key={data?._id}
-              topicName={data?.topic_name}
-              subTopicCount={data?.subtopic_count}
-              questionCount={data?.questionCount}
-              description={data?.description}
-              idx={data?._id}
+      <Container>
+        <div className="my-4 d-flex flex-wrap justify-content-between align-items-center">
+          <h5 className="text-20 font-medium text-color-secondary">
+            Mechanical Engineering
+          </h5>
+          <div className="d-flex gap-3 align-items-center flex-wrap">
+            <ViewSummaryBtn
+              text={"View Summary"}
+              onClick={() => navigate("view-summary")}
             />
-          ))
-        ) : (
-          <div className="text-center">
-            <Spinner size="sm" />
+            <SearchTopics onChange={setQuery} />
           </div>
-        )}
-      </div>
-
-      {/* <h5 className="text-22 font-medium py-3">Topic Completed</h5>
-
-      <div className="d-flex flex-wrap row-gap-3 justify-content-between">
-        {[...Array(4)].map((num, idx) => (
-          <TopicCard key={idx} topicNumber={idx + 9} />
-        ))}
-      </div> */}
+        </div>
+        <Row className="g-3">
+          {!loading ? (
+            specialities?.map((data) => (
+              <Col lg={4} key={data?._id}>
+                <TopicCard
+                  topicName={data?.topic_name}
+                  subTopicCount={data?.subtopic_count}
+                  questionCount={data?.questionCount}
+                  description={data?.description}
+                  idx={data?._id}
+                />
+              </Col>
+            ))
+          ) : (
+            <div className="text-center">
+              <Spinner size="sm" />
+            </div>
+          )}
+        </Row>
+      </Container>
+      <ToastContainer />
     </ModuleLayout>
   );
 };

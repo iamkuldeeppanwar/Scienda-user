@@ -51,31 +51,6 @@ const ExamProficiencyPercentage = () => {
             </div>
           </Stack>
         </div>
-        <div className="d-flex gap-3">
-          <div
-            className="rounded-xl px-3 py-2 d-flex align-items-center gap-2 bg-white"
-            style={{
-              border: "0.5px solid #8F8F8F",
-              boxShadow: "0px 4px 12px 0px #EEF4FF",
-            }}
-          >
-            <SearchIcon />
-            <input
-              type="text"
-              className="border-0"
-              placeholder="Search topic"
-              style={{ outline: "none" }}
-            />
-          </div>
-          <button
-            className="border-0 px-3 py-2 text-white bg-color-primary rounded"
-            style={{
-              boxShadow: "0px 4px 4px 0px #0000000A",
-            }}
-          >
-            Search
-          </button>
-        </div>
       </div>
 
       <Stack gap={4} className="px-5 py-5">
@@ -140,7 +115,7 @@ const ExamProficiencyPercentage = () => {
               );
             })
           ) : (
-            <div className="d-flex justify-content-center">
+            <div style={{ margin: "auto" }}>
               <Spinner size="sm" />
             </div>
           )}

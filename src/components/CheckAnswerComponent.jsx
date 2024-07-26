@@ -21,11 +21,16 @@ import { getReport } from "../pages/menu/Tests/apis/TestAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import { setReport } from "../features/reportSlice";
 import { Carousel, Spinner } from "react-bootstrap";
+import CreateMarkup from "../Utils/CreateMarkup";
+import { useLocation, useParams } from "react-router-dom";
 
 const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
+  const location = useLocation();
+  const from = location.search.includes("viewScore");
+  const { testID } = useParams();
   const opt = ["A", "B", "C", "D"];
   const dispatch = useDispatch();
-  const reportID = localStorage.getItem("reportID");
+  const reportID = from ? testID : localStorage.getItem("reportID");
   const token = localStorage.getItem("token");
   const { report } = useSelector((state) => state.reports);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -45,8 +50,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
   }, []);
 
   useEffect(() => {
-    if (report.test) {
-      setAnswers(report.answers);
+    if (report?.test) {
+      setAnswers(report?.answers);
       setQuestion(currentQuestion.options);
       for (let option in currentQuestion.options) {
         if (
@@ -99,12 +104,12 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
   };
 
   const goToNextQuestion = () => {
-    if (currentQuestionIndex < report.test.questions_reference.length - 1) {
+    if (currentQuestionIndex < report?.test?.questions_reference.length - 1) {
       setCurrentQuestionIndex((p) => p + 1);
     }
   };
 
-  console.log(report);
+  // console.log(report);
   //   console.log(answers);
 
   return (
@@ -137,7 +142,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
         >
           <span className="font-medium">{currentQuestionIndex + 1}</span>
           <span>/</span>
-          <span>{report.total && report.total}</span>
+          <span>{report?.total && report?.total}</span>
         </div>
         <div
           className="h-100 px-2 d-flex align-items-center rounded-end bg-white cursor-pointer"
@@ -154,7 +159,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
       >
         <div className="d-flex flex-column justify-content-center align-items-center gap-2">
           <h5 className="text-14 font-semibold">
-            {report.test && report.test.test_name}:
+            {report?.test && report?.test?.test_name}:
           </h5>
           <button
             className="rounded text-16 font-medium bg-white"
@@ -182,7 +187,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               Overall Confidence Level:
             </p>
             <p className="my-0 text-14 font-bold" style={{ color: "#12DD00" }}>
-              {report.confidence && report.confidence}%
+              {report?.confidence && report?.confidence}%
             </p>
           </div>
           {!hideDateTimeAlloted && (
@@ -199,7 +204,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                 </span>
                 <span className="text-14 font-semibold">Date:</span>
                 <span className="text-12 font-medium text-color-primary">
-                  {report.test && formattedDate}
+                  {report?.test && formattedDate}
                 </span>
               </div>
               <div className="d-flex gap-2 align-items-center">
@@ -208,8 +213,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                 </span>
                 <span className="text-14 font-semibold">Time Allotted: </span>
                 <span className="text-12 font-medium text-color-primary">
-                  {report.test &&
-                    convertMinutesToHHMM(report.test.duration_in_mins)}
+                  {report?.test &&
+                    convertMinutesToHHMM(report?.test.duration_in_mins)}
                 </span>
               </div>
             </div>
@@ -225,7 +230,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
             <div className="d-flex justify-content-between align-items-center">
               <span className="text-14 font-semibold">Wrong Answers:</span>
               <span className="text-14 font-bold" style={{ color: "#FF1616" }}>
-                {report.wrong_answers && report.wrong_answers}
+                {report?.wrong_answers && report?.wrong_answers}
               </span>
             </div>
             <div className="d-flex justify-content-between align-items-center">
@@ -233,7 +238,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                 Attempted Questions:
               </span>
               <span className="text-14 font-bold text-color-secondary">
-                {report.attempt && report.attempt}
+                {report?.attempt && report?.attempt}
               </span>
             </div>
           </div>
@@ -249,17 +254,17 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               <span className="text-14 font-semibold">Your Score:</span>
               <div className="text-16">
                 <span className="font-bold" style={{ color: "#00B132" }}>
-                  {report.correct_answers && report.correct_answers}
+                  {report?.correct_answers && report?.correct_answers}
                 </span>
                 <span className="font-semibold" style={{ color: "#4E4E4E" }}>
-                  /{report.total && report.total}
+                  /{report?.total && report?.total}
                 </span>
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
               <span className="text-14 font-semibold">Percentage:</span>
               <span className="text-16 font-bold" style={{ color: "#00B132" }}>
-                {report.percentage && report.percentage}%
+                {report?.percentage && report?.percentage}%
               </span>
             </div>
           </div>
@@ -272,9 +277,9 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
           backgroundColor: "#F3F4F6",
         }}
       >
-        {report.test && report.answers.length > 0 ? (
-          report.answers.map((ans, idx) => {
-            if (ans.flag) {
+        {report?.test && report?.answers.length > 0 ? (
+          report?.answers.map((ans, idx) => {
+            if (ans?.flag) {
               return (
                 <div
                   key={idx}
@@ -283,7 +288,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                     width: "1.95rem",
                     height: "42px",
                     backgroundColor:
-                      ans.status === "Wrong" ? "#FF1616" : " #0C9400",
+                      ans?.status === "Wrong" ? "#FF1616" : " #0C9400",
                     borderRadius: "4.46px",
                   }}
                 >
@@ -300,7 +305,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                   width: "1.95rem",
                   height: "42px",
                   backgroundColor:
-                    ans.status === "Correct" ? "#0C9400" : "#FF1616",
+                    ans?.status === "Correct" ? "#0C9400" : "#FF1616",
                   borderRadius: "4.46px",
                 }}
               >
@@ -322,7 +327,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
           Question No {currentQuestionIndex + 1}
         </h5>
         <p className="text-16 font-semibold">
-          {report.test && currentQuestion.question}
+          {<CreateMarkup content={report?.test && currentQuestion?.question} />}
         </p>
 
         <div className="d-flex gap-4">
@@ -332,8 +337,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               style={{ border: "1px solid #D2D6DB" }}
             >
               <Carousel>
-                {report.test &&
-                  currentQuestion.images.map((img, idx) => {
+                {report?.test &&
+                  currentQuestion?.images?.map((img, idx) => {
                     return (
                       <Carousel.Item key={idx}>
                         <img
@@ -371,7 +376,13 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               </p>
 
               <p className="text-16 font-normal" style={{ color: "#292929" }}>
-                {report.test && currentQuestion.explanation.description}
+                {
+                  <CreateMarkup
+                    content={
+                      report?.test && currentQuestion?.explanation?.description
+                    }
+                  />
+                }
               </p>
             </div>
 
@@ -381,8 +392,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                   Reference Links:
                 </h5>
                 <ul>
-                  {report.test &&
-                    currentQuestion.sub_topic_reference.references.map(
+                  {report?.test &&
+                    currentQuestion?.sub_topic_reference?.references?.map(
                       (ref, idx) => {
                         return (
                           <li className="my-2" key={idx}>
@@ -400,8 +411,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                   Images:
                 </h5>
                 <div className="d-flex gap-3">
-                  {report.test &&
-                    currentQuestion.sub_topic_reference.images.map(
+                  {report?.test &&
+                    currentQuestion?.sub_topic_reference?.images?.map(
                       (img, idx) => {
                         return (
                           <img
@@ -420,28 +431,28 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
 
           <div className="flex-1">
             <Stack gap={2}>
-              {questions.map((data, idx) => {
+              {questions?.map((data, idx) => {
                 return (
                   <>
                     <div
                       className="d-flex gap-2 pb-2"
                       style={{
                         backgroundColor:
-                          data === currentQuestion.correct_option
+                          data === currentQuestion?.correct_option
                             ? "#02D33D14"
                             : "",
                       }}
                       key={idx}
                     >
                       <span>
-                        {data === currentQuestion.correct_option && (
+                        {data === currentQuestion?.correct_option && (
                           <RightAnswerCheckIcon />
                         )}
                       </span>
 
                       <span>
-                        {answers[currentQuestionIndex].status === "Wrong" &&
-                          answers[currentQuestionIndex].selected === data && (
+                        {answers[currentQuestionIndex]?.status === "Wrong" &&
+                          answers[currentQuestionIndex]?.selected === data && (
                             <WrongAnswerCrossIcon />
                           )}
                       </span>
@@ -450,7 +461,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                         style={{
                           minWidth: "max-content",
                           color:
-                            data === currentQuestion.correct_option
+                            data === currentQuestion?.correct_option
                               ? "#00BA00"
                               : "",
                         }}
@@ -461,7 +472,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                         className="my-0 text-16 font-medium"
                         style={{
                           color:
-                            data === currentQuestion.correct_option
+                            data === currentQuestion?.correct_option
                               ? "#00BA00"
                               : "",
                         }}
