@@ -136,9 +136,7 @@ const Recharge = () => {
           <div className="ps-4" style={{ color: "#664747" }}>
             <h5 className="me-3 d-block text-22">What will you get:</h5>
             <ul className="text-22">
-              <li>Solve 20 Random Questions & Answer It.</li>
               <li>Unlimited Attempts</li>
-              <li>Solve 20 Questions & Answer.</li>
               <li>Improve Your Confidence.</li>
             </ul>
           </div>

@@ -268,19 +268,19 @@ const MyAccount = () => {
         </div>
 
         <div
-          className="d-flex flex-grow-1 justify-content-center align-items-center"
+          className="d-flex flex-grow-1 justify-content-center align-items-center mt-5"
           style={{ marginBottom: "6rem" }}
         >
           <div
             className="rounded-xl"
             style={{
-              width: "150px",
+              // width: "150px",
               height: "220px",
               border: "0.4px solid #00000038",
             }}
           >
-            <div className="bg-white rounded-xl w-100">
-              <h5 className="mx-auto pt-1 text-14 font-bold text-color-secondary text-center w-70">
+            <div className="bg-white rounded-xl w-100 ">
+              <h5 className="mx-auto pt-1 text-14 font-bold text-color-secondary text-center ">
                 Upload Profile Picture
               </h5>
               <div className="text-center">
@@ -291,26 +291,16 @@ const MyAccount = () => {
                 />
               </div>
             </div>
-            <div style={{ backgroundColor: "#F1F1F1" }} className="pt-4 w-100">
-              <Stack
-                className="d-flex justify-content-center"
-                direction="horizontal"
-                gap={2}
-              >
-                <div className="text-center text-12 font-bold text-color-secondary">
-                  Click to upload
-                  <div className="file_conatiner">
-                    <input
-                      type="file"
-                      className="file_upload"
-                      onChange={handleFileChange}
-                    />
-                    <span>
-                      <UploadIcon />
-                    </span>
-                  </div>
+            <div style={{ backgroundColor: "#F1F1F1" }}>
+              <div className="text-center text-12 font-bold text-color-secondary mt-4">
+                Click to upload
+                <div className="file_conatiner px-3">
+                  <input type="file" onChange={handleFileChange} />
+                  <span>
+                    <UploadIcon />
+                  </span>
                 </div>
-              </Stack>
+              </div>
             </div>
           </div>
         </div>

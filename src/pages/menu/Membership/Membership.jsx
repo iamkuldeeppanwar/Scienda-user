@@ -197,7 +197,7 @@ const Membership = () => {
               <div className="p-3 text-20 font-normal">Plan</div>
             </th>
             <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Duration</div>
+              <div className="p-3 text-20 font-normal">Validity</div>
             </th>
             <th className="text-center border-0">
               <div className="p-3 text-20 font-normal">Amount</div>
@@ -233,7 +233,7 @@ const Membership = () => {
                   <td className="text-center">
                     <div className="p-4">
                       <span className="text-14 font-bold">
-                        {data?.validity}
+                        {data?.validity} days
                       </span>
                     </div>
                   </td>
@@ -249,9 +249,9 @@ const Membership = () => {
                       {data?.payment_id.slice(0, 20)}
                     </div>
                   </td>
-                  <td className="w-15">
+                  <td className="text-center">
                     <div
-                      className="w-80 mx-auto text-12 font-bold text-center px-3 py-3 rounded"
+                      className="mt-3 text-12 font-bold text-center px-3 py-3 rounded"
                       style={{ backgroundColor: "#DADADA96" }}
                     >
                       {formatDate(data?.createdAt)}
@@ -323,7 +323,7 @@ const Membership = () => {
       </div>
 
       <h3 className="mt-5 text-center text-24 font-bold text-color-primary">
-        Upgrade & continue with Business plan
+        Upgrade & Continue With Business Plan
       </h3>
 
       <h5 className="my-4 text-center text-24 font-medium text-color-secondary">
@@ -341,7 +341,7 @@ const Membership = () => {
         </p>
       </div>
       <div className="text-center mt-4">
-        <h6 className="text-16 font-medium">Timeline will extend:</h6>
+        <h6 className="text-16 font-medium">Timeline Will Extend:</h6>
         <p
           className="text-12 font-normal w-35 mx-auto"
           style={{ color: "#475467" }}

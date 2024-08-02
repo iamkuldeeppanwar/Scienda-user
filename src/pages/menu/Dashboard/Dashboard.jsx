@@ -8,6 +8,7 @@ import { getDashboardData } from "./api/dashboardapi";
 import { TotalExamSVG, TotalQuizVG, TotalTestVG } from "./Icons";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -91,7 +92,7 @@ const Dashboard = () => {
                   <TotalExamSVG />
                   <div>
                     <div style={{ color: "rgba(164, 164, 164, 1)" }}>
-                      Total Exams
+                      Total Exam
                     </div>
                     <div
                       className="text-end"
@@ -117,7 +118,7 @@ const Dashboard = () => {
                   <TotalTestVG />
                   <div>
                     <div style={{ color: "rgba(164, 164, 164, 1)" }}>
-                      Total Tests
+                      Total Test
                     </div>
                     <div
                       className="text-end"
@@ -143,7 +144,7 @@ const Dashboard = () => {
                   <TotalQuizVG />
                   <div>
                     <div style={{ color: "rgba(164, 164, 164, 1)" }}>
-                      Total Quizs
+                      Total Quiz
                     </div>
                     <div
                       className="text-end"
@@ -172,16 +173,18 @@ const Dashboard = () => {
                 >
                   Recently Completed Exams
                 </div>
-                <div
-                  style={{
-                    color: "rgba(153, 153, 153, 1)",
-                    fontWeight: 600,
-                    fontSize: "12px",
-                    cursor: "pointer",
-                  }}
-                >
-                  View All <IoIosArrowForward />
-                </div>
+                <Link to="/menu/tests">
+                  <div
+                    style={{
+                      color: "rgba(153, 153, 153, 1)",
+                      fontWeight: 600,
+                      fontSize: "12px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    View All <IoIosArrowForward />
+                  </div>
+                </Link>
               </div>
               <Card.Body>
                 <Table responsive>
@@ -194,8 +197,8 @@ const Dashboard = () => {
                       }}
                     >
                       <th className="text-center border-0">Exam Name</th>
-                      <th className="text-center border-0">Type of Test</th>
-                      <th className="text-center border-0">No. of Questions</th>
+                      <th className="text-center border-0">Test Type</th>
+                      <th className="text-center border-0">No. Of Questions</th>
                       <th className="text-center border-0">Completed On</th>
                       <th className="text-center border-0">Score</th>
                       <th className="text-center border-0">Action</th>
@@ -221,7 +224,11 @@ const Dashboard = () => {
                             {report?.correct_answers}
                           </td>
                           <td className="text-center">
-                            <IoEyeOutline />
+                            <Link
+                              to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
+                            >
+                              <IoEyeOutline />
+                            </Link>
                           </td>
                         </tr>
                       );
@@ -287,7 +294,7 @@ const Dashboard = () => {
                               fontSize: "12px",
                             }}
                           >
-                            Recived new message
+                            Recieved new message
                           </div>
                           <div
                             className="text-end"
@@ -323,16 +330,18 @@ const Dashboard = () => {
                 >
                   Recently Created Tests
                 </div>
-                <div
-                  style={{
-                    color: "rgba(153, 153, 153, 1)",
-                    fontWeight: 600,
-                    fontSize: "12px",
-                    cursor: "pointer",
-                  }}
-                >
-                  View All <IoIosArrowForward />
-                </div>
+                <Link to="/menu/speciality-modules">
+                  <div
+                    style={{
+                      color: "rgba(153, 153, 153, 1)",
+                      fontWeight: 600,
+                      fontSize: "12px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    View All <IoIosArrowForward />
+                  </div>
+                </Link>
               </div>
               <Card.Body>
                 <Table responsive>
@@ -345,11 +354,10 @@ const Dashboard = () => {
                       }}
                     >
                       <th className="text-center border-0">Exam Name</th>
-                      <th className="text-center border-0">Type of Test</th>
-                      <th className="text-center border-0">No. of Questions</th>
+                      <th className="text-center border-0">Test Type</th>
+                      <th className="text-center border-0">No. Of Questions</th>
                       <th className="text-center border-0">Time alloted</th>
                       <th className="text-center border-0">Status</th>
-                      <th className="text-center border-0">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -375,15 +383,11 @@ const Dashboard = () => {
                                   }
                                 : {
                                     borderRadius: "20px",
-                                    backgroundColor: "#FF9C07",
                                     color: "#FF9C07",
                                   }
                             }
                           >
                             {test?.attempted ? "Attempted" : "Not Attempted"}
-                          </td>
-                          <td className="text-center">
-                            <IoEyeOutline />
                           </td>
                         </tr>
                       );
