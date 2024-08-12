@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Alert, Button } from "react-bootstrap";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 import { BsXCircle } from "react-icons/bs";
 
 const PaymentFailed = () => {

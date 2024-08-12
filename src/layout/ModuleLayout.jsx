@@ -106,7 +106,7 @@ const ModuleLayout = ({ children, className, style }) => {
         ...style,
       }}
     >
-      <div className="d-flex justify-content-end gap-3">
+      {/* <div className="d-flex justify-content-end gap-3">
         <div
           className="bg-white py-1 px-2 rounded-4 d-flex justify-content-center align-items-center gap-1 shadow-sm cursor-pointer"
           onClick={openHelpModal}
@@ -163,7 +163,7 @@ const ModuleLayout = ({ children, className, style }) => {
             ))}
           </Offcanvas.Body>
         </Offcanvas>
-      </div>
+      </div> */}
       {children}
     </div>
   );

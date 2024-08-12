@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
   DateCalendarIcon,
   StopWatchIcon,
@@ -20,8 +19,9 @@ import {
   NoIdeaIcon,
 } from "./icons/take-test-icons";
 import { convertToTwoDigits } from "../lib/TakeTest";
-import { Button, Carousel } from "react-bootstrap";
+import { Button, Carousel, Modal } from "react-bootstrap";
 import CreateMarkup from "../Utils/CreateMarkup";
+import Calc from "./Calc";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -118,6 +118,7 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
 const TakeTestComponent = (props) => {
   const currentQuestion = props?.currentQuestion;
   const [active, setActive] = useState(1);
+  const [openCalc, setOpenCalc] = useState(false);
 
   useEffect(() => {
     if (currentQuestion?.confidence === "I KNOW IT") {
@@ -223,6 +224,14 @@ const TakeTestComponent = (props) => {
 
   return (
     <div>
+      <Modal
+        style={{ margin: "0", padding: "0" }}
+        size="sm"
+        show={openCalc}
+        onHide={setOpenCalc}
+      >
+        <Calc />
+      </Modal>
       <header
         className="d-flex flex-wrap justify-content-between align-items-center px-4 py-1"
         style={{ backgroundColor: "#C3D3FF33" }}
@@ -330,6 +339,7 @@ const TakeTestComponent = (props) => {
                 height: "4rem",
                 cursor: "pointer",
               }}
+              onClick={() => setOpenCalc(true)}
             >
               <CalculatorIcon />
               <span

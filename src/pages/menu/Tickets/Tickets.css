@@ -39,3 +39,33 @@
   height: 455px;
   overflow-y: scroll;
 }
+
+.custom-file-input {
+  color: transparent;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: "Choose files";
+  color: black;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #dddddd, #dddddd);
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #dddddd, #dddddd);
+}

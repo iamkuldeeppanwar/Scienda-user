@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
-
 import {
   DateCalendarIcon,
   ClockIcon,
-  TakeNotesIcon,
   ArrowLeftOutlinedIcon24,
   ArrowRightOutlinedIcon24,
 } from "./icons/take-test-icons";
 import {
-  ArrowRightIcon,
   ExplanationIcon,
   FlagIcon,
   RightAnswerCheckIcon,
@@ -38,7 +35,6 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
     report.test &&
     report.test.questions_reference.length > 0 &&
     report.test.questions_reference[currentQuestionIndex];
-
   const [answers, setAnswers] = useState([]);
   const [questions, setQuestion] = useState([]);
   const [correctOption, setCorrectOption] = useState("");
@@ -109,9 +105,6 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
     }
   };
 
-  // console.log(report);
-  //   console.log(answers);
-
   return (
     <div className="bg-white position-relative">
       <ToastContainer />
@@ -171,7 +164,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               color: "#14FF00",
             }}
           >
-            Review Mode On
+            View score
           </button>
         </div>
         <div className="d-flex flex-wrap gap-4">
@@ -334,7 +327,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
           <div className="flex-1">
             <div
               className="rounded-xl text-center py-1"
-              style={{ border: "1px solid #D2D6DB" }}
+              // style={currentQuestion?.images && { border: "1px solid #D2D6DB" }}
             >
               <Carousel>
                 {report?.test &&
@@ -435,7 +428,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                 return (
                   <>
                     <div
-                      className="d-flex gap-2 pb-2"
+                      className="d-flex gap-1 p-1"
                       style={{
                         backgroundColor:
                           data === currentQuestion?.correct_option
@@ -480,83 +473,11 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
                         {data}
                       </p>
                     </div>
-                    {/* <div className="d-flex gap-2 pb-2">
-                      <span>
-                        <WrongAnswerCrossIcon />
-                      </span>
-                      <span
-                        className="text-16 font-bold text-color-primary"
-                        style={{
-                          minWidth: "max-content",
-                        }}
-                      >
-                        {"B ]"}
-                      </span>
-                      <p
-                        className="my-0 text-16 font-normal"
-                        style={{ color: "#1F2A37" }}
-                      >
-                        An unsaved page when you do it on purpose, and it's
-                        getting an unsaved page when you do it on purpose, and
-                        it's getting an unsaved page when you do it on purpose,
-                        and it's getting
-                      </p>
-                    </div> */}
                   </>
                 );
               })}
             </Stack>
             <hr />
-            {/* <div
-              className="bg-white px-3 py-2"
-              style={{ border: "1px solid #F5F5F5" }}
-            >
-              <div className="d-flex justify-content-between align-items-center">
-                <div
-                  className="rounded-xl px-2 py-1"
-                  style={{
-                    boxShadow: "0px 2px 12px 0px #D1D1D10A",
-                    backgroundColor: "#D6D6D63D",
-                  }}
-                >
-                  <span>
-                    <TakeNotesIcon />
-                  </span>
-                  <span className="ms-2 text-10 font-medium">Notes</span>
-                </div>
-                <div>
-                  <span className="text-14 font-semibold text-color-primary">
-                    View All
-                  </span>
-                  <span>
-                    <ArrowRightIcon />
-                  </span>
-                </div>
-              </div>
-              <hr />
-              <ul className="text-12 font-normal" style={{ color: "#292929" }}>
-                <li>
-                  Usually displays this message when you close an unsaved page
-                  when you do it on purpose, and it's getting frustrated to see
-                  this every time.
-                </li>
-                <li>
-                  Usually displays this message when you close an unsaved page
-                  when you do it on purpose, and it's getting frustrated to see
-                  this every time.
-                </li>
-                <li>
-                  Usually displays this message when you close an unsaved page
-                  when you do it on purpose, and it's getting frustrated to see
-                  this every time.
-                </li>
-                <li>
-                  Usually displays this message when you close an unsaved page
-                  when you do it on purpose, and it's getting frustrated to see
-                  this every time.
-                </li>
-              </ul>
-            </div> */}
           </div>
         </div>
       </div>

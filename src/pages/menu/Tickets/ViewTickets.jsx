@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-
 import "./Tickets.css";
 import {
   CreatePlusIcon,
@@ -24,7 +23,6 @@ function CreateTicketModal(props) {
   const token = localStorage.getItem("token");
   const { subAdmins } = useSelector((state) => state.subAdmin);
   const { topics } = useSelector((state) => state.topics);
-  // const [prof, setProf] = useState("");
   const [topicName, setTopicName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
@@ -98,40 +96,23 @@ function CreateTicketModal(props) {
           onSubmit={createTicketHandler}
         >
           <div className="ticket-form-modal">
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14 mt-2">
               <Form.Label>To</Form.Label>
               <Form.Control
                 disabled
                 type="text"
-                className="text-12 font-light"
+                className="text-12"
                 value={subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name}
                 placeholder="Enter subject"
                 required
               />
-              {/* <Form.Label>To</Form.Label>
-              <Form.Select
-                onChange={(e) => setProf(e.target.value)}
-                className="text-14 font-medium"
-                required
-                aria-label="Default select example"
-              >
-                <option disabled>Select topic</option>
-                {subAdmins.length > 0 &&
-                  subAdmins?.map((data) => {
-                    return (
-                      <option value={data?._id} key={data?._id}>
-                        {data?.name}
-                      </option>
-                    );
-                  })}
-              </Form.Select> */}
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14 mt-2">
               <Form.Label>Topics</Form.Label>
               <Form.Select
                 onChange={(e) => setTopicName(e.target.value)}
-                className="text-14 font-medium"
+                className="text-14"
                 required
                 aria-label="Default select example"
               >
@@ -147,11 +128,11 @@ function CreateTicketModal(props) {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14 mt-2">
               <Form.Label>Subject</Form.Label>
               <Form.Control
                 type="text"
-                className="text-12 font-light"
+                className="text-12"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Enter subject"
@@ -159,12 +140,12 @@ function CreateTicketModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14 mt-2">
               <Form.Label>Describe your issue</Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Describe in detail, please..."
-                className="text-12 font-light"
+                className="text-12"
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -178,10 +159,9 @@ function CreateTicketModal(props) {
                   Max 6MB each supported types, png, Jpg, Pdf, doc.
                 </p>
                 <div
-                  className="d-flex align-items-center"
+                  className="d-flex gap-1 align-items-center mt-1"
                   style={{
                     width: "5.75rem",
-                    height: "1.5rem",
                     backgroundColor: "#DDDDDD",
                     borderRadius: "5px",
                     fontSize: "11px",
@@ -189,10 +169,14 @@ function CreateTicketModal(props) {
                     border: "none",
                   }}
                 >
-                  <input type="file" onChange={handleFileChange} />
                   <span>
                     <PaperClipIcon />
                   </span>
+                  <input
+                    className="custom-file-input"
+                    type="file"
+                    onChange={handleFileChange}
+                  />
                 </div>
               </Stack>
 

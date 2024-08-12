@@ -67,7 +67,7 @@ const Dashboard = () => {
       <Container>
         <h3
           style={{ color: "rgba(33, 52, 70, 1)", fontWeight: 400 }}
-          className="text-color-secondary text-22 font-semibold"
+          className="text-color-secondary text-22 font-semibold text-capitalize"
         >
           Welcome Back{" "}
           <span
@@ -75,7 +75,7 @@ const Dashboard = () => {
               fontWeight: 600,
             }}
           >
-            {user?.first_name + user?.last_name + " " + "!!!"}
+            {user?.first_name + " " + user?.last_name + " " + "!!!"}
           </span>
         </h3>
 
@@ -173,7 +173,7 @@ const Dashboard = () => {
                 >
                   Recently Completed Exams
                 </div>
-                <Link to="/menu/tests">
+                <Link to="/menu/proficiency-percentage">
                   <div
                     style={{
                       color: "rgba(153, 153, 153, 1)",
@@ -330,7 +330,7 @@ const Dashboard = () => {
                 >
                   Recently Created Tests
                 </div>
-                <Link to="/menu/speciality-modules">
+                <Link to="/menu/tests">
                   <div
                     style={{
                       color: "rgba(153, 153, 153, 1)",

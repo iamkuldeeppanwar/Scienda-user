@@ -145,8 +145,8 @@ const ProficiencyPercentage = () => {
       <Container>
         <Row className="mt-4 g-3">
           {!loading ? (
-            proficiencies?.map((obj) => (
-              <Col lg={4} key={obj?._id}>
+            [...proficiencies].reverse()?.map((obj) => (
+              <Col lg={3} key={obj?._id}>
                 <ProficiencyPercentageCard
                   timeAlloted={obj?.test?.duration_in_mins}
                   noOfQuestions={obj?.total}

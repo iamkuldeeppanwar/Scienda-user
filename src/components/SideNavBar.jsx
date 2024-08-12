@@ -206,7 +206,13 @@ export default function SideNavbar({
             </ul>
             <hr className="w-100" />
             <div className="w-100 d-flex justify-content-between align-items-center">
-              <div className={isSidebarExpanded ? "d-flex gap-2" : "d-none"}>
+              <div
+                className={
+                  isSidebarExpanded
+                    ? "d-flex align-items-center gap-2"
+                    : "d-none"
+                }
+              >
                 <img
                   src={
                     user &&
@@ -224,7 +230,6 @@ export default function SideNavbar({
                   <p className="profile-name">
                     {user && user.first_name} {user && user.last_name}
                   </p>
-                  <p className="profile-email">{user && user.email}</p>
                 </div>
               </div>
 
@@ -237,6 +242,9 @@ export default function SideNavbar({
                 <LogoutIcon />
               </button>
             </div>
+            <p className="profile-email text-center text-truncate">
+              {user && user.email}
+            </p>
           </div>
         </nav>
       </div>

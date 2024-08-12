@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import ModuleLayout from "../../../layout/ModuleLayout";
 import {
   TimerIcon,
@@ -72,7 +71,7 @@ const TestCard = ({
 
   return (
     <div
-      className="bg-white rounded-xl p-3 px-2"
+      className="bg-white rounded-xl p-3 px-4"
       style={{
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
@@ -182,9 +181,12 @@ const Tests = () => {
           <h4 className="text-22 font-semibold">Exams</h4>
           {!testsLoading ? (
             tests
-              ?.filter((test) => test?.status === "Active")
+              ?.filter(
+                (test) =>
+                  test?.status === "Active" && test?.test_type === "Quiz"
+              )
               ?.map((test, idx) => (
-                <Col lg={4} key={test?._id}>
+                <Col lg={3} key={test?._id}>
                   <TestCard
                     testId={test?._id}
                     testName={test?.test_name}
@@ -204,11 +206,31 @@ const Tests = () => {
         </Row>
 
         <Row className="mt-2 g-3">
+          <h4 className="text-22 font-semibold">Quiz</h4>
+
+          {tests
+            ?.filter((test) => test?.status === "Active")
+            ?.map((test, idx) => (
+              <Col lg={3} key={test?._id}>
+                <TestCard
+                  testId={test?._id}
+                  testName={test?.test_name}
+                  timeAlloted={test?.duration_in_mins}
+                  noOfQuestions={test?.questions_reference.length}
+                  info="Test your knowledge with this MCQ."
+                  btnText="Take Quiz"
+                  isActivePlan={user?.is_active_plan}
+                />
+              </Col>
+            ))}
+        </Row>
+
+        <Row className="mt-2 g-3">
           <h4 className="text-22 font-semibold">
             Review Completed Exam-Scoreboard
           </h4>
           {proficiencies?.map((num, idx) => (
-            <Col md={4}>
+            <Col md={3}>
               <TestCard
                 key={idx}
                 testId={num?._id}

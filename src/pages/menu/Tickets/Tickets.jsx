@@ -237,23 +237,23 @@ const Tickets = () => {
           </div>
 
           <div className="ticket-form">
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14 mt-2">
               <Form.Label>To</Form.Label>
               <Form.Control
                 disabled
                 type="text"
-                className="text-12 font-light"
+                className="text-12"
                 value={subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name}
                 placeholder="Enter subject"
                 required
               />
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14  mt-2">
               <Form.Label>Topics</Form.Label>
               <Form.Select
                 onChange={(e) => setTopicName(e.target.value)}
-                className="text-14 font-medium"
+                className="text-14 "
                 required
                 aria-label="Default select example"
               >
@@ -269,11 +269,11 @@ const Tickets = () => {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14  mt-2">
               <Form.Label>Subject</Form.Label>
               <Form.Control
                 type="text"
-                className="text-12 font-light"
+                className="text-12 "
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Enter subject"
@@ -281,12 +281,12 @@ const Tickets = () => {
               />
             </Form.Group>
 
-            <Form.Group className="text-14 font-medium mt-2">
+            <Form.Group className="text-14  mt-2">
               <Form.Label>Describe your issue</Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Describe in detail, please..."
-                className="text-12 font-light"
+                className="text-12 "
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -300,10 +300,9 @@ const Tickets = () => {
                   Max 6MB each supported types, png, Jpg, Pdf, doc.
                 </p>
                 <div
-                  className="d-flex align-items-center"
+                  className="d-flex gap-1 align-items-center mt-1"
                   style={{
                     width: "5.75rem",
-                    height: "1.5rem",
                     backgroundColor: "#DDDDDD",
                     borderRadius: "5px",
                     fontSize: "11px",
@@ -311,10 +310,14 @@ const Tickets = () => {
                     border: "none",
                   }}
                 >
-                  <input type="file" onChange={handleFileChange} />
                   <span>
                     <PaperClipIcon />
                   </span>
+                  <input
+                    className="custom-file-input"
+                    type="file"
+                    onChange={handleFileChange}
+                  />
                 </div>
               </Stack>
 

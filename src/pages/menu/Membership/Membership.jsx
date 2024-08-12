@@ -310,14 +310,14 @@ const Membership = () => {
                   transactions?.subscription.amount}
               </span>
             </div>
-            <div>
+            {/* <div>
               <button className="border-0 bg-color-primary text-white text-14 font-semibold py-2 px-4 rounded-md">
                 Renew Plan{" "}
                 <span>
                   <CrownIcon />
                 </span>{" "}
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, Stack } from "react-bootstrap";
-
-import { SearchIcon } from "./components/exam-proficiency-icons";
 import ProficiencyProgressBar from "./components/ProficiencyProgressBar";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
@@ -32,8 +30,6 @@ const ExamProficiencyPercentage = () => {
       setLoading(false);
     }
   };
-
-  //   console.log(proficiency);
 
   return (
     <div className="py-3">

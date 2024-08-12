@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-
 import TakeTestComponent from "../../../components/TakeTestComponent";
-// import { ALL_QUESTIONS } from "./lib/TakeTest";
 import TakeTestSubmitModal from "./components/TakeTestSubmitModal";
 import CheckTestScoreModal from "./components/CheckTestScoreModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +15,6 @@ export default function TakeTest() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.tests);
-  // console.log(test);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion =
@@ -139,7 +136,6 @@ export default function TakeTest() {
     const closeTestSubmitModal = () => setTestSubmitModalShow(false);
 
     const { testID } = useParams();
-    console.log(testID);
     const [checkScoreModalShow, setCheckScoreModalShow] = React.useState(false);
 
     const openCheckScoreModal = () => setCheckScoreModalShow(true);

@@ -135,22 +135,22 @@ const SpecialityModules = () => {
   return (
     <ModuleLayout>
       <Container>
-        <div className="my-4 d-flex flex-wrap justify-content-between align-items-center">
-          <h5 className="text-20 font-medium text-color-secondary">
+        <div className="my-4 d-flex flex-wrap justify-content-end align-items-center">
+          {/* <h5 className="text-20 font-medium text-color-secondary">
             Mechanical Engineering
-          </h5>
+          </h5> */}
           <div className="d-flex gap-3 align-items-center flex-wrap">
-            <ViewSummaryBtn
+            {/* <ViewSummaryBtn
               text={"View Summary"}
               onClick={() => navigate("view-summary")}
-            />
+            /> */}
             <SearchTopics onChange={setQuery} />
           </div>
         </div>
         <Row className="g-3">
           {!loading ? (
             specialities?.map((data) => (
-              <Col lg={4} key={data?._id}>
+              <Col lg={3} key={data?._id}>
                 <TopicCard
                   topicName={data?.topic_name}
                   subTopicCount={data?.subtopic_count}
