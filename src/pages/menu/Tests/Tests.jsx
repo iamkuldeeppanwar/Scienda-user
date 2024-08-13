@@ -31,7 +31,9 @@ const TestCard = ({
   const [testStartModalShow, setTestStartModalShow] = useState(false);
 
   const openTestStartModal = () => {
-    if (isActivePlan && !completedExam) {
+    if (!isActivePlan) {
+      navigate("/menu/membership");
+    } else if (isActivePlan && !completedExam) {
       setTestStartModalShow(true);
     } else {
       navigate(`/menu/tests/check-answers/${testId}?viewScore=true`);
@@ -182,10 +184,9 @@ const Tests = () => {
           {!testsLoading ? (
             tests
               ?.filter(
-                (test) =>
-                  test?.status === "Active" && test?.test_type === "Quiz"
+                (test) => test?.status === "Active" && test.test_type === "Exam"
               )
-              ?.map((test, idx) => (
+              ?.map((test) => (
                 <Col lg={3} key={test?._id}>
                   <TestCard
                     testId={test?._id}
@@ -207,9 +208,10 @@ const Tests = () => {
 
         <Row className="mt-2 g-3">
           <h4 className="text-22 font-semibold">Quiz</h4>
-
           {tests
-            ?.filter((test) => test?.status === "Active")
+            ?.filter(
+              (test) => test?.status === "Active" && test?.test_type === "Quiz"
+            )
             ?.map((test, idx) => (
               <Col lg={3} key={test?._id}>
                 <TestCard

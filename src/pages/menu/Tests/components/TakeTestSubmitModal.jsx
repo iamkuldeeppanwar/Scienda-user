@@ -38,7 +38,6 @@ function TakeTestSubmitModal({
 
     try {
       const response = await submitTest(arr, testID, token);
-      console.log(response);
       localStorage.setItem("reportID", response?.reportcard);
       localStorage.removeItem(testID);
     } catch (error) {
