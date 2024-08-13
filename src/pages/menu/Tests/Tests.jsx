@@ -242,6 +242,7 @@ const Tests = () => {
                 noOfQuestions={num?.total}
                 btnText="View Score"
                 completedExam={true}
+                isActivePlan={user?.is_active_plan}
               />
             </Col>
           ))}
