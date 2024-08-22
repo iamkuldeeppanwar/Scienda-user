@@ -26,6 +26,8 @@ import { submitTest } from "../pages/menu/Tests/apis/TestAPIs";
 import { toast } from "react-toastify";
 import { getError } from "../Utils/error";
 import { useNavigate } from "react-router-dom";
+import CreateArea from "./CreateArea";
+import { MdDeleteOutline } from "react-icons/md";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -125,6 +127,22 @@ const TakeTestComponent = (props) => {
   const [openCalc, setOpenCalc] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [notes, setNotes] = useState([]);
+  const [openNotes, setOpenNotes] = useState(false);
+
+  function addNote(newNote) {
+    setNotes((prevNotes) => {
+      return [...prevNotes, newNote];
+    });
+  }
+
+  function deleteNote(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((noteItem, index) => {
+        return index !== id;
+      });
+    });
+  }
 
   useEffect(() => {
     if (currentQuestion?.confidence === "I KNOW IT") {
@@ -268,6 +286,24 @@ const TakeTestComponent = (props) => {
       >
         <Calc />
       </Modal>
+
+      <Modal
+        style={{ margin: "0", padding: "0" }}
+        show={openNotes}
+        onHide={setOpenNotes}
+      >
+        <CreateArea onAdd={addNote} />
+        {notes.map((noteItem, index) => {
+          return (
+            <div key={index} className="note">
+              <p>{noteItem?.content}</p>
+              <button id="target" onClick={() => deleteNote(index)}>
+                <MdDeleteOutline size={23} />
+              </button>
+            </div>
+          );
+        })}
+      </Modal>
       <header
         className="d-flex flex-wrap justify-content-between align-items-center px-4 py-1"
         style={{ backgroundColor: "#C3D3FF33" }}
@@ -395,6 +431,7 @@ const TakeTestComponent = (props) => {
                 height: "4rem",
                 cursor: "pointer",
               }}
+              onClick={() => setOpenNotes(true)}
             >
               <TakeNotesIcon />
               <span

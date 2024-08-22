@@ -144,24 +144,30 @@ const ProficiencyPercentage = () => {
     <ModuleLayout>
       <Container>
         <Row className="mt-4 g-3">
-          {!loading ? (
-            [...proficiencies].reverse()?.map((obj) => (
-              <Col lg={3} key={obj?._id}>
-                <ProficiencyPercentageCard
-                  timeAlloted={obj?.test?.duration_in_mins}
-                  noOfQuestions={obj?.total}
-                  correctAnswers={obj?.correct_answers}
-                  completedOn={obj?.createdAt}
-                  examId={obj?._id}
-                  examName={obj?.test?.test_name}
-                  percentage={obj?.percentage}
-                />
-              </Col>
-            ))
+          {proficiencies.length > 0 ? (
+            <>
+              {!loading ? (
+                [...proficiencies].reverse()?.map((obj) => (
+                  <Col lg={3} key={obj?._id}>
+                    <ProficiencyPercentageCard
+                      timeAlloted={obj?.test?.duration_in_mins}
+                      noOfQuestions={obj?.total}
+                      correctAnswers={obj?.correct_answers}
+                      completedOn={obj?.createdAt}
+                      examId={obj?._id}
+                      examName={obj?.test?.test_name}
+                      percentage={obj?.percentage}
+                    />
+                  </Col>
+                ))
+              ) : (
+                <div className="text-center">
+                  <Spinner size="sm" />
+                </div>
+              )}
+            </>
           ) : (
-            <div className="text-center">
-              <Spinner size="sm" />
-            </div>
+            <div className="text-center">No Report found!</div>
           )}
         </Row>
       </Container>
