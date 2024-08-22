@@ -22,6 +22,10 @@ import { convertToTwoDigits } from "../lib/TakeTest";
 import { Button, Carousel, Modal } from "react-bootstrap";
 import CreateMarkup from "../Utils/CreateMarkup";
 import Calc from "./Calc";
+import { submitTest } from "../pages/menu/Tests/apis/TestAPIs";
+import { toast } from "react-toastify";
+import { getError } from "../Utils/error";
+import { useNavigate } from "react-router-dom";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -119,6 +123,8 @@ const TakeTestComponent = (props) => {
   const currentQuestion = props?.currentQuestion;
   const [active, setActive] = useState(1);
   const [openCalc, setOpenCalc] = useState(false);
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentQuestion?.confidence === "I KNOW IT") {
@@ -171,6 +177,7 @@ const TakeTestComponent = (props) => {
         if (prevTime <= 1) {
           clearInterval(intervalId);
           localStorage.removeItem(localStorageKey);
+          submitTestOnTime();
           return 0;
         }
         const newTime = prevTime - 1;
@@ -221,6 +228,35 @@ const TakeTestComponent = (props) => {
 
   const now = new Date();
   const formattedDate = formatDate(now);
+
+  const submitTestOnTime = async () => {
+    try {
+      let questions = JSON.parse(localStorage.getItem(props?.testID));
+      const arr = questions.map((qnts) => {
+        let obj = {};
+        if (qnts.hasOwnProperty("confidence")) {
+          obj.comment = qnts.confidence;
+        } else {
+          obj.comment = "I KNOW IT";
+        }
+        if (qnts.hasOwnProperty("questionFlagged")) {
+          obj.flag = qnts.questionFlagged;
+        } else {
+          obj.flag = false;
+        }
+
+        obj.selected = qnts.options[qnts.selectedOption];
+
+        return obj;
+      });
+      const response = await submitTest(arr, props?.testID, token);
+      localStorage.setItem("reportID", response?.reportcard);
+      localStorage.removeItem(props?.testID);
+      navigate(`/menu/tests/check-answers/${props?.testID}`);
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  };
 
   return (
     <div>

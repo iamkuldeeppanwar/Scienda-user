@@ -43,7 +43,7 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
     if (reportID) {
       getResult();
     }
-  }, [reportID]);
+  }, []);
 
   useEffect(() => {
     if (report?.test) {
