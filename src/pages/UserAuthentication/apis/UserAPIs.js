@@ -14,7 +14,6 @@ const userRegistration = async (
     last_name,
     dob,
     mobile,
-    domain,
     subdomain,
     email,
     password,
@@ -23,7 +22,7 @@ const userRegistration = async (
     try {
       const userData = await axiosInstance.post("/api/user/register", userInfo);
 
-      resolve(userData.data);
+      resolve(userData?.data);
     } catch (error) {
       reject(error);
     }
