@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Authlogo from "./Utils/Login.png";
 import {
   Card,
@@ -27,6 +27,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [subdomain, setSubdomain] = useState(window.location.host);
 
   const submitHandler = async (e) => {
     const phone = mobile.countryCode + mobile.mobile;
@@ -38,8 +39,7 @@ const Registration = () => {
         last_name,
         dob,
         phone,
-        "66163046f9e2ecdb878291d5",
-        "6626502ba686675750282c1e",
+        subdomain,
         email,
         password
       );
