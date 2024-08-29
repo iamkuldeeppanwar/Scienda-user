@@ -5,8 +5,7 @@ const userRegistration = async (
   last_name,
   dob,
   mobile,
-  domain = "66163046f9e2ecdb878291d5",
-  subdomain = "6626502ba686675750282c1e",
+  subdomain,
   email,
   password
 ) => {
