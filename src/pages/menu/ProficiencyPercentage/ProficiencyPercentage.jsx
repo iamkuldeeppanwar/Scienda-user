@@ -167,7 +167,9 @@ const ProficiencyPercentage = () => {
               )}
             </>
           ) : (
-            <div className="text-center">No Report found!</div>
+            <div className="text-center">
+              <h5>No Report found!</h5>
+            </div>
           )}
         </Row>
       </Container>

@@ -76,41 +76,37 @@ const Reports = () => {
   return (
     <ModuleLayout>
       <ToastContainer />
-      <h2
+      {/* <h2
         style={{
           fontWeight: 600,
-          //   fontSize: "18px",
+          fontSize: "24px",
         }}
       >
         Your Reports
-      </h2>
+      </h2> */}
       <h4
         className="m-3"
-        style={{
-          fontWeight: 600,
-          fontSize: "18px",
-          color: "rgba(97, 114, 243, 1)",
-        }}
+        style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
       >
         Topic Performance
       </h4>
 
       <Container>
-        <Row className="g-3">
+        <Row className="g-2">
           <Col lg={6}>
             <Card>
               <Card.Body>
+                <p
+                  className="m-3"
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "#475467",
+                    fontWeight: 500,
+                  }}
+                >
+                  Number of Test Given
+                </p>
                 <div className="d-flex flex-column align-items-center">
-                  <h4
-                    className="m-3"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      color: "rgba(97, 114, 243, 1)",
-                    }}
-                  >
-                    No. Of Test Given
-                  </h4>
                   <BarChart
                     sx={{ marginLeft: "-50px" }}
                     dataset={reportGraph}
@@ -127,53 +123,57 @@ const Reports = () => {
           <Col lg={6}>
             <Card>
               <Card.Body>
-                <div className="d-flex flex-column align-items-center">
-                  <h4
-                    className="m-3"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      color: "rgba(97, 114, 243, 1)",
-                    }}
-                  >
-                    Overall Confidence Level {pieGraph?.confidence} %
-                  </h4>
-
-                  <div className="d-flex gap-5">
-                    <div
-                      className="text-capitalize"
+                <div className="d-flex align-items-center justify-content-between">
+                  <div>
+                    <p
+                      className="m-3"
                       style={{
-                        color: "#1F2A37",
-                        fontWeight: 600,
+                        fontSize: "0.8rem",
+                        color: "#475467",
+                        fontWeight: 500,
                       }}
                     >
-                      {pieGraph?.test_name}
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          color: "#667085",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Total Marks:{" "}
-                      </span>
-                      <span
-                        className="px-3"
-                        style={{
-                          backgroundColor: "#F3F3F3",
-                          padding: "5px",
-                          borderRadius: "20px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        <span style={{ color: "#9BCF53" }}>
-                          {pieGraph?.correct_answer}
-                        </span>{" "}
-                        / {pieGraph?.total}
-                      </span>
-                    </div>
+                      Overall Confidence Level{" "}
+                      {pieGraph?.confidence ? pieGraph?.confidence : 0} %
+                    </p>
                   </div>
+
+                  <div>
+                    <span
+                      style={{
+                        fontSize: "0.8rem",
+                        color: "#475467",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Total Marks:{" "}
+                    </span>
+                    <span
+                      className="px-4 py-1"
+                      style={{
+                        backgroundColor: "#F3F3F3",
+                        borderRadius: "20px",
+                        fontWeight: 500,
+                      }}
+                    >
+                      <span style={{ color: "#9BCF53" }}>
+                        {pieGraph?.correct_answer}
+                      </span>{" "}
+                      / {pieGraph?.total}
+                    </span>
+                  </div>
+                </div>
+
+                <p
+                  className="text-capitalize px-3"
+                  style={{
+                    color: "#1F2A37",
+                    fontWeight: 700,
+                  }}
+                >
+                  {pieGraph?.test_name}
+                </p>
+                <div className="d-flex align-items-center">
                   <PieChart
                     series={[{ data: pieGraphReport, innerRadius: 60 }]}
                     {...size}
@@ -188,16 +188,16 @@ const Reports = () => {
           <Col lg={6}>
             <Card>
               <Card.Body>
-                <h4
-                  className="m-3 text-center"
+                <p
+                  className="m-3"
                   style={{
-                    fontWeight: 600,
-                    fontSize: "18px",
-                    color: "rgba(97, 114, 243, 1)",
+                    fontSize: "0.8rem",
+                    color: "#475467",
+                    fontWeight: 500,
                   }}
                 >
                   Confidence VS Performance
-                </h4>
+                </p>
                 <div className="d-flex justify-content-center">
                   <BarChart
                     // width={350}
@@ -229,17 +229,17 @@ const Reports = () => {
           <Col lg={6}>
             <Card>
               <Card.Body>
-                <div className="d-flex flex-column align-items-center">
-                  <h4
-                    className="m-3"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      color: "rgba(97, 114, 243, 1)",
-                    }}
-                  >
-                    No. Of Questions Attempted
-                  </h4>
+                <p
+                  className="m-3"
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "#475467",
+                    fontWeight: 500,
+                  }}
+                >
+                  Number of Questions Attempted
+                </p>
+                <div className="d-flex justify-content-center align-items-center">
                   <BarChart
                     sx={{ marginLeft: "-50px" }}
                     dataset={toatalQuestions}

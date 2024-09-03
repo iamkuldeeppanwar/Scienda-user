@@ -1,8 +1,6 @@
 import "../styles/SideNavBar.css";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
-
 import {
   DashboardIcon,
   MembershipIcon,
@@ -18,7 +16,7 @@ import {
   OpenMenuIcon,
 } from "./icons/sidenavbar-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { userGetProfile } from "../pages/menu/MyAccount/apis/UserProfileAPIs";
 import { toast } from "react-toastify";
 import { getError } from "../Utils/error";
@@ -110,8 +108,6 @@ export default function SideNavbar({
     }
   };
 
-  // console.log("sidebar render", user);
-
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -159,7 +155,7 @@ export default function SideNavbar({
         </div>
       </div>
 
-      <hr />
+      <hr style={{ borderBottom: "1px solid var(--primary-color)" }} />
 
       <div className="sidebar">
         <nav className="h-100 d-flex flex-column justify-content-between">

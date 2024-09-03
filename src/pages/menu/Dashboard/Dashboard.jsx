@@ -66,10 +66,10 @@ const Dashboard = () => {
     <ModuleLayout>
       <Container>
         <h3
-          style={{ color: "rgba(33, 52, 70, 1)", fontWeight: 400 }}
+          style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
           className="text-color-secondary text-22 font-semibold text-capitalize"
         >
-          Welcome Back{" "}
+          Welcome{" "}
           <span
             style={{
               fontWeight: 600,
@@ -79,9 +79,10 @@ const Dashboard = () => {
           </span>
         </h3>
 
-        <Row className="g-3">
+        <Row className="g-3 mt-2">
           <Col>
             <Card
+              className="shadow"
               style={{
                 borderLeft: "10px solid rgba(251, 168, 52, 1)",
                 borderRadius: "10px",
@@ -91,7 +92,9 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <TotalExamSVG />
                   <div>
-                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                    <div
+                      style={{ color: "rgb(164, 164, 164)", fontSize: "16px" }}
+                    >
                       Total Exam
                     </div>
                     <div
@@ -108,6 +111,7 @@ const Dashboard = () => {
 
           <Col>
             <Card
+              className="shadow"
               style={{
                 borderLeft: "10px solid rgba(131, 111, 255, 1)",
                 borderRadius: "10px",
@@ -117,7 +121,9 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <TotalTestVG />
                   <div>
-                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                    <div
+                      style={{ color: "rgb(164, 164, 164)", fontSize: "16px" }}
+                    >
                       Total Test
                     </div>
                     <div
@@ -134,6 +140,7 @@ const Dashboard = () => {
 
           <Col>
             <Card
+              className="shadow"
               style={{
                 borderLeft: "10px solid rgba(155, 207, 83, 1)",
                 borderRadius: "10px",
@@ -143,7 +150,9 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <TotalQuizVG />
                   <div>
-                    <div style={{ color: "rgba(164, 164, 164, 1)" }}>
+                    <div
+                      style={{ color: "rgb(164, 164, 164)", fontSize: "16px" }}
+                    >
                       Total Quiz
                     </div>
                     <div
@@ -161,13 +170,13 @@ const Dashboard = () => {
 
         <Row className="g-3 mt-2">
           <Col md={8}>
-            <Card style={{ height: "400px" }}>
+            <Card className="shadow" style={{ height: "400px" }}>
               <div className="d-flex align-items-center justify-content-between px-3">
                 <div
                   className="mt-2"
                   style={{
-                    color: "rgba(97, 114, 243, 1)",
-                    fontSize: "16px",
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
                     fontWeight: 600,
                   }}
                 >
@@ -187,130 +196,149 @@ const Dashboard = () => {
                 </Link>
               </div>
               <Card.Body>
-                <Table responsive>
-                  <thead className="p-4 mb-4 custom-table-head">
-                    <tr
-                      className="rounded-xl border"
-                      style={{
-                        fontSize: "16px",
-                        color: "rgba(33, 52, 70, 1)",
-                      }}
-                    >
-                      <th className="text-center border-0">Exam Name</th>
-                      <th className="text-center border-0">Test Type</th>
-                      <th className="text-center border-0">No. Of Questions</th>
-                      <th className="text-center border-0">Completed On</th>
-                      <th className="text-center border-0">Score</th>
-                      <th className="text-center border-0">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dashboard?.reports?.map((report) => {
-                      return (
-                        <tr key={report?._id}>
-                          <td className="text-center">
-                            {report?.test?.test_name}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.test_type}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.number_of_questions}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.updatedAt.split("T")[0]}
-                          </td>
-                          <td className="text-center">
-                            {report?.correct_answers}
-                          </td>
-                          <td className="text-center">
-                            <Link
-                              to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
-                            >
-                              <IoEyeOutline />
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
+                {dashboard?.reports?.length > 0 ? (
+                  <Table responsive>
+                    <thead className="p-4 mb-4 custom-table-head">
+                      <tr
+                        className="rounded-xl border"
+                        style={{
+                          fontSize: "16px",
+                          color: "rgba(33, 52, 70, 1)",
+                        }}
+                      >
+                        <th className="text-center border-0">Exam Name</th>
+                        <th className="text-center border-0">Test Type</th>
+                        <th className="text-center border-0">
+                          No. Of Questions
+                        </th>
+                        <th className="text-center border-0">Completed On</th>
+                        <th className="text-center border-0">Score</th>
+                        <th className="text-center border-0">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dashboard?.reports?.map((report) => {
+                        return (
+                          <tr key={report?._id}>
+                            <td className="text-center">
+                              {report?.test?.test_name}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.test_type}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.number_of_questions}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.updatedAt.split("T")[0]}
+                            </td>
+                            <td className="text-center">
+                              {report?.correct_answers}
+                            </td>
+                            <td className="text-center">
+                              <Link
+                                to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
+                              >
+                                <IoEyeOutline />
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                ) : (
+                  <div className="text-center">
+                    <h5>No data found!</h5>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
 
           <Col>
-            <Card style={{ height: "530px", overflowY: "scroll" }}>
+            <Card
+              className="shadow"
+              style={{ height: "530px", overflowY: "scroll" }}
+            >
               <Card.Body>
-                <div
-                  style={{
-                    color: "rgba(97, 114, 243, 1)",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                  }}
-                >
-                  New Tickets {dashboard?.tickets?.length}
-                </div>
-
-                {dashboard?.tickets?.map((ticket, index) => {
-                  const color = colors[index % colors.length];
-                  return (
-                    <Card
-                      key={ticket._id}
-                      className="mt-2"
+                {dashboard?.ticket?.length > 0 ? (
+                  <>
+                    <div
                       style={{
-                        borderLeft: `5px solid ${color}`,
-                        borderRadius: "10px",
+                        color: "#8098F9",
+                        fontSize: "1.25rem",
+                        fontWeight: "26px",
                       }}
                     >
-                      <Card.Body>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div
-                            className="w-25 text-truncate"
-                            style={{
-                              color: "rgba(82, 82, 82, 1)",
-                              fontWeight: 600,
-                              fontSize: "14px",
-                            }}
-                          >
-                            {ticket?.subject}
-                          </div>
-                          <div
-                            className="text-end"
-                            style={{
-                              fontWeight: 400,
-                              fontSize: "12px",
-                              color: "rgba(108, 108, 108, 1)",
-                            }}
-                          >
-                            {formatDate(ticket?.createdAt)}
-                          </div>
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div
-                            style={{
-                              color: "rgba(82, 82, 82, 1)",
-                              fontWeight: 600,
-                              fontSize: "12px",
-                            }}
-                          >
-                            Recieved new message
-                          </div>
-                          <div
-                            className="text-end"
-                            style={{
-                              fontWeight: 400,
-                              fontSize: "10px",
-                              color: "rgba(108, 108, 108, 1)",
-                            }}
-                          >
-                            {formatTime(ticket?.createdAt)}
-                          </div>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  );
-                })}
+                      New Tickets {dashboard?.tickets?.length}
+                    </div>
+
+                    {dashboard?.tickets?.map((ticket, index) => {
+                      const color = colors[index % colors.length];
+                      return (
+                        <Card
+                          key={ticket._id}
+                          className="mt-2"
+                          style={{
+                            borderLeft: `5px solid ${color}`,
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <Card.Body>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <div
+                                className="w-25 text-truncate"
+                                style={{
+                                  color: "rgba(82, 82, 82, 1)",
+                                  fontWeight: 600,
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {ticket?.subject}
+                              </div>
+                              <div
+                                className="text-end"
+                                style={{
+                                  fontWeight: 400,
+                                  fontSize: "12px",
+                                  color: "rgba(108, 108, 108, 1)",
+                                }}
+                              >
+                                {formatDate(ticket?.createdAt)}
+                              </div>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <div
+                                style={{
+                                  color: "rgba(82, 82, 82, 1)",
+                                  fontWeight: 600,
+                                  fontSize: "12px",
+                                }}
+                              >
+                                Recieved new message
+                              </div>
+                              <div
+                                className="text-end"
+                                style={{
+                                  fontWeight: 400,
+                                  fontSize: "10px",
+                                  color: "rgba(108, 108, 108, 1)",
+                                }}
+                              >
+                                {formatTime(ticket?.createdAt)}
+                              </div>
+                            </div>
+                          </Card.Body>
+                        </Card>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <h5>No ticket found!</h5>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
@@ -318,13 +346,13 @@ const Dashboard = () => {
 
         <Row className="g-3 mt-2">
           <Col className="recent-test-created" md={8}>
-            <Card style={{ height: "400px" }}>
+            <Card className="shadow" style={{ height: "400px" }}>
               <div className="d-flex align-items-center justify-content-between px-3">
                 <div
                   className="mt-2"
                   style={{
-                    color: "rgba(97, 114, 243, 1)",
-                    fontSize: "16px",
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
                     fontWeight: 600,
                   }}
                 >
@@ -344,69 +372,77 @@ const Dashboard = () => {
                 </Link>
               </div>
               <Card.Body>
-                <Table responsive>
-                  <thead className="p-4 mb-4 custom-table-head">
-                    <tr
-                      className="rounded-xl border"
-                      style={{
-                        fontSize: "16px",
-                        color: "rgba(33, 52, 70, 1)",
-                      }}
-                    >
-                      <th className="text-center border-0">Exam Name</th>
-                      <th className="text-center border-0">Test Type</th>
-                      <th className="text-center border-0">No. Of Questions</th>
-                      <th className="text-center border-0">Time alloted</th>
-                      <th className="text-center border-0">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dashboard?.tests?.map((test) => {
-                      return (
-                        <tr key={test?._id}>
-                          <td className="text-center">{test?.test_name}</td>
-                          <td className="text-center">{test?.test_type}</td>
-                          <td className="text-center">
-                            {test?.number_of_questions}
-                          </td>
-                          <td className="text-center">
-                            {formatDuration(test?.duration_in_mins)}
-                          </td>
-                          <td
-                            className="text-center px-2"
-                            style={
-                              test?.attempted
-                                ? {
-                                    borderRadius: "20px",
-                                    backgroundColor: "rgba(240, 253, 249, 1)",
-                                    color: "rgba(21, 183, 158, 1)",
-                                  }
-                                : {
-                                    borderRadius: "20px",
-                                    color: "#FF9C07",
-                                  }
-                            }
-                          >
-                            {test?.attempted ? "Attempted" : "Not Attempted"}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
+                {dashboard?.tests?.length > 0 ? (
+                  <Table responsive>
+                    <thead className="p-4 mb-4 custom-table-head">
+                      <tr
+                        className="rounded-xl border"
+                        style={{
+                          fontSize: "16px",
+                          color: "rgba(33, 52, 70, 1)",
+                        }}
+                      >
+                        <th className="text-center border-0">Exam Name</th>
+                        <th className="text-center border-0">Test Type</th>
+                        <th className="text-center border-0">
+                          No. Of Questions
+                        </th>
+                        <th className="text-center border-0">Time alloted</th>
+                        <th className="text-center border-0">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dashboard?.tests?.map((test) => {
+                        return (
+                          <tr key={test?._id}>
+                            <td className="text-center">{test?.test_name}</td>
+                            <td className="text-center">{test?.test_type}</td>
+                            <td className="text-center">
+                              {test?.number_of_questions}
+                            </td>
+                            <td className="text-center">
+                              {formatDuration(test?.duration_in_mins)}
+                            </td>
+                            <td
+                              className="text-center px-2"
+                              style={
+                                test?.attempted
+                                  ? {
+                                      borderRadius: "20px",
+                                      backgroundColor: "rgba(240, 253, 249, 1)",
+                                      color: "rgba(21, 183, 158, 1)",
+                                    }
+                                  : {
+                                      borderRadius: "20px",
+                                      color: "#FF9C07",
+                                    }
+                              }
+                            >
+                              {test?.attempted ? "Attempted" : "Not Attempted"}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                ) : (
+                  <div>
+                    <h5 className="text-center">No data found!</h5>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
 
           <Col>
-            <Card style={{ height: "270px" }}>
+            <Card className="shadow" style={{ height: "270px" }}>
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
                   <div
                     style={{
-                      color: "rgba(97, 114, 243, 1)",
+                      color: "#8098F9",
+                      fontSize: "1.25rem",
                       fontWeight: 600,
-                      fontSize: "12px",
                     }}
                   >
                     Your Membership Plan
@@ -433,7 +469,11 @@ const Dashboard = () => {
                     fontWeight: 700,
                   }}
                 >
-                  £ {dashboard?.subscription?.amount} / Month
+                  £{" "}
+                  {dashboard?.subscription?.amount
+                    ? dashboard?.subscription?.amount
+                    : 0}{" "}
+                  / Month
                 </div>
 
                 <div className="d-flex justify-content-center mt-4">
@@ -450,15 +490,21 @@ const Dashboard = () => {
                   </button>
                 </div>
 
-                <div
-                  className="mt-4"
-                  style={{ fontSize: "12px", textAlign: "center" }}
-                >
-                  Membership Expires on:{" "}
-                  <span style={{ color: "rgba(255, 68, 64, 1)" }}>
-                    {formatDate(dashboard?.subscription?.expiry)}
-                  </span>
-                </div>
+                {dashboard?.subscription?.expiry && (
+                  <div
+                    className="mt-4"
+                    style={{
+                      fontSize: "12px",
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Membership Expires on:{" "}
+                    <span style={{ color: "rgba(255, 68, 64, 1)" }}>
+                      {formatDate(dashboard?.subscription?.expiry)}
+                    </span>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>

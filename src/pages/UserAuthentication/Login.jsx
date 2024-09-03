@@ -18,6 +18,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
+  const [subdomain, setSubdomain] = useState(window.location.host);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await userLogin(email, password);
+      const response = await userLogin(email, password, subdomain);
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
       dispatch(setToken(response));

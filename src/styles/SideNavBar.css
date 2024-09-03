@@ -47,7 +47,7 @@
   height: calc(100% - (5rem + 1px));
   overflow-x: hidden;
   overflow-y: initial;
-  padding: 0 1rem;
+  padding: 0.2rem;
 }
 
 .nav-sidebar {
@@ -69,17 +69,16 @@
 .nav-sidebar .menu-item .nav-link {
   width: 100%;
   white-space: nowrap;
-  padding: 0.25rem 0.5rem;
+  padding: 5px 16px;
 }
 
 .nav-sidebar .menu-item .nav-link p {
   display: inline;
   margin: 0;
   white-space: nowrap;
-
   color: var(--primary-color);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* NX = not expanded */
@@ -101,10 +100,12 @@
 /* ACTIVE LINK */
 .menu-item.active-item .nav-link {
   background-color: var(--primary-color);
+  padding: 5px 16px;
 }
 
 .menu-item.active-item .nav-link p {
   color: white;
+  font-size: 16px;
 }
 
 .profile-name {

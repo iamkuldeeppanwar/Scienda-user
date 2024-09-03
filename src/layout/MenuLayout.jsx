@@ -36,7 +36,7 @@ const MenuLayout = () => {
       <section
         className="w-100 page-outlet"
         style={{
-          backgroundColor: isSidebarExpanded ? "#F3F4F6" : "#FCFCFD",
+          // backgroundColor: isSidebarExpanded ? "#F3F4F6" : "#FCFCFD",
           minHeight: "100vh",
         }}
       >

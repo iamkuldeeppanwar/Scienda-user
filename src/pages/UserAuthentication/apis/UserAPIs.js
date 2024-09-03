@@ -57,8 +57,8 @@ const userResendOtp = async (email, otp) => {
   });
 };
 
-const userLogin = async (email, password) => {
-  const login = { email, password };
+const userLogin = async (email, password, subdomain) => {
+  const login = { email, password, host: subdomain };
   return new Promise(async (resolve, reject) => {
     try {
       const userData = await axiosInstance.post("/api/user/login", login);
