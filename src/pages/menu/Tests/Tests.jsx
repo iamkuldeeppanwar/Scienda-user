@@ -77,42 +77,46 @@ const TestCard = ({
       style={{
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
-        // width: "300px",
         minHeight: "12rem",
       }}
     >
-      <h6 className="text-center text-14 font-medium">{testName}</h6>
+      <h6
+        style={{ color: "#475467" }}
+        className="text-center text-15 font-bold"
+      >
+        {testName}
+      </h6>
       <div className="d-flex flex-column gap-2 mt-4 mb-3">
         <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex justify-content-between align-items-center gap-1 text-12 font-semibold">
+          <div className="d-flex justify-content-between align-items-center gap-1 text-14 font-semibold">
             <TimerIcon /> Time Allotted:
           </div>
-          <div className="text-12 font-light">
+          <div className="text-14 font-medium">
             {formatDuration(timeAlloted)}
           </div>
         </div>
         {completedOn && (
           <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex justify-content-between align-items-center gap-1 text-12 font-semibold">
+            <div className="d-flex justify-content-between align-items-center gap-1 text-14 font-semibold">
               <CalendarIcon /> Completed On:
             </div>
-            <div className="text-12 font-light">
+            <div className="text-14 font-medium">
               {formatDateTime(completedOn)}
             </div>
           </div>
         )}
 
         <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex justify-content-between align-items-center gap-1 text-12 font-semibold">
+          <div className="d-flex justify-content-between align-items-center gap-1 text-14 font-semibold">
             <QuestionsIcon /> No. of Questions:
           </div>
-          <div className="text-12 font-light">{noOfQuestions}</div>
+          <div className="text-14 font-medium">{noOfQuestions}</div>
         </div>
       </div>
       {info && (
         <p
           style={{ color: "#475467" }}
-          className="text-center text-12 font-normal"
+          className="text-center text-12 font-medium"
         >
           {info}
         </p>
@@ -120,7 +124,7 @@ const TestCard = ({
       <div className="w-100 d-flex justify-content-center">
         <button
           onClick={openTestStartModal}
-          className="bg-white mx-auto text-center font-medium text-12 text-color-primary rounded py-1"
+          className="view-button text-center font-medium text-14 text-color-primary rounded py-1"
           style={{
             border: "1px solid #00008B",
             boxShadow: "0px 4px 4px 0px #ACD4FF0A",

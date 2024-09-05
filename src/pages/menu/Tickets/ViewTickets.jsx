@@ -260,21 +260,21 @@ const ViewTickets = () => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center bg-color-light py-4 px-3">
-        <h3 className="text-36 font-semibold text-color-secondary">
+        <h3 style={{ color: "#8098F9", fontSize: "26px", fontWeight: 600 }}>
           Manage Tickets
         </h3>
         <CreateTicketButton />
       </div>
 
       <div className="p-4">
-        <h4 className="text-22 font-medium mb-4">My Tickets</h4>
+        <p style={{ fontWeight: 700, fontSize: "18px" }}>My Tickets</p>
 
         <Stack gap={3}>
           {!ticketLoader ? (
             tickets?.map((ticket, idx) => (
               <div
                 key={idx}
-                className="pb-2 pt-3 px-4 bg-white rounded-xl d-flex flex-column cursor-pointer"
+                className="pb-2 pt-3 px-4 bg-white rounded-xl d-flex flex-column cursor-pointer shadow"
                 style={{
                   border: "1px solid #EFEFEF",
                   boxShadow: "0px 4px 12px 0px #0000000A",
@@ -290,7 +290,7 @@ const ViewTickets = () => {
                   </p>
 
                   {ticket?.status === "Closed" && (
-                    <p className="text-color-secondary text-12 font-normal">
+                    <p className="text-color-secondary text-12 font-medium">
                       Issue Resolved{" "}
                       <span>
                         <IssueResolvedIcon />
@@ -299,7 +299,7 @@ const ViewTickets = () => {
                   )}
 
                   {ticket?.status === "Pending" && (
-                    <p className="text-color-progress text-12 font-normal">
+                    <p className="text-color-progress text-12 font-medium">
                       In Progress{" "}
                       <span>
                         <InProgressIcon />
@@ -308,7 +308,7 @@ const ViewTickets = () => {
                   )}
 
                   {ticket?.status === "Open" && (
-                    <p className="text-secondary text-12 font-normal">
+                    <p className="text-secondary text-12 font-medium">
                       Issue Not Resolved{" "}
                       <span>
                         <UnResolvedIcon />
@@ -318,13 +318,13 @@ const ViewTickets = () => {
                 </div>
                 <div className="d-flex flex-wrap justify-content-between align-items-start">
                   <p
-                    className="text-14 font-normal"
+                    className="text-14 font-medium"
                     style={{ color: "#525252" }}
                   >
                     {ticket?.description}
                   </p>
                   <p
-                    className="text-12 font-normal"
+                    className="text-12 font-medium"
                     style={{ color: "#475467" }}
                   >
                     {formatDate(ticket?.createdAt.split("T")[0])}

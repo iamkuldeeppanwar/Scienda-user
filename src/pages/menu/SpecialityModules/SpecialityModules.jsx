@@ -15,41 +15,27 @@ import CreateMarkup from "../../../Utils/CreateMarkup";
 
 const SearchTopics = ({ onChange }) => {
   return (
-    <div className="d-flex column-gap-3">
-      <div
+    <div
+      className="d-flex align-items-center rounded-lg shadow"
+      style={{
+        boxShadow: "0px 4px 12px 0px #0000000A",
+        backgroundColor: "white",
+        padding: "4px 1rem",
+        minWidth: "300px",
+        height: "2.5rem",
+      }}
+    >
+      <SearchIcon />
+      <input
+        onChange={(e) => onChange(e.target.value)}
+        type="text"
+        placeholder="Search Topics"
+        className="w-100 p-1"
         style={{
-          boxShadow: "0px 4px 12px 0px #0000000A",
-          borderRadius: "5px",
-          backgroundColor: "white",
-          padding: "4px 1rem",
-          minWidth: "300px",
-          height: "2.5rem",
+          outline: "none",
+          border: "none",
         }}
-      >
-        <SearchIcon />
-        <input
-          onChange={(e) => onChange(e.target.value)}
-          type="text"
-          placeholder="Search Topics"
-          className="border-0 mx-2 mt-1 w-75"
-          style={{
-            outline: "none",
-          }}
-        />
-      </div>
-      {/* <button
-        className="border-0 d-block text-white rounded-2"
-        style={{
-          boxShadow: "0px 4px 4px 0px #0000000A",
-          height: "2.5rem",
-          width: "5.35rem",
-          backgroundColor: "var(--primary-color)",
-          fontSize: "14px",
-          fontWeight: 500,
-        }}
-      >
-        Search
-      </button> */}
+      />
     </div>
   );
 };
@@ -63,31 +49,33 @@ const TopicCard = ({
 }) => {
   return (
     <div
-      className="rounded-lg bg-white p-3 "
+      className="rounded-lg bg-white p-3 shadow"
       style={{
-        // width: "24.35%",
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
       }}
     >
-      <h5 className="text-center text-14 font-medium mt-2">
+      <h5
+        className="text-center mt-2"
+        style={{ color: "#475467", fontWeight: 500, fontSize: "16px" }}
+      >
         Topic Name {topicName}
       </h5>
       <hr className="my-2" />
       <Stack direction="horizontal" gap={2} className="justify-content-between">
-        <div className="flex-grow-1 text-center rounded-sm bg-color-yellow-100 text-10 font-medium">
+        <div className="flex-grow-1 text-center rounded-sm bg-color-yellow-100 text-12 font-medium p-1">
           {topicName}
         </div>
-        <div className="flex-grow-1 text-center rounded-sm bg-color-light text-10 font-medium">
+        <div className="flex-grow-1 text-center rounded-sm bg-color-light text-12 font-medium p-1">
           Subtopics: {subTopicCount}
         </div>
       </Stack>
-      <p className="d-flex justify-content-center align-items-center gap-2 text-12 font-semibold my-2">
+      <p className="d-flex justify-content-center align-items-center gap-2 text-12 font-medium my-2">
         <QuestionsIcon /> No. of questions:{" "}
-        <span className="font-light">{questionCount} Questions</span>
+        <span className="font-medium">{questionCount} Questions</span>
       </p>
       <p
-        className="text-center text-12 font-light "
+        className="text-center text-12 font-medium"
         style={{ color: "#475467" }}
       >
         <CreateMarkup content={description} />
@@ -95,7 +83,7 @@ const TopicCard = ({
       <div className="text-center">
         <Link
           to={`topic-detail/${idx}`}
-          className="text-12 font-medium text-color-primary text-decoration-none rounded bg-white border-color-primary px-4 py-2"
+          className="view-button text-12 font-bold text-color-primary text-decoration-none rounded border-color-primary px-4 py-2"
           style={{ boxShadow: "0px 4px 4px 0px #0000000A" }}
         >
           View Details
@@ -136,16 +124,7 @@ const SpecialityModules = () => {
     <ModuleLayout>
       <Container>
         <div className="my-4 d-flex flex-wrap justify-content-end align-items-center">
-          {/* <h5 className="text-20 font-medium text-color-secondary">
-            Mechanical Engineering
-          </h5> */}
-          <div className="d-flex gap-3 align-items-center flex-wrap">
-            {/* <ViewSummaryBtn
-              text={"View Summary"}
-              onClick={() => navigate("view-summary")}
-            /> */}
-            <SearchTopics onChange={setQuery} />
-          </div>
+          <SearchTopics onChange={setQuery} />
         </div>
         <Row className="g-3">
           {!loading ? (

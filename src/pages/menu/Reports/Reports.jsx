@@ -76,17 +76,9 @@ const Reports = () => {
   return (
     <ModuleLayout>
       <ToastContainer />
-      {/* <h2
-        style={{
-          fontWeight: 600,
-          fontSize: "24px",
-        }}
-      >
-        Your Reports
-      </h2> */}
       <h4
         className="m-3"
-        style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
+        style={{ color: "#8098F9", fontSize: "26px", fontWeight: 600 }}
       >
         Topic Performance
       </h4>
@@ -94,7 +86,7 @@ const Reports = () => {
       <Container>
         <Row className="g-2">
           <Col lg={6}>
-            <Card>
+            <Card className="shadow border-0">
               <Card.Body>
                 <p
                   className="m-3"
@@ -106,13 +98,11 @@ const Reports = () => {
                 >
                   Number of Test Given
                 </p>
-                <div className="d-flex flex-column align-items-center">
+                <div className="d-flex justify-content-center">
                   <BarChart
-                    sx={{ marginLeft: "-50px" }}
                     dataset={reportGraph}
                     xAxis={[{ scaleType: "band", dataKey: "month" }]}
                     series={[{ dataKey: "count" }]}
-                    // width={350}
                     height={225}
                   />
                 </div>
@@ -121,7 +111,7 @@ const Reports = () => {
           </Col>
 
           <Col lg={6}>
-            <Card>
+            <Card className="shadow border-0">
               <Card.Body>
                 <div className="d-flex align-items-center justify-content-between">
                   <div>
@@ -148,19 +138,21 @@ const Reports = () => {
                     >
                       Total Marks:{" "}
                     </span>
-                    <span
-                      className="px-4 py-1"
-                      style={{
-                        backgroundColor: "#F3F3F3",
-                        borderRadius: "20px",
-                        fontWeight: 500,
-                      }}
-                    >
-                      <span style={{ color: "#9BCF53" }}>
-                        {pieGraph?.correct_answer}
-                      </span>{" "}
-                      / {pieGraph?.total}
-                    </span>
+                    {pieGraph?.total && (
+                      <span
+                        className="px-4 py-1"
+                        style={{
+                          backgroundColor: "#F3F3F3",
+                          borderRadius: "20px",
+                          fontWeight: 500,
+                        }}
+                      >
+                        <span style={{ color: "#9BCF53" }}>
+                          {pieGraph?.correct_answer}
+                        </span>{" "}
+                        / {pieGraph?.total}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -186,7 +178,7 @@ const Reports = () => {
 
         <Row className="mt-4 g-3">
           <Col lg={6}>
-            <Card>
+            <Card className="shadow border-0">
               <Card.Body>
                 <p
                   className="m-3"
@@ -200,7 +192,6 @@ const Reports = () => {
                 </p>
                 <div className="d-flex justify-content-center">
                   <BarChart
-                    // width={350}
                     height={300}
                     series={[
                       {
@@ -227,7 +218,7 @@ const Reports = () => {
           </Col>
 
           <Col lg={6}>
-            <Card>
+            <Card className="shadow border-0">
               <Card.Body>
                 <p
                   className="m-3"
@@ -239,13 +230,11 @@ const Reports = () => {
                 >
                   Number of Questions Attempted
                 </p>
-                <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex justify-content-center">
                   <BarChart
-                    sx={{ marginLeft: "-50px" }}
                     dataset={toatalQuestions}
                     xAxis={[{ scaleType: "band", dataKey: "month" }]}
                     series={[{ dataKey: "count" }]}
-                    // width={350}
                     height={300}
                   />
                 </div>

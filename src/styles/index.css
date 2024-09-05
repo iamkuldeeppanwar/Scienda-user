@@ -5,8 +5,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --primary-color: #00008B;
-  --secondary-color: #6172F3;
+  --primary-color: #00008b;
+  --secondary-color: #6172f3;
 }
 
 /* SCROLLBAR */
@@ -40,4 +40,9 @@
   background-repeat: no-repeat;
   background-position-y: bottom;
   cursor: default;
+}
+
+.view-button:hover {
+  background-color: var(--primary-color);
+  color: white;
 }

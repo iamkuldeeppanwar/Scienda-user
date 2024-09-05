@@ -6,7 +6,9 @@ const userSlice = createSlice({
     users: [],
     userCount: 0,
     filteredUsers: 0,
-    user: {},
+    user: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : {},
     user_transactions: [],
   },
   reducers: {
@@ -17,6 +19,7 @@ const userSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload.user;
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.user_transactions = action.payload.user_transactions;
     },
   },

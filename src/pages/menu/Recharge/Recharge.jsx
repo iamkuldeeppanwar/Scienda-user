@@ -8,6 +8,7 @@ import { getError } from "../../../Utils/error";
 import { ToastContainer, toast } from "react-toastify";
 import { getReacharge } from "./api/reachargeApi";
 import { Spinner } from "react-bootstrap";
+import "./Recharge.css";
 
 const RechargeModalTest = (props) => {
   const [modalShow, setModalShow] = useState(false);
@@ -105,54 +106,42 @@ const Recharge = () => {
   };
 
   return (
-    <ModuleLayout>
-      <div className="px-4 pt-5 pb-4 d-flex justify-content-center">
-        <img
-          className="w-90"
-          src="/images/recharge-hero.png"
-          alt="recharge-hero.png"
-          srcset=""
-        />
-      </div>
+    <ModuleLayout style={{ padding: "0" }}>
+      <div className="blur-container">
+        <div className="content d-flex flex-column align-items-center justify-content-center">
+          <h5 className="text-white text-center w-55 text-28 font-medium">
+            "Feeling stuck? Let's reboot your brain with a practice exam
+            jumpstart! Get ready to conquer and recharge!"
+          </h5>
 
-      <h5 className="w-65 mx-auto text-center text-28 font-medium">
-        "Feeling stuck? Let's reboot your brain with a practice exam jumpstart!
-        Get ready to conquer and recharge!"
-      </h5>
+          <div className="mb-3">
+            <div>
+              <h5 className="mt-3 text-22 text-white text-center">
+                What will you get:
+              </h5>
+              <ul className="text-22">
+                <li style={{ fontWeight: "300" }} className="text-white">
+                  Unlimited Attempts
+                </li>
+                <li style={{ fontWeight: "300" }} className="text-white">
+                  Improve Your Confidence.
+                </li>
+              </ul>
+            </div>
+          </div>
 
-      <div
-        className="d-flex flex-column align-items-start w-55 mx-auto px-3 mb-4"
-        style={{}}
-      >
-        <p
-          style={{ color: "#664747" }}
-          className="text-center text-22 font-normal mt-3"
-        >
-          "Unlock your potential with an exam jumpstart! Say goodbye to feeling
-          stuck and hello to Knowledge recharge!"
-        </p>
-
-        <div className="d-flex flex-column align-items-center">
-          <div className="ps-4" style={{ color: "#664747" }}>
-            <h5 className="me-3 d-block text-22">What will you get:</h5>
-            <ul className="text-22">
-              <li>Unlimited Attempts</li>
-              <li>Improve Your Confidence.</li>
-            </ul>
+          <div style={{ border: "1px solid #FFFFFF6B", width: "50%" }} />
+          <div className="text-center mt-4">
+            <button
+              className="text-24 font-semibold border-0 bg-color-white rounded-lg view-button"
+              style={{ width: "350px", height: "60px" }}
+              onClick={handleRecharge}
+            >
+              {loading ? <Spinner size="sm" /> : "Recharge Now"}
+            </button>
           </div>
         </div>
       </div>
-
-      <div className="text-center">
-        <button
-          className="text-24 font-semibold text-white border-0 bg-color-primary rounded-lg"
-          style={{ width: "428px", height: "72px" }}
-          onClick={handleRecharge}
-        >
-          {loading ? <Spinner size="sm" /> : "Recharge Now"}
-        </button>
-      </div>
-      {/* <RechargeModalTest /> */}
       <ToastContainer />
     </ModuleLayout>
   );

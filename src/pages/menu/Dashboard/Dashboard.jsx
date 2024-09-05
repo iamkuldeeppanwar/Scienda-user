@@ -66,7 +66,7 @@ const Dashboard = () => {
     <ModuleLayout>
       <Container>
         <h3
-          style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
+          style={{ color: "#8098F9", fontSize: "26px", fontWeight: 600 }}
           className="text-color-secondary text-22 font-semibold text-capitalize"
         >
           Welcome{" "}
@@ -185,9 +185,9 @@ const Dashboard = () => {
                 <Link to="/menu/proficiency-percentage">
                   <div
                     style={{
-                      color: "rgba(153, 153, 153, 1)",
-                      fontWeight: 600,
-                      fontSize: "12px",
+                      color: "#00009b",
+                      fontWeight: 500,
+                      fontSize: "16px",
                       cursor: "pointer",
                     }}
                   >
@@ -361,9 +361,9 @@ const Dashboard = () => {
                 <Link to="/menu/tests">
                   <div
                     style={{
-                      color: "rgba(153, 153, 153, 1)",
-                      fontWeight: 600,
-                      fontSize: "12px",
+                      color: "#00009b",
+                      fontWeight: 500,
+                      fontSize: "16px",
                       cursor: "pointer",
                     }}
                   >
@@ -374,37 +374,69 @@ const Dashboard = () => {
               <Card.Body>
                 {dashboard?.tests?.length > 0 ? (
                   <Table responsive>
-                    <thead className="p-4 mb-4 custom-table-head">
-                      <tr
-                        className="rounded-xl border"
-                        style={{
-                          fontSize: "16px",
-                          color: "rgba(33, 52, 70, 1)",
-                        }}
-                      >
-                        <th className="text-center border-0">Exam Name</th>
-                        <th className="text-center border-0">Test Type</th>
-                        <th className="text-center border-0">
+                    <thead
+                      style={{ borderRadius: "10px" }}
+                      className="p-4 mb-4 "
+                    >
+                      <tr>
+                        <th
+                          style={{
+                            borderTopLeftRadius: "5px",
+                            borderBottomLeftRadius: "5px",
+                            backgroundColor: "#f5f8ff",
+                          }}
+                          className="text-center border-0 text-14"
+                        >
+                          Exam Name
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#f5f8ff" }}
+                          className="text-center border-0 text-14"
+                        >
+                          Test Type
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#f5f8ff" }}
+                          className="text-center border-0 text-14"
+                        >
                           No. Of Questions
                         </th>
-                        <th className="text-center border-0">Time alloted</th>
-                        <th className="text-center border-0">Status</th>
+                        <th
+                          style={{ backgroundColor: "#f5f8ff" }}
+                          className="text-center border-0 text-14"
+                        >
+                          Time alloted
+                        </th>
+                        <th
+                          className="text-center text-14 border-0"
+                          style={{
+                            borderTopRightRadius: "5px",
+                            borderBottomRightRadius: "5px",
+                            backgroundColor: "#f5f8ff",
+                          }}
+                        >
+                          Status
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {dashboard?.tests?.map((test) => {
                         return (
                           <tr key={test?._id}>
-                            <td className="text-center">{test?.test_name}</td>
-                            <td className="text-center">{test?.test_type}</td>
-                            <td className="text-center">
+                            <td className="text-center font-medium text-12">
+                              {test?.test_name}
+                            </td>
+                            <td className="text-center font-medium text-12">
+                              {test?.test_type}
+                            </td>
+                            <td className="text-center font-medium text-12">
                               {test?.number_of_questions}
                             </td>
-                            <td className="text-center">
+                            <td className="text-center font-medium text-12">
                               {formatDuration(test?.duration_in_mins)}
                             </td>
                             <td
-                              className="text-center px-2"
+                              className="text-center px-2 font-medium text-12"
                               style={
                                 test?.attempted
                                   ? {
