@@ -11,10 +11,12 @@ import {
   getReportQuestionGraph,
 } from "./api/reportApi";
 import { PieChart } from "@mui/x-charts/PieChart";
+import HeaderContent from "../../../components/HeaderContent";
+import Skeleton from "react-loading-skeleton";
 
 const size = {
   width: 400,
-  height: 200,
+  height: 188,
 };
 
 const Reports = () => {
@@ -26,6 +28,10 @@ const Reports = () => {
   const [pData, setPData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [toatalQuestions, setTotalQuestions] = useState([]);
+  const [reportLoading, setReportLoading] = useState(false);
+  const [pieLoading, setPieLoading] = useState(false);
+  const [confidenceLoading, setConfidenceLoading] = useState(false);
+  const [questionLoading, setQuestionLoading] = useState(false);
 
   useEffect(() => {
     getGraphReport();
@@ -36,214 +42,274 @@ const Reports = () => {
 
   const getGraphReport = async () => {
     try {
+      setReportLoading(true);
       const res = await getReportGraph(token);
       setReportGraph(res?.data);
+      setReportLoading(false);
     } catch (error) {
       toast.error(getError(error));
+      setReportLoading(false);
     }
   };
 
   const getPieGraphReport = async () => {
     try {
+      setPieLoading(true);
       const res = await getReportPieGraph(token);
       setPieGraph(res?.data);
       setPieGraphReport(res?.data?.graphdata);
+      setPieLoading(false);
     } catch (error) {
       toast.error(getError(error));
+      setPieLoading(false);
     }
   };
 
   const getReportConfidence = async () => {
     try {
+      setConfidenceLoading(true);
       const res = await getReportConfidenceGraph(token);
       setUData(res?.data?.uData);
       setPData(res?.data?.pData);
       setXLabels(res?.data?.xLabels);
+      setConfidenceLoading(false);
     } catch (error) {
       toast.error(getError(error));
+      setConfidenceLoading(false);
     }
   };
 
   const getReportQuestions = async () => {
     try {
+      setQuestionLoading(true);
       const res = await getReportQuestionGraph(token);
       setTotalQuestions(res?.data);
+      setQuestionLoading(false);
     } catch (error) {
       toast.error(getError(error));
+      setQuestionLoading(false);
     }
   };
 
   return (
-    <ModuleLayout>
-      <ToastContainer />
-      <h4
-        className="m-3"
-        style={{ color: "#8098F9", fontSize: "26px", fontWeight: 600 }}
-      >
-        Topic Performance
-      </h4>
-
-      <Container>
-        <Row className="g-2">
-          <Col lg={6}>
-            <Card className="shadow border-0">
-              <Card.Body>
-                <p
-                  className="m-3"
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#475467",
-                    fontWeight: 500,
-                  }}
-                >
-                  Number of Test Given
-                </p>
-                <div className="d-flex justify-content-center">
-                  <BarChart
-                    dataset={reportGraph}
-                    xAxis={[{ scaleType: "band", dataKey: "month" }]}
-                    series={[{ dataKey: "count" }]}
-                    height={225}
-                  />
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col lg={6}>
-            <Card className="shadow border-0">
-              <Card.Body>
-                <div className="d-flex align-items-center justify-content-between">
-                  <div>
+    <>
+      <HeaderContent content={"Reports"} />
+      <ModuleLayout className="ps-3">
+        <Container>
+          <Row className="g-2">
+            {!reportLoading ? (
+              <Col lg={6}>
+                <Card className="shadow border-1 rounded-xl">
+                  <Card.Body>
                     <p
-                      className="m-3"
                       style={{
-                        fontSize: "0.8rem",
+                        fontSize: "14px",
                         color: "#475467",
                         fontWeight: 500,
                       }}
                     >
-                      Overall Confidence Level{" "}
-                      {pieGraph?.confidence ? pieGraph?.confidence : 0} %
+                      Number of Test Given
                     </p>
-                  </div>
+                    <div className="d-flex justify-content-center">
+                      <BarChart
+                        dataset={reportGraph}
+                        xAxis={[{ scaleType: "band", dataKey: "month" }]}
+                        series={[{ dataKey: "count" }]}
+                        height={225}
+                        borderRadius={10}
+                        colors={["#00008b"]}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ) : (
+              <Col>
+                {[1].map((_, i) => (
+                  <Skeleton
+                    className="rounded-4"
+                    width={"550px"}
+                    height={"290px"}
+                  />
+                ))}
+              </Col>
+            )}
 
-                  <div>
-                    <span
-                      style={{
-                        fontSize: "0.8rem",
-                        color: "#475467",
-                        fontWeight: 500,
-                      }}
-                    >
-                      Total Marks:{" "}
-                    </span>
-                    {pieGraph?.total && (
-                      <span
-                        className="px-4 py-1"
+            {!pieLoading ? (
+              <Col lg={6}>
+                <Card className="shadow border-1 rounded-xl">
+                  <Card.Body>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "14px",
+                            color: "#475467",
+                            fontWeight: 500,
+                          }}
+                        >
+                          Overall Confidence Level{" "}
+                          {pieGraph?.confidence ? pieGraph?.confidence : 0} %
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center justify-content-between">
+                      <p
+                        className="text-capitalize font-medium text-14"
                         style={{
-                          backgroundColor: "#F3F3F3",
-                          borderRadius: "20px",
-                          fontWeight: 500,
+                          color: "#1F2A37",
+                          fontWeight: 700,
                         }}
                       >
-                        <span style={{ color: "#9BCF53" }}>
-                          {pieGraph?.correct_answer}
-                        </span>{" "}
-                        / {pieGraph?.total}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                        {pieGraph?.test_name}
+                      </p>
 
-                <p
-                  className="text-capitalize px-3"
-                  style={{
-                    color: "#1F2A37",
-                    fontWeight: 700,
-                  }}
-                >
-                  {pieGraph?.test_name}
-                </p>
-                <div className="d-flex align-items-center">
-                  <PieChart
-                    series={[{ data: pieGraphReport, innerRadius: 60 }]}
-                    {...size}
-                  />
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+                      <div>
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            color: "#475467",
+                            fontWeight: 500,
+                          }}
+                        >
+                          Total Marks:{" "}
+                        </span>
+                        {pieGraph?.total && (
+                          <span
+                            className="px-2"
+                            style={{
+                              backgroundColor: "#F3F3F3",
+                              borderRadius: "20px",
+                              fontWeight: 500,
+                            }}
+                          >
+                            <span style={{ color: "#9BCF53" }}>
+                              {pieGraph?.correct_answer}
+                            </span>{" "}
+                            / {pieGraph?.total}
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
-        <Row className="mt-4 g-3">
-          <Col lg={6}>
-            <Card className="shadow border-0">
-              <Card.Body>
-                <p
-                  className="m-3"
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#475467",
-                    fontWeight: 500,
-                  }}
-                >
-                  Confidence VS Performance
-                </p>
-                <div className="d-flex justify-content-center">
-                  <BarChart
-                    height={300}
-                    series={[
-                      {
-                        data: pData,
-                        label: "Confidence",
-                        id: "pvId",
-                        color: "#F5BE08",
-                      },
-                      {
-                        data: uData,
-                        label: "Performance",
-                        id: "uvId",
-                        color: "#FFE99F",
-                      },
-                    ]}
-                    barLabel={(item, context) => {
-                      return item.value?.toString();
-                    }}
-                    xAxis={[{ data: xLabels, scaleType: "band" }]}
+                    <div className="d-flex align-items-center">
+                      <PieChart
+                        series={[{ data: pieGraphReport, innerRadius: 60 }]}
+                        {...size}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ) : (
+              <Col>
+                {[1].map((_, i) => (
+                  <Skeleton
+                    className="rounded-4"
+                    width={"550px"}
+                    height={"290px"}
                   />
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
+                ))}
+              </Col>
+            )}
+          </Row>
 
-          <Col lg={6}>
-            <Card className="shadow border-0">
-              <Card.Body>
-                <p
-                  className="m-3"
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#475467",
-                    fontWeight: 500,
-                  }}
-                >
-                  Number of Questions Attempted
-                </p>
-                <div className="d-flex justify-content-center">
-                  <BarChart
-                    dataset={toatalQuestions}
-                    xAxis={[{ scaleType: "band", dataKey: "month" }]}
-                    series={[{ dataKey: "count" }]}
-                    height={300}
+          <Row className="mt-1 g-3">
+            {!confidenceLoading ? (
+              <Col lg={6}>
+                <Card className="shadow rounded-xl border-1">
+                  <Card.Body>
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "#475467",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Confidence VS Performance
+                    </p>
+                    <div className="d-flex justify-content-center">
+                      <BarChart
+                        height={300}
+                        borderRadius={10}
+                        series={[
+                          {
+                            data: pData,
+                            label: "Confidence",
+                            id: "pvId",
+                            color: "#F5BE08",
+                          },
+                          {
+                            data: uData,
+                            label: "Performance",
+                            id: "uvId",
+                            color: "#FFE99F",
+                          },
+                        ]}
+                        barLabel={(item, context) => {
+                          return <span>{item?.value?.toString()}</span>;
+                        }}
+                        xAxis={[{ data: xLabels, scaleType: "band" }]}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ) : (
+              <Col>
+                {[1].map((_, i) => (
+                  <Skeleton
+                    className="rounded-4"
+                    width={"550px"}
+                    height={"290px"}
                   />
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </ModuleLayout>
+                ))}
+              </Col>
+            )}
+
+            {!questionLoading ? (
+              <Col lg={6}>
+                <Card className="shadow border-1 rounded-xl">
+                  <Card.Body>
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "#475467",
+                        fontWeight: 500,
+                      }}
+                    >
+                      Number of Questions Attempted
+                    </p>
+                    <div className="d-flex justify-content-center">
+                      <BarChart
+                        dataset={toatalQuestions}
+                        xAxis={[{ scaleType: "band", dataKey: "month" }]}
+                        series={[{ dataKey: "count" }]}
+                        height={300}
+                        borderRadius={10}
+                        colors={["#00008b"]}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ) : (
+              <Col>
+                {[1].map((_, i) => (
+                  <Skeleton
+                    className="rounded-4"
+                    width={"550px"}
+                    height={"290px"}
+                  />
+                ))}
+              </Col>
+            )}
+          </Row>
+        </Container>
+        <ToastContainer />
+      </ModuleLayout>
+    </>
   );
 };
 

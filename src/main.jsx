@@ -10,6 +10,7 @@ import store from "./features/store.js";
 import { HashRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "react-phone-input-2/lib/style.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Carousel, Container, Spinner, Stack } from "react-bootstrap";
+import { Card, Carousel, Container, Spinner, Stack } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
@@ -7,6 +7,7 @@ import { getSpecialityModule } from "./apis/specialityAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setSpeciality } from "../../../features/specialityModuleSlice";
 import CreateMarkup from "../../../Utils/CreateMarkup";
+import HeaderContent from "../../../components/HeaderContent";
 
 const TopicDetail = () => {
   const dispatch = useDispatch();
@@ -31,66 +32,41 @@ const TopicDetail = () => {
     }
   };
 
-  // console.log(speciality);
+  console.log(speciality);
 
   return (
     <>
+      <HeaderContent content={window.location.host} />
       {!loading ? (
         <>
-          <div className="p-5 pt-4">
-            <h4 className="px-3 text-16 font-medium text-color-secondary">
-              {speciality?.topic_name}
-            </h4>
-            <hr className="my-4" />
+          <div className="p-2">
             <div className="d-flex flex-wrap gap-3 align-items-center">
               <Carousel
                 style={{ maxWidth: "300px" }}
                 className="d-flex justify-content-center"
                 fade
               >
-                {speciality?.images?.length > 0 ? (
-                  speciality?.images?.map((img, idx) => {
-                    return (
-                      <Carousel.Item style={{ width: "300px" }} key={idx}>
-                        <img
-                          style={{
-                            height: "200px",
-                            width: "300px",
-                            objectFit: "contain",
-                          }}
-                          src={`https://creative-story.s3.amazonaws.com${img}`}
-                          alt="..."
-                        />
-                      </Carousel.Item>
-                    );
-                  })
-                ) : (
-                  <img
-                    style={{
-                      height: "200px",
-                      width: "300px",
-                      objectFit: "contain",
-                    }}
-                    src={`/images/topic-detail.png`}
-                    alt="..."
-                  />
-                )}
+                {speciality?.images?.map((img, idx) => {
+                  return (
+                    <Carousel.Item style={{ width: "300px" }} key={idx}>
+                      <img
+                        style={{
+                          height: "200px",
+                          width: "300px",
+                          objectFit: "contain",
+                        }}
+                        src={`https://creative-story.s3.amazonaws.com${img}`}
+                        alt="..."
+                      />
+                    </Carousel.Item>
+                  );
+                })}
               </Carousel>
 
               <div className="flex-1">
                 <h3 className="text-color-primary">{speciality?.topic_name}</h3>
                 <hr style={{ border: "2.37px solid #0000001F" }} />
                 <Stack direction="horizontal" gap={3}>
-                  <div
-                    className="text-16 font-semibold px-3 py-2 rounded"
-                    style={{
-                      background: "#FEF7C3",
-                      boxShadow: "0px 28.39px 56.78px 0px #DBEAF10A",
-                      maxWidth: "max-content",
-                    }}
-                  >
-                    {speciality?.topic_name}
-                  </div>
                   <div
                     className="text-16 font-semibold px-3 py-2 rounded"
                     style={{
@@ -121,7 +97,7 @@ const TopicDetail = () => {
                     className="text-16 font-semibold"
                     style={{ color: "#131B24" }}
                   >
-                    References:
+                    {speciality?.references?.length > 0 && "References:"}
                   </div>
                   <Stack>
                     {speciality?.references?.map((data, idx) => {
@@ -140,7 +116,7 @@ const TopicDetail = () => {
               </div>
             </div>
 
-            <p className="my-3" style={{ color: "#292929" }}>
+            <p className="px-3" style={{ color: "#292929" }}>
               <CreateMarkup content={speciality?.description} />
             </p>
 
@@ -153,16 +129,14 @@ const TopicDetail = () => {
               <h4 className="text-center text-20 font-bold">Subtopics List</h4>
               {speciality?.subtopics?.map((subTopics, idx) => {
                 return (
-                  <>
-                    <div
-                      className="d-flex justify-content-between gap-2 align-items-start"
-                      key={idx}
-                    >
+                  <Card key={idx} className="shadow">
+                    <Card.Body className="d-flex justify-content-between gap-2 align-items-start">
                       <p className="m-0 text-14 font-normal w-75">
                         <span className="font-semibold">
                           Subtopic {idx + 1}:{" "}
                         </span>
-                        {<CreateMarkup content={subTopics?.description} />}
+                        {subTopics?.sub_topic_name}
+                        {/* {<CreateMarkup content={subTopics?.description} />} */}
                       </p>
                       <div
                         className="bg-color-light text-12 font-semibold px-2 py-1 rounded"
@@ -172,10 +146,8 @@ const TopicDetail = () => {
                       >
                         No. Questions: {subTopics?.questionCount}
                       </div>
-                    </div>
-
-                    <hr style={{ border: "1px solid #CCCCCC" }} />
-                  </>
+                    </Card.Body>
+                  </Card>
                 );
               })}
             </div>

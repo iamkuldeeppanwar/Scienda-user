@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Table from "react-bootstrap/Table";
 
 import "./Membership.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
 // import { ViewEyeIcon } from "../Reports/components/reports-icons";
 import {
+  CheckCalendarIcon,
   CheckCircleIcon,
+  CheckFeaturesIcon,
   CrownIcon,
   ViewEyeIcon2,
 } from "./components/membership-icons";
@@ -18,12 +20,22 @@ import {
 } from "./apis/MembershipAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlans } from "../../../features/planSlice";
-import { Spinner } from "react-bootstrap";
+import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { userGetProfile } from "../MyAccount/apis/UserProfileAPIs";
 import { setUser } from "../../../features/userSlice";
 import { setTransactions } from "../../../features/transactionSlice";
+import HeaderContent from "../../../components/HeaderContent";
+import Skeleton from "react-loading-skeleton";
+import CustomSkeleton from "../../../components/CustomSkeleton/CustomSkeleton";
 
-const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
+const MembershipCard = ({
+  price,
+  dayAccess,
+  planId,
+  subdomain,
+  userId,
+  features,
+}) => {
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
 
@@ -48,12 +60,12 @@ const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
 
   return (
     <div
-      className="rounded-xl bg-white p-0"
+      className="rounded-xl bg-white p-0 shadow"
       style={{
         border: "1px solid #EAECF0",
         boxShadow: "0px 2.56px 3.85px -1.28px #10182808",
         width: "246px",
-        height: "342px",
+        height: "auto",
       }}
     >
       <div style={{ height: "114.27px" }} className="px-4 pt-4 pb-2">
@@ -80,44 +92,31 @@ const MembershipCard = ({ price, dayAccess, planId, subdomain, userId }) => {
             className="d-flex align-items-center gap-2 my-2 text-12 font-normal"
             style={{ color: "#475467" }}
           >
-            <span>
-              <CheckCircleIcon />
-            </span>{" "}
-            Full QBank Access
-          </p>
-          <p
-            className="d-flex align-items-center gap-2 my-2 text-12 font-normal"
-            style={{ color: "#475467" }}
-          >
-            <span>
-              <CheckCircleIcon />
-            </span>{" "}
-            2 -Self Assessments
-          </p>
-          <p
-            className="d-flex align-items-center gap-2 my-2 text-12 font-normal"
-            style={{ color: "#475467" }}
-          >
-            <span>
-              <CheckCircleIcon />
-            </span>{" "}
-            One- Time reset option
+            {features?.map((fet, index) => {
+              return (
+                <>
+                  <span key={index}>
+                    <CheckCircleIcon />
+                  </span>{" "}
+                  {fet}
+                </>
+              );
+            })}
           </p>
         </div>
 
-        <div className="text-center mt-4">
-          {!loading ? (
-            <button
-              onClick={addPlan}
-              className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold"
-            >
-              Upgrade Now
-            </button>
-          ) : (
-            <button className="w-100 border-0 rounded bg-color-primary py-2 text-white text-10 font-semibold">
-              <Spinner size="sm" />
-            </button>
-          )}
+        <div className="mt-3 text-center">
+          <button
+            onClick={addPlan}
+            className="view-button text-center font-medium text-14 text-color-primary rounded py-1"
+            style={{
+              border: "1px solid #00008B",
+              boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+              width: "100%",
+            }}
+          >
+            {!loading ? "Upgrade Now" : <Spinner size="sm" />}
+          </button>
         </div>
       </div>
     </div>
@@ -132,6 +131,7 @@ const Membership = () => {
   const { transactions } = useSelector((state) => state.transaction);
   const [planLoader, setPlanLoader] = useState(false);
   const [transactionLoading, setTransactionLoading] = useState(false);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     getProfile();
@@ -139,7 +139,7 @@ const Membership = () => {
   }, [dispatch, token]);
 
   useEffect(() => {
-    if (user.subdomain) {
+    if (user?.subdomain) {
       getUserPlans();
     }
   }, [user, dispatch]);
@@ -156,8 +156,8 @@ const Membership = () => {
   const getUserPlans = async () => {
     try {
       setPlanLoader(true);
-      const response = await membershipPlans(user.subdomain);
-      dispatch(setPlans(response.subDomain));
+      const response = await membershipPlans(user?.subdomain);
+      dispatch(setPlans(response?.subDomain));
       setPlanLoader(false);
     } catch (error) {
       toast.error(getError(error));
@@ -187,193 +187,294 @@ const Membership = () => {
     });
   };
 
+  const handleBottom = () => {
+    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <ModuleLayout>
-      <ToastContainer />
-      <Table responsive className="my-4 ">
-        <thead className="p-4 mb-4 custom-table-head">
-          <tr className="rounded-xl border">
-            <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Plan</div>
-            </th>
-            <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Validity</div>
-            </th>
-            <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Amount</div>
-            </th>
-            <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Payment ID</div>
-            </th>
-            <th className="text-center border-0">
-              <div className="w-60 mx-auto text-20 font-normal">
-                Payment Date
-              </div>
-            </th>
-            <th className="text-center border-0">
-              <div className="p-3 text-20 font-normal">Invoice</div>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {transactions?.transactions &&
-            transactions?.transactions?.map((data) => {
-              return (
-                <tr key={data?._id} className="border bg-white">
-                  <td className="text-center">
-                    <div className="p-4">
-                      <button
-                        className="text-14 font-bold bg-color-light border-0 rounded px-3 py-2"
-                        style={{ backgroundColor: "#E0EAFF" }}
-                      >
-                        Basic Plan
-                      </button>
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <div className="p-4">
-                      <span className="text-14 font-bold">
-                        {data?.validity} days
-                      </span>
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <div className="p-4">
-                      <span className="text-14 font-bold text-color-secondary">
-                        £ {data?.amount}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <div className="p-4" style={{ color: "#565656" }}>
-                      {data?.payment_id.slice(0, 20)}
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <div
-                      className="mt-3 text-12 font-bold text-center px-3 py-3 rounded"
-                      style={{ backgroundColor: "#DADADA96" }}
-                    >
-                      {formatDate(data?.createdAt)}
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <div className="p-4">
-                      <button className="rounded-lg px-3 py-1 border-color-primary bg-white text-color-primary text-14 font-semibold">
-                        <a
-                          href={`https://creative-story.s3.amazonaws.com${data?.invoice_url}`}
-                        >
-                          View <ViewEyeIcon2 />
-                        </a>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
-
-      <div className="w-90 mx-auto">
-        <h5 className="text-16 font-medium">Your Active Plan</h5>
-        <div
-          className="px-4 py-3 bg-white"
-          style={{
-            border: "1px solid #EAEAEA",
-            boxShadow: "0px 2px 32px 2px #0000000A",
-            borderRadius: "10px",
-          }}
-        >
-          <div className="d-flex flex-wrap justify-content-between align-items-center">
-            <h6>My Subscription Plan</h6>
-            <div
-              className="font-normal p-2 rounded-sm"
-              style={{
-                backgroundColor: "#F3F4F6",
-                color: "#101828",
-                fontSize: "15px",
-              }}
+    <>
+      <HeaderContent content={"Membership"} />
+      <ModuleLayout>
+        <Row>
+          <Col lg={5}>
+            <Table
+              responsive
+              bordered
+              className="custom-table shadow"
+              style={{ borderRadius: "20px !important", overflow: "hidden" }}
             >
-              Plan Expiring On :{" "}
-              {formatDate(
-                transactions?.subscription && transactions?.subscription.expiry
-              )}
-            </div>
-          </div>
-          <hr />
-          <div className="d-flex flex-wrap justify-content-between align-items-center">
-            <div className="font-normal text-20">
-              Active Plan :{" "}
-              <span className="text-color-secondary font-bold">
-                £{" "}
-                {transactions?.subscription &&
-                  transactions?.subscription.amount}
-              </span>
-            </div>
-            {/* <div>
-              <button className="border-0 bg-color-primary text-white text-14 font-semibold py-2 px-4 rounded-md">
-                Renew Plan{" "}
-                <span>
-                  <CrownIcon />
-                </span>{" "}
-              </button>
-            </div> */}
-          </div>
-        </div>
-      </div>
+              <tbody>
+                <tr className="h-25">
+                  <th scope="row" className="text-center table-header">
+                    <div className="p-2">Plan</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <button
+                          className="text-14 font-bold bg-color-light border-0 rounded px-2 py-1"
+                          style={{ backgroundColor: "#FFECAA" }}
+                        >
+                          Basic Plan
+                        </button>
+                      </td>
+                    ))
+                  )}
+                </tr>
+                <tr className="h-25">
+                  <th scope="row" className="text-center">
+                    <div className="p-2">Validity</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <span className="text-14 font-bold">
+                          {data?.validity} days
+                        </span>
+                      </td>
+                    ))
+                  )}
+                </tr>
+                <tr>
+                  <th scope="row" className="text-center">
+                    <div className="p-2">Amount</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <span className="text-14 font-bold text-color-secondary">
+                          £ {data?.amount}
+                        </span>
+                      </td>
+                    ))
+                  )}
+                </tr>
+                <tr>
+                  <th scope="row" className="text-center">
+                    <div className="p-2">Payment ID</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <div className="" style={{ color: "#565656" }}>
+                          {data?.payment_id.slice(0, 20)}
+                        </div>
+                      </td>
+                    ))
+                  )}
+                </tr>
+                <tr>
+                  <th scope="row" className="text-center">
+                    <div className="p-2">Payment Date</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <div className="text-12 font-bold text-center rounded">
+                          {formatDate(data?.createdAt)}
+                        </div>
+                      </td>
+                    ))
+                  )}
+                </tr>
+                <tr>
+                  <th scope="row" className="text-center">
+                    <div className="p-2">Invoice</div>
+                  </th>
+                  {transactionLoading ? (
+                    <td className="text-center p-3">
+                      <Skeleton width={"100%"} height={"20px"} />
+                    </td>
+                  ) : (
+                    transactions?.transactions?.map((data, index) => (
+                      <td key={index} className="text-center p-3">
+                        <div className="text-center">
+                          <button
+                            className="text-center font-medium text-14 text-color-primary rounded py-1"
+                            style={{
+                              border: "1px solid #00008B",
+                              boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+                              width: "7rem",
+                            }}
+                          >
+                            <a
+                              className="text-decoration-none text-color-primary"
+                              href={`https://creative-story.s3.amazonaws.com${data?.invoice_url}`}
+                            >
+                              {" "}
+                              View <ViewEyeIcon2 />
+                            </a>
+                          </button>
+                        </div>
+                      </td>
+                    ))
+                  )}
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
 
-      <h3 className="mt-5 text-center text-24 font-bold text-color-primary">
-        Upgrade & Continue With Business Plan
-      </h3>
+          <Col>
+            <Card className="rounded-xl shadow">
+              <Card.Body className="p-0">
+                <h3 className="text-18 text-center font-bold mt-1">
+                  Your Active Plan
+                </h3>
 
-      <h5 className="my-4 text-center text-24 font-medium text-color-secondary">
-        Why Upgrade?
-      </h5>
+                <div
+                  className="mt-1 py-3 px-4 d-flex justify-content-between align-items-center"
+                  style={{
+                    backgroundColor: "#DAE4FF",
+                  }}
+                >
+                  <div className="d-flex gap-2 align-items-center">
+                    <div className="text-20 font-bold">
+                      My Subscription Plan
+                    </div>
+                    <div
+                      className="py-0 px-2"
+                      style={{
+                        backgroundColor: "#FEFBE8",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      Monthly
+                    </div>
+                  </div>
+                  <div className="text-24 font-bold text-primary">
+                    £{" "}
+                    {transactions?.subscription &&
+                      transactions?.subscription.amount}{" "}
+                    / Month
+                  </div>
+                </div>
 
-      <div className="text-center">
-        <h6 className="text-16 font-medium">Unlock All Features:</h6>
-        <p
-          className="text-12 font-normal w-35 mx-auto"
-          style={{ color: "#475467" }}
-        >
-          Gain access to a comprehensive set of features designed to maximize
-          your learning potential.
-        </p>
-      </div>
-      <div className="text-center mt-4">
-        <h6 className="text-16 font-medium">Timeline Will Extend:</h6>
-        <p
-          className="text-12 font-normal w-35 mx-auto"
-          style={{ color: "#475467" }}
-        >
-          Enjoy tailored recommendations and insights based on your performance
-          and preferences.
-        </p>
-      </div>
+                <div className="d-flex justify-content-between px-5 mt-2">
+                  <div
+                    className="font-normal rounded-md p-2"
+                    style={{
+                      backgroundColor: "#FF16160A",
+                      color: "#C00000",
+                    }}
+                  >
+                    Plan Expiring On :{" "}
+                    {formatDate(
+                      transactions?.subscription &&
+                        transactions?.subscription.expiry
+                    )}
+                  </div>
 
-      <div className="membership-card-container">
-        {!planLoader ? (
-          plans.length > 0 ? (
-            plans.map((data) => {
-              return (
-                <MembershipCard
-                  key={data._id}
-                  price={`${data.price}`}
-                  dayAccess={data.validity}
-                  planId={data._id}
-                  subdomain={user.subdomain}
-                  userId={user._id}
-                />
-              );
-            })
+                  <div>
+                    <button
+                      onClick={handleBottom}
+                      className="border-0 bg-color-primary text-white text-14 font-semibold py-2 px-4 rounded-md"
+                    >
+                      Upgrade Plan{" "}
+                      <span>
+                        <CrownIcon />
+                      </span>{" "}
+                    </button>
+                  </div>
+                </div>
+
+                <h4
+                  className="text-16 text-center mt-2"
+                  style={{ color: "#6172F3" }}
+                >
+                  Why Upgrade ?
+                </h4>
+
+                <div className="d-flex align-items-center gap-2 mt-3 mb-1 px-5">
+                  <Card className="rounded-xl">
+                    <Card.Body>
+                      <div className="border-1 text-center">
+                        <CheckCalendarIcon />
+                        <div className="text-14 font-normal mt-2">
+                          Unlock All Features
+                        </div>
+                        <div className="text-12 font-normal mt-1">
+                          Gain access to a comprehensive set of features
+                          designed to maximize your learning potential.
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+
+                  <Card className="rounded-xl">
+                    <Card.Body>
+                      <div className="border-1 text-center">
+                        <CheckFeaturesIcon />
+                        <div className="text-14 font-normal mt-2">
+                          Timeline will extend
+                        </div>
+                        <div className="text-12 font-normal mt-1">
+                          Enjoy tailored recommendations and insights based on
+                          your performance and preferences.
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <div className="membership-card-container " ref={bottomRef}>
+          {!planLoader ? (
+            plans?.length > 0 ? (
+              plans?.map((data) => {
+                return (
+                  <MembershipCard
+                    key={data._id}
+                    price={`${data.price}`}
+                    dayAccess={data.validity}
+                    planId={data._id}
+                    subdomain={user.subdomain}
+                    userId={user._id}
+                    features={data?.features}
+                  />
+                );
+              })
+            ) : (
+              ""
+            )
           ) : (
-            ""
-          )
-        ) : (
-          <Spinner size="sm" />
-        )}
-      </div>
-    </ModuleLayout>
+            <div className="d-flex gap-3 align-items-center justify-content-between ">
+              {[1, 2, 3].map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="rounded-4"
+                  width={"270px"}
+                  height={"350px"}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <ToastContainer />
+      </ModuleLayout>
+    </>
   );
 };
 

@@ -171,3 +171,12 @@
 #target {
   color: red;
 }
+
+.content-header {
+  background-color: #eef4ff;
+  height: 76px;
+  color: rgb(128, 152, 249);
+  font-size: 26px;
+  font-weight: 600;
+  /* border-bottom: 1px solid var(--primary-color); */
+}

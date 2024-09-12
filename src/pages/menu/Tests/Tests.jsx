@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { userProciencys } from "../ProficiencyPercentage/api/proficiencyAPI";
 import { setProficiencies } from "../../../features/proficiencySlice";
+import HeaderContent from "../../../components/HeaderContent";
+import Skeleton from "react-loading-skeleton";
 
 const TestCard = ({
   testId,
@@ -73,11 +75,10 @@ const TestCard = ({
 
   return (
     <div
-      className="bg-white rounded-xl p-3 px-4 shadow"
+      className="rounded-lg bg-white p-3 shadow all-card"
       style={{
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
-        minHeight: "12rem",
       }}
     >
       <h6
@@ -121,6 +122,7 @@ const TestCard = ({
           {info}
         </p>
       )}
+      <hr />
       <div className="w-100 d-flex justify-content-center">
         <button
           onClick={openTestStartModal}
@@ -181,114 +183,149 @@ const Tests = () => {
   };
 
   return (
-    <ModuleLayout className="ps-4">
-      <Container>
-        <Row className="mt-2 g-3">
-          <h4
-            style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
-          >
-            Exams
-          </h4>
-          {tests.length > 0 ? (
-            <>
-              {!testsLoading ? (
-                tests
+    <>
+      <HeaderContent content={"Tests"} />
+      <ModuleLayout className="ps-3">
+        <Container>
+          <Row className="g-3">
+            {tests.length > 0 ? (
+              <>
+                <hr />
+                <h4
+                  style={{
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  Exams
+                </h4>
+                <hr />
+                {!testsLoading ? (
+                  tests
+                    ?.filter(
+                      (test) =>
+                        test?.status === "Active" && test.test_type === "Exam"
+                    )
+                    ?.map((test) => (
+                      <>
+                        <Col lg={4} key={test?._id}>
+                          <TestCard
+                            testId={test?._id}
+                            testName={test?.test_name}
+                            timeAlloted={test?.duration_in_mins}
+                            noOfQuestions={test?.questions_reference.length}
+                            info="Test your knowledge with this MCQ."
+                            btnText="Take Exam"
+                            isActivePlan={user?.is_active_plan}
+                          />
+                        </Col>
+                      </>
+                    ))
+                ) : (
+                  <div
+                    className={`p-2 d-flex justify-conten-center gap-5 flex-wrap mt-4`}
+                  >
+                    {[1, 2, 3, 4, 5, 6].map((_, i) => (
+                      <Skeleton
+                        className="rounded-4"
+                        width={"350px"}
+                        height={"250px"}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center">
+                <h5>No Exams found!</h5>
+              </div>
+            )}
+          </Row>
+
+          <Row className="mt-2 g-3">
+            {tests.length > 0 ? (
+              <>
+                <hr />
+                <h4
+                  style={{
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  Quiz
+                </h4>
+                <hr />
+                {tests
                   ?.filter(
                     (test) =>
-                      test?.status === "Active" && test.test_type === "Exam"
+                      test?.status === "Active" && test?.test_type === "Quiz"
                   )
                   ?.map((test) => (
-                    <Col lg={3} key={test?._id}>
+                    <>
+                      <Col lg={4} key={test?._id}>
+                        <TestCard
+                          testId={test?._id}
+                          testName={test?.test_name}
+                          timeAlloted={test?.duration_in_mins}
+                          noOfQuestions={test?.questions_reference.length}
+                          info="Test your knowledge with this MCQ."
+                          btnText="Take Quiz"
+                          isActivePlan={user?.is_active_plan}
+                        />
+                      </Col>
+                    </>
+                  ))}
+              </>
+            ) : (
+              <div className="text-center">
+                <h5>No Quiz found!</h5>
+              </div>
+            )}
+          </Row>
+
+          <Row className="mt-2 g-3">
+            {proficiencies.length > 0 ? (
+              <>
+                <hr />
+                <h4
+                  style={{
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  Review Completed Exam-Scoreboard
+                </h4>
+                <hr />
+                {proficiencies?.map((num, idx) => (
+                  <>
+                    <Col md={4}>
                       <TestCard
-                        testId={test?._id}
-                        testName={test?.test_name}
-                        timeAlloted={test?.duration_in_mins}
-                        noOfQuestions={test?.questions_reference.length}
-                        info="Test your knowledge with this MCQ."
-                        btnText="Take Exam"
+                        key={idx}
+                        testId={num?._id}
+                        testName={num?.test?.test_name}
+                        timeAlloted={num?.test?.duration_in_mins}
+                        completedOn={num?.createdAt}
+                        noOfQuestions={num?.total}
+                        btnText="View Score"
+                        completedExam={true}
                         isActivePlan={user?.is_active_plan}
                       />
                     </Col>
-                  ))
-              ) : (
-                <div className="d-flex justify-content-center w-100">
-                  <Spinner size="sm" />
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="text-center">
-              <h5>No Exams found!</h5>
-            </div>
-          )}
-        </Row>
-
-        <Row className="mt-2 g-3">
-          <h4
-            style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
-          >
-            Quiz
-          </h4>
-          {tests.length > 0 ? (
-            <>
-              {tests
-                ?.filter(
-                  (test) =>
-                    test?.status === "Active" && test?.test_type === "Quiz"
-                )
-                ?.map((test) => (
-                  <Col lg={3} key={test?._id}>
-                    <TestCard
-                      testId={test?._id}
-                      testName={test?.test_name}
-                      timeAlloted={test?.duration_in_mins}
-                      noOfQuestions={test?.questions_reference.length}
-                      info="Test your knowledge with this MCQ."
-                      btnText="Take Quiz"
-                      isActivePlan={user?.is_active_plan}
-                    />
-                  </Col>
+                  </>
                 ))}
-            </>
-          ) : (
-            <div className="text-center">
-              <h5>No Quiz found!</h5>
-            </div>
-          )}
-        </Row>
-
-        <Row className="mt-2 g-3">
-          <h4
-            style={{ color: "#8098F9", fontSize: "1.25rem", fontWeight: 600 }}
-          >
-            Review Completed Exam-Scoreboard
-          </h4>
-          {proficiencies.length > 0 ? (
-            <>
-              {proficiencies?.map((num, idx) => (
-                <Col md={3}>
-                  <TestCard
-                    key={idx}
-                    testId={num?._id}
-                    testName={num?.test?.test_name}
-                    timeAlloted={num?.test?.duration_in_mins}
-                    completedOn={num?.createdAt}
-                    noOfQuestions={num?.total}
-                    btnText="View Score"
-                    completedExam={true}
-                    isActivePlan={user?.is_active_plan}
-                  />
-                </Col>
-              ))}
-            </>
-          ) : (
-            <div className="text-center">
-              <h5>No Completed exams found!</h5>
-            </div>
-          )}
-        </Row>
-      </Container>
-    </ModuleLayout>
+              </>
+            ) : (
+              <div className="text-center">
+                <h5>No Completed exams found!</h5>
+              </div>
+            )}
+          </Row>
+        </Container>
+      </ModuleLayout>
+    </>
   );
 };
 

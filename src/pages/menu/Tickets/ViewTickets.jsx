@@ -17,6 +17,7 @@ import { createTickets, getTickets } from "./apis/TicketApi";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
 import { setTickets } from "../../../features/ticketSlice";
+import Skeleton from "react-loading-skeleton";
 
 function CreateTicketModal(props) {
   const dispatch = useDispatch();
@@ -96,23 +97,23 @@ function CreateTicketModal(props) {
           onSubmit={createTicketHandler}
         >
           <div className="ticket-form-modal">
-            <Form.Group className="text-14 mt-2">
-              <Form.Label>To</Form.Label>
+            <Form.Group className="mt-1">
+              <Form.Label className="text-16 font-medium ">To</Form.Label>
               <Form.Control
                 disabled
                 type="text"
-                className="text-12"
+                className="text-12 font-medium py-2 px-3 input-border"
                 value={subAdmins[0]?.first_name + " " + subAdmins[0]?.last_name}
                 placeholder="Enter subject"
                 required
               />
             </Form.Group>
 
-            <Form.Group className="text-14 mt-2">
-              <Form.Label>Topics</Form.Label>
+            <Form.Group className="mt-1">
+              <Form.Label className="text-16 font-medium">Topics</Form.Label>
               <Form.Select
                 onChange={(e) => setTopicName(e.target.value)}
-                className="text-14"
+                className="text-12 font-medium py-2 px-3 input-border"
                 required
                 aria-label="Default select example"
               >
@@ -128,11 +129,11 @@ function CreateTicketModal(props) {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group className="text-14 mt-2">
-              <Form.Label>Subject</Form.Label>
+            <Form.Group className="mt-1">
+              <Form.Label className="text-16 font-medium">Subject</Form.Label>
               <Form.Control
                 type="text"
-                className="text-12"
+                className="text-12 font-medium py-2 px-3 input-border"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Enter subject"
@@ -140,12 +141,14 @@ function CreateTicketModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="text-14 mt-2">
-              <Form.Label>Describe your issue</Form.Label>
+            <Form.Group className="mt-1">
+              <Form.Label className="text-16 font-medium">
+                Describe your issue
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Describe in detail, please..."
-                className="text-12"
+                className="text-12 font-medium py-2 px-3 input-border"
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -153,44 +156,20 @@ function CreateTicketModal(props) {
               />
             </Form.Group>
 
-            <div className="d-flex flex-wrap justify-content-between align-items-center mt-4">
-              <Stack>
-                <p className="m-0 " style={{ fontSize: "11px", width: "9rem" }}>
-                  Max 6MB each supported types, png, Jpg, Pdf, doc.
-                </p>
-                <div
-                  className="d-flex gap-1 align-items-center mt-1"
-                  style={{
-                    width: "5.75rem",
-                    backgroundColor: "#DDDDDD",
-                    borderRadius: "5px",
-                    fontSize: "11px",
-                    fontWeight: 300,
-                    border: "none",
-                  }}
-                >
-                  <span>
-                    <PaperClipIcon />
-                  </span>
-                  <input
-                    className="custom-file-input"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
-                </div>
-              </Stack>
-
-              {!loading ? (
-                <button className="border-0 rounded-lg bg-color-primary px-3 py-2 text-16 font-bold text-white">
-                  Create Ticket
-                </button>
-              ) : (
-                <button className="border-0 rounded-lg bg-color-primary px-3 py-2 text-16 font-bold text-white">
-                  <Spinner size="sm" />
-                </button>
-              )}
-              {/* <CreateTicketSuccessModal /> */}
+            <div className="mt-3">
+              <button
+                className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
+                style={{
+                  border: "1px solid #00008B",
+                  boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+                  width: "8.5rem",
+                }}
+              >
+                {!loading ? "+ Create Ticket" : <Spinner size="sm" />}
+              </button>
             </div>
+
+            {/* <CreateTicketSuccessModal /> */}
           </div>
         </Form>
       </div>
@@ -207,15 +186,19 @@ const CreateTicketButton = () => {
 
   return (
     <>
-      <button
-        onClick={openCreateTicketModal}
-        className="border-0 rounded-lg bg-color-primary py-2 px-3 d-flex gap-2"
-      >
-        <span>
-          <CreatePlusIcon />
-        </span>
-        <span className="text-16 font-bold text-white">Create Ticket</span>
-      </button>
+      <div className="mt-1">
+        <button
+          onClick={openCreateTicketModal}
+          className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
+          style={{
+            border: "1px solid #00008B",
+            boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+            width: "8.5rem",
+          }}
+        >
+          + Create Ticket
+        </button>
+      </div>
       <CreateTicketModal
         createTicketModalShow={createTicketModalShow}
         closeCreateTicketModal={closeCreateTicketModal}
@@ -259,7 +242,7 @@ const ViewTickets = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center bg-color-light py-4 px-3">
+      <div className="d-flex justify-content-between align-items-center bg-color-light py-3 px-3">
         <h3 style={{ color: "#8098F9", fontSize: "26px", fontWeight: 600 }}>
           Manage Tickets
         </h3>
@@ -268,6 +251,7 @@ const ViewTickets = () => {
 
       <div className="p-4">
         <p style={{ fontWeight: 700, fontSize: "18px" }}>My Tickets</p>
+        <hr />
 
         <Stack gap={3}>
           {!ticketLoader ? (
@@ -282,15 +266,12 @@ const ViewTickets = () => {
                 onClick={() => navigate(`/menu/tickets/chat/${ticket?._id}`)}
               >
                 <div className="d-flex justify-content-between align-items-center">
-                  <p
-                    className="text-14 font-semibold"
-                    style={{ color: "#525252" }}
-                  >
-                    {ticket?.topic?.topic_name}
+                  <p className="text-14 font-bold" style={{ color: "#525252" }}>
+                    Topic: {ticket?.topic?.topic_name}
                   </p>
 
                   {ticket?.status === "Closed" && (
-                    <p className="text-color-secondary text-12 font-medium">
+                    <p className="text-color-secondary text-14 font-medium">
                       Issue Resolved{" "}
                       <span>
                         <IssueResolvedIcon />
@@ -299,7 +280,7 @@ const ViewTickets = () => {
                   )}
 
                   {ticket?.status === "Pending" && (
-                    <p className="text-color-progress text-12 font-medium">
+                    <p className="text-color-progress text-14 font-medium">
                       In Progress{" "}
                       <span>
                         <InProgressIcon />
@@ -308,7 +289,7 @@ const ViewTickets = () => {
                   )}
 
                   {ticket?.status === "Open" && (
-                    <p className="text-secondary text-12 font-medium">
+                    <p className="text-secondary text-14 font-medium">
                       Issue Not Resolved{" "}
                       <span>
                         <UnResolvedIcon />
@@ -316,6 +297,11 @@ const ViewTickets = () => {
                     </p>
                   )}
                 </div>
+
+                <p className="text-14 font-medium">
+                  Subject: {ticket?.subject}
+                </p>
+
                 <div className="d-flex flex-wrap justify-content-between align-items-start">
                   <p
                     className="text-14 font-medium"
@@ -333,8 +319,14 @@ const ViewTickets = () => {
               </div>
             ))
           ) : (
-            <div className="d-flex justify-content-center">
-              <Spinner size="sm" />
+            <div className={`p-2 d-flex flex-column gap-5`}>
+              {[1, 2, 3].map((_, i) => (
+                <Skeleton
+                  className="rounded-4"
+                  height={"150px"}
+                  width={"100%"}
+                />
+              ))}
             </div>
           )}
         </Stack>

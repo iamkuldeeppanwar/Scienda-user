@@ -14,6 +14,8 @@ import { getError } from "../../../Utils/error";
 import { userProciencys } from "./api/proficiencyAPI";
 import { setProficiencies } from "../../../features/proficiencySlice";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
+import HeaderContent from "../../../components/HeaderContent";
+import Skeleton from "react-loading-skeleton";
 
 const ProficiencyPercentageCard = ({
   timeAlloted,
@@ -57,59 +59,61 @@ const ProficiencyPercentageCard = ({
 
   return (
     <div
-      className="bg-white w-100 p-3 rounded-lg"
+      className="rounded-lg bg-white p-3 shadow all-card"
       style={{
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
       }}
     >
-      <h5 className="text-14 font-medium text-center my-2 mb-3 w-100">
+      <h6
+        style={{ color: "#475467" }}
+        className="text-center text-15 font-bold"
+      >
         {examName}
-      </h5>
-      <ProficiencyProgressBar current={percentage} />
-      <div className="d-flex flex-column gap-2 my-2">
+      </h6>
+      <ProficiencyProgressBar height={"12px"} current={percentage} />
+      <div className="d-flex flex-column gap-2 mt-4 mb-3">
         <div className="d-flex justify-content-between align-items-center">
-          <p className="m-0 text-10 font-semibold">
+          <div className="text-14 font-medium">
             <StopwatchIcon /> Time Allotted:
-          </p>
-          <p className="m-0 text-10 font-normal">
+          </div>
+          <div className="text-14 font-medium">
             {formatDuration(timeAlloted)}
-          </p>
+          </div>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <p className="m-0 text-10 font-semibold">
+          <div className="text-14 font-medium">
             <CalendarIcon /> Completed On::
-          </p>
-          <p className="m-0 text-10 font-normal">
+          </div>
+          <div className="text-14 font-medium">
             {formatDateTime(completedOn)}
-          </p>
+          </div>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <p className="m-0 text-10 font-semibold">
+          <div className="text-14 font-medium">
             <QuestionsIcon /> No. of Questions:
-          </p>
-          <p className="m-0 text-10 font-normal">{noOfQuestions}</p>
+          </div>
+          <div className="text-14 font-medium">{noOfQuestions}</div>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <p className="m-0 text-10 font-semibold">
+          <div className="text-14 font-medium">
             <ScoreIcon /> Your Score:
-          </p>
-          <p className="m-0 text-10 font-normal">
+          </div>
+          <div className="text-14 font-medium">
             {correctAnswers}/{noOfQuestions}
-          </p>
+          </div>
         </div>
       </div>
       <hr />
       <div className="text-center">
         <button
-          className="text-12 font-semibold text-color-primary bg-white rounded"
+          onClick={() => navigate(`${examId}`)}
+          className="view-button text-center font-medium text-14 text-color-primary rounded py-1"
           style={{
-            width: "9.75rem",
-            height: "2rem",
             border: "1px solid #00008B",
             boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+            width: "8.5rem",
           }}
-          onClick={() => navigate(`${examId}`)}
         >
           View Proficiency
         </button>
@@ -141,40 +145,52 @@ const ProficiencyPercentage = () => {
   };
 
   return (
-    <ModuleLayout>
-      <Container>
-        <Row className="mt-4 g-3">
-          {proficiencies.length > 0 ? (
-            <>
-              {!loading ? (
-                [...proficiencies].reverse()?.map((obj) => (
-                  <Col lg={3} key={obj?._id}>
-                    <ProficiencyPercentageCard
-                      timeAlloted={obj?.test?.duration_in_mins}
-                      noOfQuestions={obj?.total}
-                      correctAnswers={obj?.correct_answers}
-                      completedOn={obj?.createdAt}
-                      examId={obj?._id}
-                      examName={obj?.test?.test_name}
-                      percentage={obj?.percentage}
-                    />
-                  </Col>
-                ))
-              ) : (
-                <div className="text-center">
-                  <Spinner size="sm" />
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="text-center">
-              <h5>No Report found!</h5>
-            </div>
-          )}
-        </Row>
-      </Container>
-      <ToastContainer />
-    </ModuleLayout>
+    <>
+      <HeaderContent content={"Proficiency Percentage"} />
+      <ModuleLayout className="ps-3">
+        <Container>
+          <Row className="g-3">
+            {proficiencies.length > 0 ? (
+              <>
+                {!loading ? (
+                  [...proficiencies].reverse()?.map((obj) => (
+                    <Col lg={4} key={obj?._id}>
+                      <ProficiencyPercentageCard
+                        timeAlloted={obj?.test?.duration_in_mins}
+                        noOfQuestions={obj?.total}
+                        correctAnswers={obj?.correct_answers}
+                        completedOn={obj?.createdAt}
+                        examId={obj?._id}
+                        examName={obj?.test?.test_name}
+                        percentage={obj?.percentage}
+                      />
+                    </Col>
+                  ))
+                ) : (
+                  <div
+                    className={`p-2 d-flex justify-conten-center gap-5 flex-wrap mt-4`}
+                  >
+                    {[1, 2, 3, 4, 5, 6].map((_, i) => (
+                      <Skeleton
+                        key={i}
+                        className="rounded-4"
+                        width={"350px"}
+                        height={"250px"}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center">
+                <h5>No Report found!</h5>
+              </div>
+            )}
+          </Row>
+        </Container>
+        <ToastContainer />
+      </ModuleLayout>
+    </>
   );
 };
 

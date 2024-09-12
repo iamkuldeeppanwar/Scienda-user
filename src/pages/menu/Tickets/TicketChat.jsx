@@ -119,7 +119,7 @@ const TicketChat = () => {
             </span>
           </p>
           <p className="text-16 font-medium">
-            Title:{" "}
+            Subject:{" "}
             <span
               className="text-14 font-semibold"
               style={{ color: "#525252" }}
@@ -146,7 +146,7 @@ const TicketChat = () => {
           <p className="text-16 font-medium">
             Description:
             <span
-              className="text-14 font-normal ms-2"
+              className="text-14 font-medium ms-2"
               style={{ color: "#525252" }}
             >
               {ticket?.subject && ticket?.description}

@@ -12,6 +12,8 @@ import { getSpecialityModules } from "./apis/specialityAPI";
 import { setSpecialitys } from "../../../features/specialityModuleSlice";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import CreateMarkup from "../../../Utils/CreateMarkup";
+import HeaderContent from "../../../components/HeaderContent";
+import Skeleton from "react-loading-skeleton";
 
 const SearchTopics = ({ onChange }) => {
   return (
@@ -49,7 +51,7 @@ const TopicCard = ({
 }) => {
   return (
     <div
-      className="rounded-lg bg-white p-3 shadow"
+      className="rounded-lg bg-white p-3 shadow mt-4 all-card"
       style={{
         border: "1px solid #8F8F8F17",
         boxShadow: "0px 12px 12px 0px #00000005",
@@ -61,7 +63,6 @@ const TopicCard = ({
       >
         Topic Name {topicName}
       </h5>
-      <hr className="my-2" />
       <Stack direction="horizontal" gap={2} className="justify-content-between">
         <div className="flex-grow-1 text-center rounded-sm bg-color-yellow-100 text-12 font-medium p-1">
           {topicName}
@@ -80,7 +81,8 @@ const TopicCard = ({
       >
         <CreateMarkup content={description} />
       </p>
-      <div className="text-center">
+      <hr />
+      <div className="text-center mt-2">
         <Link
           to={`topic-detail/${idx}`}
           className="view-button text-12 font-bold text-color-primary text-decoration-none rounded border-color-primary px-4 py-2"
@@ -94,7 +96,6 @@ const TopicCard = ({
 };
 
 const SpecialityModules = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const token = localStorage.getItem("token");
@@ -121,33 +122,44 @@ const SpecialityModules = () => {
   };
 
   return (
-    <ModuleLayout>
-      <Container>
-        <div className="my-4 d-flex flex-wrap justify-content-end align-items-center">
-          <SearchTopics onChange={setQuery} />
-        </div>
-        <Row className="g-3">
-          {!loading ? (
-            specialities?.map((data) => (
-              <Col lg={3} key={data?._id}>
-                <TopicCard
-                  topicName={data?.topic_name}
-                  subTopicCount={data?.subtopic_count}
-                  questionCount={data?.questionCount}
-                  description={data?.description}
-                  idx={data?._id}
-                />
-              </Col>
-            ))
-          ) : (
-            <div className="text-center">
-              <Spinner size="sm" />
-            </div>
-          )}
-        </Row>
-      </Container>
-      <ToastContainer />
-    </ModuleLayout>
+    <>
+      <HeaderContent content={"Speciality Modules"} />
+      <ModuleLayout style={{ padding: 0 }} className="ps-3">
+        <Container>
+          <div className="d-flex justify-content-end align-items-center">
+            <SearchTopics onChange={setQuery} />
+          </div>
+          <Row className="g-3">
+            {!loading ? (
+              specialities?.map((data) => (
+                <Col lg={4} key={data?._id}>
+                  <TopicCard
+                    topicName={data?.topic_name}
+                    subTopicCount={data?.subtopic_count}
+                    questionCount={data?.questionCount}
+                    description={data?.description}
+                    idx={data?._id}
+                  />
+                </Col>
+              ))
+            ) : (
+              <div
+                className={`p-2 d-flex justify-conten-center gap-5 flex-wrap mt-4`}
+              >
+                {[1, 2, 3, 4, 5, 6].map((_, i) => (
+                  <Skeleton
+                    className="rounded-4"
+                    width={"350px"}
+                    height={"250px"}
+                  />
+                ))}
+              </div>
+            )}
+          </Row>
+        </Container>
+        <ToastContainer />
+      </ModuleLayout>
+    </>
   );
 };
 

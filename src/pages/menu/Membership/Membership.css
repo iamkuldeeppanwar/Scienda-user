@@ -18,3 +18,9 @@
 .custom-table-head th {
   background-color: #e5e7eb;
 }
+
+.table-header-row {
+  background-color: #f0f0f0; /* Header-like background color */
+  color: #333; /* Text color */
+  font-weight: bold;
+}

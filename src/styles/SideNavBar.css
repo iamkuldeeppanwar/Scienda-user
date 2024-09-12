@@ -119,10 +119,9 @@
 .profile-email {
   margin: 0;
   padding: 0;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--primary-color);
-  width: 95%;
+  font-size: 12px;
+  font-weight: 500;
+  width: 90%;
 }
 
 .icon-md {

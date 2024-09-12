@@ -1,6 +1,6 @@
 .create-ticket-container {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .create-ticket-container .ticket-form {
@@ -29,9 +29,9 @@
     width: 40%;
   }
 
-  .create-ticket-container .ticket-form {
+  /* .create-ticket-container .ticket-form {
     width: 60%;
-  }
+  } */
 }
 
 .chat_box_container {

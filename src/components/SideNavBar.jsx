@@ -226,6 +226,9 @@ export default function SideNavbar({
                   <p className="profile-name">
                     {user && user.first_name} {user && user.last_name}
                   </p>
+                  <p className="profile-email text-center text-10 font-medium text-truncate">
+                    {user && user.email}
+                  </p>
                 </div>
               </div>
 
@@ -238,9 +241,6 @@ export default function SideNavbar({
                 <LogoutIcon />
               </button>
             </div>
-            <p className="profile-email text-center text-truncate">
-              {user && user.email}
-            </p>
           </div>
         </nav>
       </div>
