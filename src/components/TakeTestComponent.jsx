@@ -27,12 +27,11 @@ import { toast } from "react-toastify";
 import { getError } from "../Utils/error";
 import { useNavigate } from "react-router-dom";
 import CreateArea from "./CreateArea";
-import { MdDeleteOutline } from "react-icons/md";
 
 const UnFlaggedOption = (props) => {
   return (
     <div
-      className="d-flex flex-column align-items-center p-2 px-3 rounded-lg cursor-pointer"
+      className="d-flex flex-column align-items-center py-1 px-3 rounded-lg cursor-pointer"
       style={{
         border: "1px solid #D9D9D9",
         boxShadow: "0px 2px 12px 0px #D1D1D10A",
@@ -43,7 +42,7 @@ const UnFlaggedOption = (props) => {
       <span>
         <BlackFlagIcon />
       </span>
-      <span className="text-8 font-semibold">Flag Que.</span>
+      <span className="text-8 font-medium">Flag Que.</span>
     </div>
   );
 };
@@ -51,7 +50,7 @@ const UnFlaggedOption = (props) => {
 const FlaggedOption = (props) => {
   return (
     <div
-      className="d-flex flex-column align-items-center p-2 px-3 rounded-lg cursor-pointer"
+      className="d-flex flex-column align-items-center py-1 px-3 rounded-lg cursor-pointer"
       style={{
         border: "1px solid #FFAEAE",
         boxShadow: "0px 2px 12px 0px #D1D1D10A",
@@ -62,7 +61,7 @@ const FlaggedOption = (props) => {
       <span>
         <RedFlagIcon />
       </span>
-      <span className="text-8 font-semibold" style={{ color: "#FF1616" }}>
+      <span className="text-8 font-medium" style={{ color: "#FF1616" }}>
         Flagged
       </span>
     </div>
@@ -73,9 +72,9 @@ const CheckedOption = ({ option, optionNumber }) => {
   const questionMap = ["A", "B", "C", "D"];
 
   return (
-    <div className="d-flex justify-content-between px-2 py-2 bg-color-light">
-      <div className="d-flex align-items-center flex-grow-1 gap-3 text-color-primary text-16">
-        <span className="font-bold">{`${questionMap[optionNumber]}]`}</span>
+    <div className="d-flex justify-content-between align-items-center rounded-xl px-2 py-2 bg-color-light">
+      <div className="d-flex flex-grow-1 gap-3 text-color-primary text-16">
+        <span className="font-bold">{`[${questionMap[optionNumber]}]`}</span>
         <p
           className="m-0 font-medium"
           style={{
@@ -97,9 +96,9 @@ const UncheckedOption = ({ option, optionNumber, onUncheckedOptionClick }) => {
   const questionMap = ["A", "B", "C", "D"];
 
   return (
-    <div className="d-flex justify-content-between flex-wrap px-2 py-2">
-      <div className="d-flex align-items-center flex-wrap flex-grow-1 gap-3 text-16">
-        <span className="font-bold text-color-primary">{`${questionMap[optionNumber]}]`}</span>
+    <div className="d-flex justify-content-between align-items-center px-2 py-2">
+      <div className="d-flex  flex-wrap flex-grow-1 gap-3 text-16">
+        <span className="font-bold text-color-primary">{`[${questionMap[optionNumber]}]`}</span>
         <p
           className="m-0 font-normal"
           style={{
@@ -127,22 +126,7 @@ const TakeTestComponent = (props) => {
   const [openCalc, setOpenCalc] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [notes, setNotes] = useState([]);
   const [openNotes, setOpenNotes] = useState(false);
-
-  function addNote(newNote) {
-    setNotes((prevNotes) => {
-      return [...prevNotes, newNote];
-    });
-  }
-
-  function deleteNote(id) {
-    setNotes((prevNotes) => {
-      return prevNotes.filter((noteItem, index) => {
-        return index !== id;
-      });
-    });
-  }
 
   useEffect(() => {
     if (currentQuestion?.confidence === "I KNOW IT") {
@@ -292,62 +276,63 @@ const TakeTestComponent = (props) => {
         show={openNotes}
         onHide={setOpenNotes}
       >
-        <CreateArea onAdd={addNote} />
-        {notes.map((noteItem, index) => {
-          return (
-            <div key={index} className="note">
-              <p>{noteItem?.content}</p>
-              <button id="target" onClick={() => deleteNote(index)}>
-                <MdDeleteOutline size={23} />
-              </button>
-            </div>
-          );
-        })}
+        <CreateArea
+          questions={props?.questions}
+          currentQuestionIndex={props?.currentQuestionIndex}
+          setQuestions={props?.setQuestions}
+        />
       </Modal>
+
       <header
-        className="d-flex flex-wrap justify-content-between align-items-center px-4 py-1"
+        className="d-flex flex-wrap justify-content-between align-items-center px-4 py-0"
         style={{ backgroundColor: "#C3D3FF33" }}
       >
-        <h5 className="text-20 font-semibold">{props.subDomain} Test</h5>
-        <p className="text-14 font-semibold">
-          <DateCalendarIcon /> Date:{" "}
-          <span className="text-12 font-medium text-color-primary">
-            {formattedDate}
-          </span>
-        </p>
-        <div className="d-flex flex-wrap justify-content-end gap-3">
-          <div
-            className="bg-white"
-            style={{
-              borderLeft: "5px solid #A4BCFD",
-            }}
-          >
-            <p
-              style={{ width: "12rem" }}
-              className="m-0 p-2 px-3 d-flex justify-content-between align-items-center"
-            >
-              <span className="text-14 font-semibold">
-                Attempted Question:{" "}
-              </span>
-              <span className="text-12 font-medium text-color-secondary">
-                {convertToTwoDigits(props.attemptedQuestions)}
-              </span>
-            </p>
-            <p
-              style={{ width: "12rem" }}
-              className="m-0 p-2 px-3 d-flex justify-content-between align-items-center"
-            >
-              <span className="text-14 font-semibold">Missing Question:</span>
-              <span className="text-12 font-medium text-color-secondary">
-                {convertToTwoDigits(props.missingQuestions)}
-              </span>
-            </p>
+        <h5
+          style={{ color: "rgb(128, 152, 249)" }}
+          className="text-26 font-semibold"
+        >
+          {props?.subDomain} Test
+        </h5>
+
+        <div className="d-flex flex-wrap align-items-center justify-content-end gap-3 py-2">
+          <div className="text-14 font-medium">
+            <DateCalendarIcon /> Date:{" "}
+            <span className="text-12 font-medium text-color-primary">
+              {formattedDate}
+            </span>
           </div>
+
           <div
-            className="bg-white d-flex flex-column justify-content-around align-items-center py-1"
+            className="bg-white d-flex flex-column px-2 py-2"
             style={{
               borderLeft: "5px solid #A4BCFD",
               minWidth: "14rem",
+              borderRadius: "10px",
+            }}
+          >
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-14 font-semibold">Missing Question:</span>
+              <span className="text-14 font-medium text-color-secondary">
+                {convertToTwoDigits(props?.missingQuestions)}
+              </span>
+            </div>
+
+            <div className="d-flex justify-content-between align-items-center mt-1 ">
+              <span className="text-14 font-semibold">
+                Attempted Question:{" "}
+              </span>
+              <span className="text-14 font-medium text-color-secondary">
+                {convertToTwoDigits(props?.attemptedQuestions)}
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="bg-white d-flex flex-column justify-content-around align-items-center px-3 py-1"
+            style={{
+              borderLeft: "5px solid #A4BCFD",
+              // minWidth: "14rem",
+              borderRadius: "10px",
             }}
           >
             <div className="d-flex">
@@ -364,12 +349,10 @@ const TakeTestComponent = (props) => {
                 </span>
               </p>
             </div>
+
             <div className="d-flex justify-content-around align-items-center gap-2">
-              <span>
-                <ClockIcon />
-              </span>
               <span
-                className="text-14 font-semibold"
+                className="text-14 font-medium"
                 style={{ color: "#2D3282" }}
               >
                 Time Allotted:
@@ -386,29 +369,25 @@ const TakeTestComponent = (props) => {
         <div className="d-flex flex-wrap justify-content-between align-items-center">
           <div className="d-flex flex-wrap justify-content-start align-items-center gap-4">
             <h5 className="text-18 font-bold" style={{ color: "#2B3674" }}>
-              Question No. {props.currentQuestionIndex + 1}
+              Question No. {props?.currentQuestionIndex + 1}
             </h5>
-            {currentQuestion && currentQuestion.questionFlagged ? (
-              <FlaggedOption toggleQuestionFlag={props.toggleQuestionFlag} />
+            {currentQuestion && currentQuestion?.questionFlagged ? (
+              <FlaggedOption toggleQuestionFlag={props?.toggleQuestionFlag} />
             ) : (
-              <UnFlaggedOption toggleQuestionFlag={props.toggleQuestionFlag} />
+              <UnFlaggedOption toggleQuestionFlag={props?.toggleQuestionFlag} />
             )}
-            {/* {props.randomFill && (
-              <button onClick={props.randomFill}>Random Fill</button>
-            )} */}
-            {props.goToLastQuestion && (
+
+            {/* {props.goToLastQuestion && (
               <Button onClick={props.goToLastQuestion}>
                 Go to last question
               </Button>
-            )}
+            )} */}
           </div>
 
           <div className="d-flex flex-wrap justify-content-end align-items-center gap-3">
             <div
-              className="d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
+              className="shadow py-2 px-2 d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
               style={{
-                width: "5rem",
-                height: "4rem",
                 cursor: "pointer",
               }}
               onClick={() => setOpenCalc(true)}
@@ -425,10 +404,8 @@ const TakeTestComponent = (props) => {
             </div>
 
             <div
-              className="d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
+              className="shadow py-2 px-2 d-flex flex-column justify-content-center align-items-center gap-1 bg-white rounded-xl"
               style={{
-                width: "5rem",
-                height: "4rem",
                 cursor: "pointer",
               }}
               onClick={() => setOpenNotes(true)}
@@ -454,7 +431,7 @@ const TakeTestComponent = (props) => {
             >
               <div
                 className="h-100 px-2 d-flex align-items-center rounded-start bg-white cursor-pointer"
-                onClick={props.goToPrevQuestion}
+                onClick={props?.goToPrevQuestion}
               >
                 <ArrowLeftOutlinedIcon24 />
               </div>
@@ -467,14 +444,14 @@ const TakeTestComponent = (props) => {
                 }}
               >
                 <span className="font-medium">
-                  {props.currentQuestionIndex + 1}
+                  {props?.currentQuestionIndex + 1}
                 </span>
                 <span>/</span>
-                <span>{props.questionsLength}</span>
+                <span>{props?.questionsLength}</span>
               </div>
               <div
                 className="h-100 px-2 d-flex align-items-center rounded-end bg-white cursor-pointer"
-                onClick={props.goToNextQuestion}
+                onClick={props?.goToNextQuestion}
               >
                 <ArrowRightOutlinedIcon24 />
               </div>
@@ -485,18 +462,17 @@ const TakeTestComponent = (props) => {
         <hr />
 
         <div>
-          <p
-            className="text-16 font-semibold"
-            style={{
-              maxWidth: "75%",
-              textWrap: "stable",
-              overflowX: "hidden",
-            }}
+          <div
+            className="text-16 "
+            // style={{
+            //   textWrap: "stable",
+            //   overflowX: "hidden",
+            // }}
           >
             {currentQuestion && (
               <CreateMarkup content={currentQuestion?.question} />
             )}
-          </p>
+          </div>
           <div>
             {currentQuestion && (
               <CreateMarkup
@@ -504,16 +480,25 @@ const TakeTestComponent = (props) => {
               />
             )}
           </div>
-          <Carousel className="d-flex justify-content-center" fade>
-            {currentQuestion && currentQuestion.images.length > 0 ? (
-              currentQuestion.images.map((img, idx) => {
+          <Carousel
+            style={{ width: "400px" }}
+            className="d-flex justify-content-center"
+            prevIcon={false}
+            nextIcon={false}
+            touch={true}
+            slide={true}
+            interval={3000}
+            controls={false}
+          >
+            {currentQuestion && currentQuestion?.images?.length > 0 ? (
+              currentQuestion?.images?.map((img, idx) => {
                 return (
                   <Carousel.Item key={idx}>
                     <img
                       style={{
                         height: "200px",
                         width: "100%",
-                        objectFit: "contain",
+                        borderRadius: "15px",
                       }}
                       src={`https://creative-story.s3.amazonaws.com${img}`}
                       alt="..."
@@ -528,7 +513,7 @@ const TakeTestComponent = (props) => {
 
           <section className="my-4">
             {currentQuestion &&
-              currentQuestion.options.map((item, idx) => {
+              currentQuestion?.options?.map((item, idx) => {
                 if (currentQuestion["selectedOption"] === idx) {
                   return (
                     <CheckedOption key={idx} option={item} optionNumber={idx} />
@@ -539,7 +524,7 @@ const TakeTestComponent = (props) => {
                     key={idx}
                     option={item}
                     optionNumber={idx}
-                    onUncheckedOptionClick={props.onUncheckedOptionClick}
+                    onUncheckedOptionClick={props?.onUncheckedOptionClick}
                   />
                 );
               })}
@@ -548,14 +533,14 @@ const TakeTestComponent = (props) => {
       </div>
 
       <footer
-        className="sticky-bottom d-flex flex-wrap justify-content-between align-items-center p-4 bg-white rounded-top"
+        className="sticky-bottom d-flex flex-wrap justify-content-between align-items-center px-4 py-2 bg-white rounded-top"
         style={{
           border: "1px solid #6D94FF33",
         }}
       >
         <div className="d-flex flex-wrap justify-content-start align-items-end gap-3">
           <div
-            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded-lg text-14 text-color-primary cursor-pointer"
+            className="shadow font-medium d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded-lg text-14 text-color-primary cursor-pointer"
             style={
               active === 1
                 ? { border: "1px solid #007C23" }
@@ -568,7 +553,7 @@ const TakeTestComponent = (props) => {
             {active === 1 ? <IKnowItIcon /> : <ThinkSoIcon />} I KNOW IT
           </div>
           <div
-            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
+            className="shadow font-medium d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={
               active === 2
                 ? { border: "1px solid #007C23" }
@@ -581,7 +566,7 @@ const TakeTestComponent = (props) => {
             {active === 2 ? <IKnowItIcon /> : <ThinkSoIcon />} THINK SO
           </div>
           <div
-            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
+            className="shadow font-medium d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={
               active === 3
                 ? { border: "1px solid #007C23" }
@@ -594,7 +579,7 @@ const TakeTestComponent = (props) => {
             {active === 3 ? <IKnowItIcon /> : <NotSureIcon />} NOT SURE
           </div>
           <div
-            className="d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
+            className="shadow font-medium d-flex flex-column justify-content-center align-items-center px-3 py-2 rounded text-14 font-light cursor-pointer"
             style={
               active === 4
                 ? { border: "1px solid #007C23" }

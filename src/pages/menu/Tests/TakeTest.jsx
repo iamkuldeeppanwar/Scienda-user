@@ -180,6 +180,8 @@ export default function TakeTest() {
   return (
     <TakeTestComponent
       testID={testID}
+      questions={questions}
+      setQuestions={setQuestions}
       questionsLength={
         test?.questions_reference && test.questions_reference.length
       }

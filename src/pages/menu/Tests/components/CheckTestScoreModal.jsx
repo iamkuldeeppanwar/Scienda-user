@@ -16,7 +16,7 @@ const CheckTestScoreModal = ({
           <TestSubmitCheckIcon />
         </div>
         <p
-          className="text-24 font-semibold text-center"
+          className="text-24 font-semibold text-center mt-2"
           style={{ color: "#111927" }}
         >
           You have successfully submitted the Exam
@@ -26,12 +26,11 @@ const CheckTestScoreModal = ({
           className="text-center d-block"
         >
           <button
-            className="bg-color-primary py-2 px-3 text-white text-16 font-semibold rounded-lg"
+            className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
             style={{
-              border: "1px solid var(--primary-color)",
-              boxShadow: "0px 1px 2px 0px #1018280D",
+              border: "1px solid #00008B",
+              boxShadow: "0px 4px 4px 0px #ACD4FF0A",
               width: "263px",
-              height: "56px",
             }}
           >
             Check Score

@@ -33,6 +33,8 @@ function TakeTestSubmitModal({
 
       obj.selected = qnts.options[qnts.selectedOption];
 
+      obj.notes = qnts.note || "";
+
       return obj;
     });
 
@@ -40,6 +42,7 @@ function TakeTestSubmitModal({
       const response = await submitTest(arr, testID, token);
       localStorage.setItem("reportID", response?.reportcard);
       localStorage.removeItem(testID);
+      closeTestSubmitModal();
     } catch (error) {
       toast.error(getError(error));
     }
@@ -54,8 +57,8 @@ function TakeTestSubmitModal({
       className="help-modal"
       // size='lg'
     >
-      <div className="py-5 px-3">
-        <h4 className="px-4 py-2 text-22 font-semibold text-center">
+      <div className="p-3">
+        <h4 className="px-4 py-2 text-22 font-medium text-center">
           Are you sure you want to submit this exam? it cannot be reverted..!
         </h4>
 
@@ -83,26 +86,26 @@ function TakeTestSubmitModal({
         <div className="mt-3 d-flex justify-content-center align-items-center gap-2">
           {questionsLength > attemptedQuestions && (
             <button
-              className="text-white bg-color-primary text-16 font-semibold py-3 px-4 rounded-lg border-0"
-              style={{
-                width: "18.3125rem",
-                height: "56px",
-                boxShadow: "0px 1px 2px 0px #1018280D",
-              }}
               onClick={closeTestSubmitModal}
+              className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
+              style={{
+                border: "1px solid #00008B",
+                boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+                width: "18.3125rem",
+              }}
             >
               Go back & Add Response
             </button>
           )}
           {questionsLength === attemptedQuestions && (
             <button
-              className="bg-white text-16 text-color-primary font-medium rounded-lg"
-              style={{
-                width: "10.5rem",
-                height: "56px",
-                border: "1px solid var(--primary-color)",
-              }}
               onClick={closeTestSubmitModal}
+              className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
+              style={{
+                border: "1px solid #00008B",
+                boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+                width: "8.5rem",
+              }}
             >
               Go back
             </button>
@@ -110,13 +113,13 @@ function TakeTestSubmitModal({
           {questionsLength === attemptedQuestions && (
             <CheckTestScoreButton>
               <button
-                className="text-white bg-color-primary text-16 font-semibold py-3 px-4 rounded-lg border-0"
-                style={{
-                  width: "10.5rem",
-                  height: "56px",
-                  boxShadow: "0px 1px 2px 0px #1018280D",
-                }}
                 onClick={handleSubmitTest}
+                className="view-button text-center font-medium text-14 text-color-primary rounded py-2"
+                style={{
+                  border: "1px solid #00008B",
+                  boxShadow: "0px 4px 4px 0px #ACD4FF0A",
+                  width: "8.5rem",
+                }}
               >
                 Submit Now
               </button>

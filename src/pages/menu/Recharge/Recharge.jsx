@@ -7,8 +7,9 @@ import SearchableDropdown from "../../../components/SearchableDropdown";
 import { getError } from "../../../Utils/error";
 import { ToastContainer, toast } from "react-toastify";
 import { getReacharge } from "./api/reachargeApi";
-import { Spinner } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 import "./Recharge.css";
+import HeaderContent from "../../../components/HeaderContent";
 
 const RechargeModalTest = (props) => {
   const [modalShow, setModalShow] = useState(false);
@@ -106,34 +107,93 @@ const Recharge = () => {
   };
 
   return (
-    <ModuleLayout style={{ padding: "0" }}>
-      <div className="blur-container">
-        <div className="content d-flex flex-column align-items-center justify-content-center">
-          <h5 className="text-white text-center w-55 text-28 font-medium">
-            "Feeling stuck? Let's reboot your brain with a practice exam
-            jumpstart! Get ready to conquer and recharge!"
-          </h5>
+    <>
+      <HeaderContent content={"Recharge"} />
+      <ModuleLayout style={{ padding: "0" }}>
+        <div className="d-flex justify-content-center mt-3">
+          <Carousel
+            prevIcon={false}
+            nextIcon={false}
+            touch={true}
+            slide={true} // Ensure slide is enabled for a sliding effect
+            interval={3000} // 3 seconds interval between slides, adjust as needed
+            controls={false}
+          >
+            <Carousel.Item>
+              <img src="/images/Rectangle 6127.png" alt="..." />
+              <Carousel.Caption>
+                <div
+                  className="p-3"
+                  style={{
+                    border: "1px solid #FFFFFF",
+                    borderRadius: "15px",
+                    height: "5rem",
+                    backdropFilter: "blur(5px)",
+                    WebkitBackdropFilter: "blur(5px)",
+                    backgroundColor: "rgba(1, 4, 22, 0.12)",
+                    boxShadow: "0px 8px 42px 0px #FFFFFF0A",
+                  }}
+                >
+                  "Feeling stuck? Let's reboot your brain with a practice exam
+                  jumpstart! Get ready to conquer and recharge!"
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src="/images/image.png" alt="..." />
+              <Carousel.Caption>
+                <div
+                  className="p-3"
+                  style={{
+                    border: "1px solid #FFFFFF",
+                    borderRadius: "15px",
+                    height: "5rem",
+                    backdropFilter: "blur(5px)",
+                    WebkitBackdropFilter: "blur(5px)",
+                    backgroundColor: "rgba(1, 4, 22, 0.12)",
+                    boxShadow: "0px 8px 42px 0px #FFFFFF0A",
+                  }}
+                >
+                  "Feeling stuck? Let's reboot your brain with a practice exam
+                  jumpstart! Get ready to conquer and recharge!"
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src="/images/image (1).png" alt="..." />
+              <Carousel.Caption>
+                <div
+                  className="p-3"
+                  style={{
+                    border: "1px solid #FFFFFF",
+                    borderRadius: "15px",
+                    height: "5rem",
+                    backdropFilter: "blur(5px)",
+                    WebkitBackdropFilter: "blur(5px)",
+                    backgroundColor: "rgba(1, 4, 22, 0.12)",
+                    boxShadow: "0px 8px 42px 0px #FFFFFF0A",
+                  }}
+                >
+                  "Feeling stuck? Let's reboot your brain with a practice exam
+                  jumpstart! Get ready to conquer and recharge!"
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </div>
 
-          <div className="mb-3">
-            <div>
-              <h5 className="mt-3 text-22 text-white text-center">
-                What will you get:
-              </h5>
-              <ul className="text-22">
-                <li style={{ fontWeight: "300" }} className="text-white">
-                  Unlimited Attempts
-                </li>
-                <li style={{ fontWeight: "300" }} className="text-white">
-                  Improve Your Confidence.
-                </li>
-              </ul>
-            </div>
+        <div className="mb-3 d-flex flex-column align-items-center justify-content-center">
+          <div>
+            <h5 className="mt-3 text-20 px-4 font-bold">What will you get:</h5>
+            <ul className="text-18 font-medium">
+              <li>Unlimited Attempts</li>
+              <li>Improve Your Confidence.</li>
+            </ul>
           </div>
 
-          <div style={{ border: "1px solid #FFFFFF6B", width: "50%" }} />
-          <div className="text-center mt-4">
+          <div className="text-center mt-2">
             <button
-              className="text-24 font-semibold border-0 bg-color-white rounded-lg view-button"
+              className="text-24 font-semibold border-1 bg-color-white rounded-lg view-button"
               style={{ width: "350px", height: "60px" }}
               onClick={handleRecharge}
             >
@@ -141,9 +201,9 @@ const Recharge = () => {
             </button>
           </div>
         </div>
-      </div>
-      <ToastContainer />
-    </ModuleLayout>
+        <ToastContainer />
+      </ModuleLayout>
+    </>
   );
 };
 

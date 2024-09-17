@@ -11,6 +11,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import CustomSkeleton from "../../../components/CustomSkeleton/CustomSkeleton";
+import { CrownIcon } from "../Membership/components/membership-icons";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -66,7 +67,7 @@ const Dashboard = () => {
     }
   };
 
-  // console.log(dashboard);
+  // console.log(dashboard?.tickets);
 
   return (
     <ModuleLayout>
@@ -234,6 +235,7 @@ const Dashboard = () => {
                       style={{
                         fontSize: "16px",
                         color: "rgba(33, 52, 70, 1)",
+                        borderRadius: "10%",
                       }}
                     >
                       <th className="text-center border-2">Exam Name</th>
@@ -285,21 +287,24 @@ const Dashboard = () => {
           <Col>
             <Card
               className="shadow"
-              style={{ height: "530px", overflowY: "scroll" }}
+              style={
+                dashboard?.tickets?.length > 5
+                  ? { height: "530px", overflowY: "scroll", marginTop: "-10px" }
+                  : { height: "530px", marginTop: "-10px" }
+              }
             >
               <Card.Body>
-                {dashboard?.ticket?.length > 0 ? (
+                <div
+                  style={{
+                    color: "#8098F9",
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  New Tickets {dashboard?.tickets?.length}
+                </div>
+                {dashboard?.tickets?.length > 0 ? (
                   <>
-                    <div
-                      style={{
-                        color: "#8098F9",
-                        fontSize: "1.25rem",
-                        fontWeight: "26px",
-                      }}
-                    >
-                      New Tickets {dashboard?.tickets?.length}
-                    </div>
-
                     {dashboard?.tickets?.map((ticket, index) => {
                       const color = colors[index % colors.length];
                       return (
@@ -502,17 +507,22 @@ const Dashboard = () => {
                 </div>
 
                 <div className="d-flex justify-content-center mt-4">
-                  <button
-                    className="px-3 py-1"
-                    style={{
-                      backgroundColor: "rgba(0, 0, 139, 1)",
-                      border: "none",
-                      borderRadius: "5px",
-                      color: "white",
-                    }}
-                  >
-                    Upgrade
-                  </button>
+                  <Link to="/menu/membership">
+                    <button
+                      className="px-3 py-1"
+                      style={{
+                        backgroundColor: "rgba(0, 0, 139, 1)",
+                        border: "none",
+                        borderRadius: "5px",
+                        color: "white",
+                      }}
+                    >
+                      Upgrade{" "}
+                      <span>
+                        <CrownIcon />
+                      </span>{" "}
+                    </button>
+                  </Link>
                 </div>
 
                 {dashboard?.subscription?.expiry && (

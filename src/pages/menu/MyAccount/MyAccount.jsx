@@ -296,10 +296,7 @@ const MyAccount = () => {
         <div className="px-3 py-4 account-details-container">
           <div className="form-container">
             <Form onSubmit={updatePasswordHandler}>
-              <div className="d-flex align-items-center column-gap-3">
-                <span>
-                  <PasswordLockIcon />
-                </span>
+              <div className="ms-2">
                 <p className="m-0 text-18 font-semibold">Password & Security</p>
               </div>
 

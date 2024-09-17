@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Table from "react-bootstrap/Table";
-
 import "./Membership.css";
 import ModuleLayout from "../../../layout/ModuleLayout";
-// import { ViewEyeIcon } from "../Reports/components/reports-icons";
 import {
   CheckCalendarIcon,
   CheckCircleIcon,
   CheckFeaturesIcon,
-  CrownIcon,
-  ViewEyeIcon2,
 } from "./components/membership-icons";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
@@ -26,7 +22,6 @@ import { setUser } from "../../../features/userSlice";
 import { setTransactions } from "../../../features/transactionSlice";
 import HeaderContent from "../../../components/HeaderContent";
 import Skeleton from "react-loading-skeleton";
-import CustomSkeleton from "../../../components/CustomSkeleton/CustomSkeleton";
 
 const MembershipCard = ({
   price,
@@ -131,7 +126,6 @@ const Membership = () => {
   const { transactions } = useSelector((state) => state.transaction);
   const [planLoader, setPlanLoader] = useState(false);
   const [transactionLoading, setTransactionLoading] = useState(false);
-  const bottomRef = useRef(null);
 
   useEffect(() => {
     getProfile();
@@ -187,10 +181,6 @@ const Membership = () => {
     });
   };
 
-  const handleBottom = () => {
-    bottomRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <>
       <HeaderContent content={"Membership"} />
@@ -201,12 +191,12 @@ const Membership = () => {
               responsive
               bordered
               className="custom-table shadow"
-              style={{ borderRadius: "20px !important", overflow: "hidden" }}
+              style={{ borderRadius: "20px", overflow: "hidden" }}
             >
               <tbody>
                 <tr className="h-25">
                   <th scope="row" className="text-center table-header">
-                    <div className="p-2">Plan</div>
+                    <div className="p-3">Plan</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -227,7 +217,7 @@ const Membership = () => {
                 </tr>
                 <tr className="h-25">
                   <th scope="row" className="text-center">
-                    <div className="p-2">Validity</div>
+                    <div className="p-3">Validity</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -245,7 +235,7 @@ const Membership = () => {
                 </tr>
                 <tr>
                   <th scope="row" className="text-center">
-                    <div className="p-2">Amount</div>
+                    <div className="p-3">Amount</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -263,7 +253,7 @@ const Membership = () => {
                 </tr>
                 <tr>
                   <th scope="row" className="text-center">
-                    <div className="p-2">Payment ID</div>
+                    <div className="p-3">Payment ID</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -281,7 +271,7 @@ const Membership = () => {
                 </tr>
                 <tr>
                   <th scope="row" className="text-center">
-                    <div className="p-2">Payment Date</div>
+                    <div className="p-3">Payment Date</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -299,7 +289,7 @@ const Membership = () => {
                 </tr>
                 <tr>
                   <th scope="row" className="text-center">
-                    <div className="p-2">Invoice</div>
+                    <div className="p-3">Invoice</div>
                   </th>
                   {transactionLoading ? (
                     <td className="text-center p-3">
@@ -309,22 +299,16 @@ const Membership = () => {
                     transactions?.transactions?.map((data, index) => (
                       <td key={index} className="text-center p-3">
                         <div className="text-center">
-                          <button
-                            className="text-center font-medium text-14 text-color-primary rounded py-1"
+                          <a
+                            className="view-button text-decoration-none text-center font-medium text-14 text-color-primary rounded px-3 py-1"
                             style={{
                               border: "1px solid #00008B",
                               boxShadow: "0px 4px 4px 0px #ACD4FF0A",
-                              width: "7rem",
                             }}
+                            href={`https://creative-story.s3.amazonaws.com${data?.invoice_url}`}
                           >
-                            <a
-                              className="text-decoration-none text-color-primary"
-                              href={`https://creative-story.s3.amazonaws.com${data?.invoice_url}`}
-                            >
-                              {" "}
-                              View <ViewEyeIcon2 />
-                            </a>
-                          </button>
+                            View
+                          </a>
                         </div>
                       </td>
                     ))
@@ -335,14 +319,14 @@ const Membership = () => {
           </Col>
 
           <Col>
-            <Card className="rounded-xl shadow">
+            <Card style={{ height: "440px" }} className="rounded-xl shadow">
               <Card.Body className="p-0">
-                <h3 className="text-18 text-center font-bold mt-1">
+                <h3 className="text-18 text-center font-bold mt-3">
                   Your Active Plan
                 </h3>
 
                 <div
-                  className="mt-1 py-3 px-4 d-flex justify-content-between align-items-center"
+                  className="mt-2 py-3 px-4 d-flex justify-content-between align-items-center"
                   style={{
                     backgroundColor: "#DAE4FF",
                   }}
@@ -369,10 +353,11 @@ const Membership = () => {
                   </div>
                 </div>
 
-                <div className="d-flex justify-content-between px-5 mt-2">
+                <div className="px-5 mt-3">
                   <div
-                    className="font-normal rounded-md p-2"
+                    className="font-normal  rounded-md p-2"
                     style={{
+                      width: "52%",
                       backgroundColor: "#FF16160A",
                       color: "#C00000",
                     }}
@@ -383,28 +368,16 @@ const Membership = () => {
                         transactions?.subscription.expiry
                     )}
                   </div>
-
-                  <div>
-                    <button
-                      onClick={handleBottom}
-                      className="border-0 bg-color-primary text-white text-14 font-semibold py-2 px-4 rounded-md"
-                    >
-                      Upgrade Plan{" "}
-                      <span>
-                        <CrownIcon />
-                      </span>{" "}
-                    </button>
-                  </div>
                 </div>
 
                 <h4
-                  className="text-16 text-center mt-2"
+                  className="text-18 text-center mt-3"
                   style={{ color: "#6172F3" }}
                 >
                   Why Upgrade ?
                 </h4>
 
-                <div className="d-flex align-items-center gap-2 mt-3 mb-1 px-5">
+                <div className="d-flex align-items-center gap-2 mt-4 mb-1 px-5">
                   <Card className="rounded-xl">
                     <Card.Body>
                       <div className="border-1 text-center">
@@ -440,7 +413,7 @@ const Membership = () => {
           </Col>
         </Row>
 
-        <div className="membership-card-container " ref={bottomRef}>
+        <div className="membership-card-container">
           {!planLoader ? (
             plans?.length > 0 ? (
               plans?.map((data) => {

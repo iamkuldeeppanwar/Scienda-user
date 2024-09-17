@@ -215,7 +215,7 @@ const Reports = () => {
             )}
           </Row>
 
-          <Row className="mt-1 g-3">
+          <Row className="mt-1 g-2">
             {!confidenceLoading ? (
               <Col lg={6}>
                 <Card className="shadow rounded-xl border-1">

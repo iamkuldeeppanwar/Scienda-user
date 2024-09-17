@@ -119,9 +119,8 @@ const Tickets = () => {
   return (
     <>
       <HeaderContent content={"My Tickets"} />
-      <ModuleLayout className="ps-3" style={{ padding: 0 }}>
+      <ModuleLayout className="ps-2" style={{ padding: 0 }}>
         <div className="px-3">
-          <hr />
           <div className="d-flex justify-content-between align-items-center">
             <div>
               <div className="font-bold text-16">My Tickets</div>
@@ -148,7 +147,7 @@ const Tickets = () => {
             <div
               className={`${
                 tickets.length === 4
-                  ? "d-flex flex-wrap justify-content-center gap-2"
+                  ? "d-flex flex-wrap justify-content-between"
                   : "d-flex flex-wrap gap-2"
               }`}
             >
@@ -159,7 +158,7 @@ const Tickets = () => {
                       key={data?._id}
                       className="px-3 border-1 rounded-xl bg-white d-flex flex-column justify-content-between shadow"
                       style={{
-                        width: "273px",
+                        width: "285px",
                         // height: "151px",
                         cursor: "pointer",
                       }}
@@ -255,7 +254,6 @@ const Tickets = () => {
             className="create-ticket-container mt-4 border-1"
             onSubmit={createTicketHandler}
           >
-            <hr />
             <div>
               <p className="font-bold text-16">Create New Ticket</p>
             </div>

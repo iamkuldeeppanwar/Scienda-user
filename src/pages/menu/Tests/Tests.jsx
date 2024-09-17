@@ -142,6 +142,7 @@ const TestCard = ({
           testName={testName}
           timeAlloted={timeAlloted}
           noOfQuestions={noOfQuestions}
+          button={btnText}
         />
       </div>
     </div>
@@ -190,7 +191,6 @@ const Tests = () => {
           <Row className="g-3">
             {tests.length > 0 ? (
               <>
-                <hr />
                 <h4
                   style={{
                     color: "#8098F9",
@@ -246,7 +246,6 @@ const Tests = () => {
           <Row className="mt-2 g-3">
             {tests.length > 0 ? (
               <>
-                <hr />
                 <h4
                   style={{
                     color: "#8098F9",
@@ -288,7 +287,6 @@ const Tests = () => {
           <Row className="mt-2 g-3">
             {proficiencies.length > 0 ? (
               <>
-                <hr />
                 <h4
                   style={{
                     color: "#8098F9",
