@@ -128,54 +128,49 @@ const MyAccount = () => {
   return (
     <>
       <HeaderContent content={"My Account"} />
-      <ModuleLayout style={{ padding: 0 }}>
+      <ModuleLayout className="px-4" style={{ padding: 0 }}>
         <div className="px-3  account-details-container">
           <div className="form-container">
-            <Form onSubmit={profileUpdateHandler}>
-              <p className="ms-2 text-18 font-semibold">
-                Upload Profile Picture
-              </p>
-              <div className="d-flex align-items-center gap-3">
-                <img
-                  style={{
-                    border: "2px solid #DCD6CB",
-                  }}
-                  className="profile_pic"
-                  src={profile}
-                  alt="myaccount-profile"
-                />
+            <p className="ms-2 text-18 font-semibold">Upload Profile Picture</p>
+            <div className="d-flex align-items-center gap-3">
+              <img
+                style={{
+                  border: "2px solid #DCD6CB",
+                }}
+                className="profile_pic"
+                src={profile}
+                alt="myaccount-profile"
+              />
 
-                <div
-                  style={{ borderLeft: "1px solid #C7D7FE" }}
-                  className="py-2"
+              <div style={{ borderLeft: "1px solid #C7D7FE" }} className="py-2">
+                <input
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*"
+                />
+                <button
+                  onClick={handleButtonClick}
+                  className="px-3 py-1 m-2"
+                  style={{
+                    border: "none",
+                    backgroundColor: "#00008B",
+                    color: "white",
+                    fontWeight: 500,
+                    borderRadius: "5px",
+                  }}
                 >
-                  <input
-                    onChange={handleImageChange}
-                    style={{ display: "none" }}
-                    ref={fileRef}
-                    type="file"
-                    accept="image/*"
-                  />
-                  <button
-                    onClick={handleButtonClick}
-                    className="px-3 py-1 m-2"
-                    style={{
-                      border: "none",
-                      backgroundColor: "#00008B",
-                      color: "white",
-                      fontWeight: 500,
-                      borderRadius: "5px",
-                    }}
-                  >
-                    Upload New <UploadIcon />
-                  </button>
-                </div>
+                  Upload New <UploadIcon />
+                </button>
               </div>
-              <hr />
+            </div>
+            <hr />
+            <Form onSubmit={profileUpdateHandler}>
               <div className="container">
                 <p className="text-18 font-semibold">Basic Details</p>
                 <Row className="mt-2">
-                  <Col md={6}>
+                  <Col md={4}>
                     <Form.Group className="flex-grow-1">
                       <Form.Label className="text-14 font-medium">
                         First Name
@@ -189,7 +184,7 @@ const MyAccount = () => {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={6}>
+                  <Col md={4}>
                     <Form.Group className="flex-grow-1">
                       <Form.Label className="text-14 font-medium">
                         Last Name
@@ -203,26 +198,21 @@ const MyAccount = () => {
                       />
                     </Form.Group>
                   </Col>
-                </Row>
-
-                <Row className="mt-2">
-                  <Col md={6}>
+                  <Col md={4}>
                     <Form.Group className="flex-grow-1">
                       <Form.Label className="text-14 font-medium">
                         Phone No.
                       </Form.Label>
                       <PhoneInput
-                        containerClass=""
-                        inputClass=" w-100 m-0 border-1 input-border"
+                        containerClass="input-border rounded-md"
+                        inputClass=" w-100 m-0"
                         inputStyle={{
                           height: "2.7rem",
+                          border: "0px",
                         }}
-                        buttonClass=" "
+                        country="uk"
                         enableSearch={true}
                         countryCodeEditable={false}
-                        // value={mobile}
-                        country="us"
-                        // regions={["north-america", "carribean"]}
                         onChange={(phone, code) => {
                           setMobile({
                             mobile: phone,
@@ -238,6 +228,9 @@ const MyAccount = () => {
                       />
                     </Form.Group>
                   </Col>
+                </Row>
+
+                <Row className="mt-2">
                   <Col md={6}>
                     <Form.Group className="flex-grow-1">
                       <Form.Label className="text-14 font-medium">
@@ -252,9 +245,7 @@ const MyAccount = () => {
                       />
                     </Form.Group>
                   </Col>
-                </Row>
 
-                <Row className="mt-2">
                   <Col md={6}>
                     <Form.Group className="flex-grow-1">
                       <Form.Label className="text-14 font-medium">
@@ -301,23 +292,23 @@ const MyAccount = () => {
               </div>
 
               <div className="p-2">
-                <Stack className="input-layout" direction="horizontal" gap={4}>
-                  <Form.Group className="mt-2 flex-grow-1">
-                    <Form.Label className="text-14 font-medium">
-                      Current Password
-                    </Form.Label>
-                    <Form.Control
-                      className="py-2 px-3 input-border"
-                      type="password"
-                      placeholder="**************"
-                      value={currentPassword}
-                      required
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                    />
-                  </Form.Group>
-                </Stack>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mt-2 flex-grow-1">
+                      <Form.Label className="text-14 font-medium">
+                        Current Password
+                      </Form.Label>
+                      <Form.Control
+                        className="py-2 px-3 input-border"
+                        type="password"
+                        placeholder="**************"
+                        value={currentPassword}
+                        required
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Row className="mt-2">
                   <Col md={6}>
                     <Form.Group>
                       <Form.Label className="text-14 font-medium">
@@ -333,6 +324,9 @@ const MyAccount = () => {
                       />
                     </Form.Group>
                   </Col>
+                </Row>
+
+                <Row className="mt-2">
                   <Col md={6}>
                     <Form.Group>
                       <Form.Label className="text-14 font-medium">

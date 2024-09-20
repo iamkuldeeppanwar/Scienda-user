@@ -9,7 +9,7 @@
   width: 100%;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
   .account-details-container {
     flex-direction: row;
     column-gap: 2rem;
@@ -18,7 +18,7 @@
   .account-details-container .form-container {
     width: 60%;
   }
-}
+} */
 
 .profile_pic {
   width: 80px;

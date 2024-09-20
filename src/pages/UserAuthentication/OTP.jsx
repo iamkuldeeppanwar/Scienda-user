@@ -134,6 +134,9 @@ const OTPComponent = () => {
 
     if (forget) {
       try {
+        if (otp.length < 4) {
+          throw new Error("All fields required");
+        }
         setLoading(true);
         await userResetPasswordOtp(email, otp);
         setLoading(false);
@@ -144,6 +147,9 @@ const OTPComponent = () => {
       }
     } else {
       try {
+        if (otp.length < 4) {
+          throw new Error("All fields required");
+        }
         setLoading(true);
         const response = await userEmailVerifyOtp(email, otp);
         localStorage.setItem("token", response.token);

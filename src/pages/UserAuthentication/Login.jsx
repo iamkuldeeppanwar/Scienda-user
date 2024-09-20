@@ -67,17 +67,22 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
+                  className="input-border"
                 />
               </Form.Group>
 
               <Form.Label>Password</Form.Label>
-              <Form.Group controlId="password" className="input-group mb-3">
+              <Form.Group
+                controlId="password"
+                className="input-group input-border rounded-md mb-3"
+              >
                 <Form.Control
                   placeholder="Password"
                   value={password}
                   type={check ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  className=""
                 />
                 <InputGroup.Text onClick={() => setCheck((p) => !p)}>
                   {!check ? (

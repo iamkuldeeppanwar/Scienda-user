@@ -77,6 +77,7 @@ const Registration = () => {
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Enter your first name"
                       required
+                      className="input-border"
                     />
                   </Form.Group>
                 </Col>
@@ -90,6 +91,7 @@ const Registration = () => {
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Enter your last name"
                       required
+                      className="input-border"
                     />
                   </Form.Group>
                 </Col>
@@ -104,26 +106,20 @@ const Registration = () => {
                       value={dob}
                       onChange={(e) => setDob(e.target.value)}
                       required
+                      className="input-border"
                     />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Mobile</Form.Label>
+                    <Form.Label>Phone No.</Form.Label>
                     <PhoneInput
-                      containerClass=""
+                      containerClass="input-border rounded-md"
                       inputClass=" w-100 m-0 border-0"
-                      inputStyle={
-                        {
-                          // height: "2.7rem",
-                        }
-                      }
-                      buttonClass=" "
-                      // country={form?.countryIsoCode?.toLowerCase()}
+                      country="uk"
                       enableSearch={true}
                       countryCodeEditable={false}
-                      // value={form?.mobile}
                       onChange={(phone, code) => {
                         setMobile({
                           mobile: phone,
@@ -145,6 +141,7 @@ const Registration = () => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
+                  className="input-border"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
@@ -153,7 +150,10 @@ const Registration = () => {
               </Form.Group>
 
               <Form.Label>Password</Form.Label>
-              <Form.Group controlId="password" className="input-group mb-3">
+              <Form.Group
+                controlId="password"
+                className="input-group input-border rounded-md mb-3"
+              >
                 <Form.Control
                   placeholder="Enter your password"
                   value={password}

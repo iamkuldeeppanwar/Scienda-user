@@ -44,7 +44,7 @@ const FogetPassword = () => {
               <div>
                 <img src={messageIcon} alt="Message icon" />
               </div>
-              <h3 className="otp_text">Check your email</h3>
+              <h3 className="otp_text">Check Your Email</h3>
               <div>We will sent a verification link to </div>
               <div className="otp_mail">{email}</div>
             </div>
@@ -54,6 +54,7 @@ const FogetPassword = () => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
+                  className="input-border"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
