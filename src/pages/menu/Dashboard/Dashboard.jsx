@@ -228,58 +228,86 @@ const Dashboard = () => {
                 </Link>
               </div>
               <Card.Body>
-                <Table responsive bordered>
-                  <thead>
-                    <tr
-                      className="rounded-lg"
-                      style={{
-                        fontSize: "16px",
-                        color: "rgba(33, 52, 70, 1)",
-                        borderRadius: "10%",
-                      }}
-                    >
-                      <th className="text-center border-2">Exam Name</th>
-                      <th className="text-center border-2">Test Type</th>
-                      <th className="text-center border-2">No. Of Questions</th>
-                      <th className="text-center border-2">Completed On</th>
-                      <th className="text-center border-2">Score</th>
-                      <th className="text-center border-2">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {loading ? (
-                      <CustomSkeleton resultPerPage={5} column={6} />
-                    ) : (
-                      dashboard?.reports?.length > 0 &&
-                      dashboard?.reports?.map((report) => (
-                        <tr key={report?._id}>
-                          <td className="text-center">
-                            {report?.test?.test_name}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.test_type}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.number_of_questions}
-                          </td>
-                          <td className="text-center">
-                            {report?.test?.updatedAt.split("T")[0]}
-                          </td>
-                          <td className="text-center">
-                            {report?.correct_answers}
-                          </td>
-                          <td className="text-center">
-                            <Link
-                              to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
-                            >
-                              <IoEyeOutline />
-                            </Link>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </Table>
+                <div
+                  className="border rounded-3 p-0 m-0"
+                  style={{ overflow: "hidden" }}
+                >
+                  <Table responsive bordered className="m-0 p-0">
+                    <thead className="m-0 p-0">
+                      <tr>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          Exam Name
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          Test Type
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          No. Of Questions
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          Completed On
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          Score
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center"
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="m-0 p-0">
+                      {loading ? (
+                        <CustomSkeleton resultPerPage={5} column={6} />
+                      ) : (
+                        dashboard?.reports?.length > 0 &&
+                        dashboard?.reports?.map((report) => (
+                          <tr key={report?._id}>
+                            <td className="text-center">
+                              {report?.test?.test_name}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.test_type}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.number_of_questions}
+                            </td>
+                            <td className="text-center">
+                              {report?.test?.updatedAt.split("T")[0]}
+                            </td>
+                            <td className="text-center">
+                              {report?.correct_answers}
+                            </td>
+                            <td className="text-center">
+                              <Link
+                                to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
+                              >
+                                <IoEyeOutline />
+                              </Link>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </Table>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -289,8 +317,8 @@ const Dashboard = () => {
               className="shadow"
               style={
                 dashboard?.tickets?.length > 5
-                  ? { height: "530px", overflowY: "scroll", marginTop: "-10px" }
-                  : { height: "530px", marginTop: "-10px" }
+                  ? { height: "530px", overflowY: "scroll" }
+                  : { height: "530px" }
               }
             >
               <Card.Body>
@@ -403,63 +431,87 @@ const Dashboard = () => {
                 </Link>
               </div>
               <Card.Body>
-                <Table responsive bordered>
-                  <thead>
-                    <tr
-                      className="rounded-lg"
-                      style={{
-                        fontSize: "16px",
-                        color: "rgba(33, 52, 70, 1)",
-                      }}
-                    >
-                      <th className="text-center border-2">Exam Name</th>
-                      <th className="text-center border-2">Test Type</th>
-                      <th className="text-center border-2">No. Of Questions</th>
-                      <th className="text-center border-2">Time alloted</th>
-                      <th className="text-center border-2">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {loading ? (
-                      <CustomSkeleton resultPerPage={5} column={5} />
-                    ) : (
-                      dashboard?.tests?.length > 0 &&
-                      dashboard?.tests?.map((test) => (
-                        <tr key={test?._id}>
-                          <td className="text-center font-medium text-12">
-                            {test?.test_name}
-                          </td>
-                          <td className="text-center font-medium text-12">
-                            {test?.test_type}
-                          </td>
-                          <td className="text-center font-medium text-12">
-                            {test?.number_of_questions}
-                          </td>
-                          <td className="text-center font-medium text-12">
-                            {formatDuration(test?.duration_in_mins)}
-                          </td>
-                          <td
-                            className="text-center px-2 py-1 font-medium text-12"
-                            style={
-                              test?.attempted
-                                ? {
-                                    borderRadius: "20px",
-                                    backgroundColor: "rgba(240, 253, 249, 1)",
-                                    color: "rgba(21, 183, 158, 1)",
-                                  }
-                                : {
-                                    borderRadius: "20px",
-                                    color: "#FF9C07",
-                                  }
-                            }
-                          >
-                            {test?.attempted ? "Attempted" : "Not Attempted"}
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </Table>
+                <div
+                  className="border rounded-3 p-0 m-0"
+                  style={{ overflow: "hidden" }}
+                >
+                  <Table className="m-0 p-0" responsive bordered>
+                    <thead className="m-0 p-0">
+                      <tr>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center "
+                        >
+                          Exam Name
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center "
+                        >
+                          Test Type
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center "
+                        >
+                          No. Of Questions
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center "
+                        >
+                          Time alloted
+                        </th>
+                        <th
+                          style={{ backgroundColor: "#E5E7EB" }}
+                          className="text-center "
+                        >
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="m-0 p-0">
+                      {loading ? (
+                        <CustomSkeleton resultPerPage={5} column={5} />
+                      ) : (
+                        dashboard?.tests?.length > 0 &&
+                        dashboard?.tests?.map((test) => (
+                          <tr key={test?._id}>
+                            <td className="text-center font-medium ">
+                              {test?.test_name}
+                            </td>
+                            <td className="text-center font-medium ">
+                              {test?.test_type}
+                            </td>
+                            <td className="text-center font-medium ">
+                              {test?.number_of_questions}
+                            </td>
+                            <td className="text-center font-medium ">
+                              {formatDuration(test?.duration_in_mins)}
+                            </td>
+                            <td
+                              className="text-center px-2 py-1 font-medium "
+                              style={
+                                test?.attempted
+                                  ? {
+                                      borderRadius: "20px",
+                                      backgroundColor: "rgba(240, 253, 249, 1)",
+                                      color: "rgba(21, 183, 158, 1)",
+                                    }
+                                  : {
+                                      borderRadius: "20px",
+                                      color: "#FF9C07",
+                                    }
+                              }
+                            >
+                              {test?.attempted ? "Attempted" : "Not Attempted"}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </Table>
+                </div>
               </Card.Body>
             </Card>
           </Col>

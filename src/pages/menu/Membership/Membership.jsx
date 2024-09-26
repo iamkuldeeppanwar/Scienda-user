@@ -195,7 +195,11 @@ const Membership = () => {
             >
               <tbody>
                 <tr className="h-25">
-                  <th scope="row" className="text-center table-header">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center table-header"
+                  >
                     <div className="p-3">Plan</div>
                   </th>
                   {transactionLoading ? (
@@ -204,7 +208,7 @@ const Membership = () => {
                     </td>
                   ) : (
                     transactions?.transactions?.map((data, index) => (
-                      <td key={index} className="text-center p-3">
+                      <td key={index} className="text-center p-4">
                         <button
                           className="text-14 font-bold bg-color-light border-0 rounded px-2 py-1"
                           style={{ backgroundColor: "#FFECAA" }}
@@ -216,11 +220,15 @@ const Membership = () => {
                   )}
                 </tr>
                 <tr className="h-25">
-                  <th scope="row" className="text-center">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center"
+                  >
                     <div className="p-3">Validity</div>
                   </th>
                   {transactionLoading ? (
-                    <td className="text-center p-3">
+                    <td className="text-center p-4">
                       <Skeleton width={"100%"} height={"20px"} />
                     </td>
                   ) : (
@@ -234,7 +242,11 @@ const Membership = () => {
                   )}
                 </tr>
                 <tr>
-                  <th scope="row" className="text-center">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center"
+                  >
                     <div className="p-3">Amount</div>
                   </th>
                   {transactionLoading ? (
@@ -243,7 +255,7 @@ const Membership = () => {
                     </td>
                   ) : (
                     transactions?.transactions?.map((data, index) => (
-                      <td key={index} className="text-center p-3">
+                      <td key={index} className="text-center p-4">
                         <span className="text-14 font-bold text-color-secondary">
                           £ {data?.amount}
                         </span>
@@ -252,11 +264,15 @@ const Membership = () => {
                   )}
                 </tr>
                 <tr>
-                  <th scope="row" className="text-center">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center"
+                  >
                     <div className="p-3">Payment ID</div>
                   </th>
                   {transactionLoading ? (
-                    <td className="text-center p-3">
+                    <td className="text-center p-4">
                       <Skeleton width={"100%"} height={"20px"} />
                     </td>
                   ) : (
@@ -270,7 +286,11 @@ const Membership = () => {
                   )}
                 </tr>
                 <tr>
-                  <th scope="row" className="text-center">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center"
+                  >
                     <div className="p-3">Payment Date</div>
                   </th>
                   {transactionLoading ? (
@@ -279,7 +299,7 @@ const Membership = () => {
                     </td>
                   ) : (
                     transactions?.transactions?.map((data, index) => (
-                      <td key={index} className="text-center p-3">
+                      <td key={index} className="text-center p-4">
                         <div className="text-12 font-bold text-center rounded">
                           {formatDate(data?.createdAt)}
                         </div>
@@ -288,7 +308,11 @@ const Membership = () => {
                   )}
                 </tr>
                 <tr>
-                  <th scope="row" className="text-center">
+                  <th
+                    style={{ backgroundColor: "#EEF4FF" }}
+                    scope="row"
+                    className="text-center"
+                  >
                     <div className="p-3">Invoice</div>
                   </th>
                   {transactionLoading ? (
@@ -297,7 +321,7 @@ const Membership = () => {
                     </td>
                   ) : (
                     transactions?.transactions?.map((data, index) => (
-                      <td key={index} className="text-center p-3">
+                      <td key={index} className="text-center p-4">
                         <div className="text-center">
                           <a
                             className="view-button text-decoration-none text-center font-medium text-14 text-color-primary rounded px-3 py-1"
@@ -326,12 +350,12 @@ const Membership = () => {
                 </h3>
 
                 <div
-                  className="mt-2 py-3 px-4 d-flex justify-content-between align-items-center"
+                  className="mt-3 py-3 px-4 d-flex justify-content-between align-items-center"
                   style={{
                     backgroundColor: "#DAE4FF",
                   }}
                 >
-                  <div className="d-flex gap-2 align-items-center">
+                  <div className="d-flex gap-2 align-items-center ">
                     <div className="text-20 font-bold">
                       My Subscription Plan
                     </div>

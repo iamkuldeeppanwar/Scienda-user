@@ -119,7 +119,7 @@ const Tickets = () => {
   return (
     <>
       <HeaderContent content={"My Tickets"} />
-      <ModuleLayout className="ps-2" style={{ padding: 0 }}>
+      <ModuleLayout className="px-4" style={{ padding: 0 }}>
         <div className="px-3">
           <div className="d-flex justify-content-between align-items-center">
             <div>

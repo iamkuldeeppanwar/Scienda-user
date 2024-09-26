@@ -238,7 +238,7 @@ export default function SideNavbar({
                   isSidebarExpanded ? "logout_btn" : "w-100 logout_btn"
                 }
               >
-                <LogoutIcon />
+                <LogoutIcon fillColor={"#00009b"} />
               </button>
             </div>
           </div>

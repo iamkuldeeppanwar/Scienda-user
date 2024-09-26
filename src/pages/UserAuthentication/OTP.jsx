@@ -152,10 +152,10 @@ const OTPComponent = () => {
         }
         setLoading(true);
         const response = await userEmailVerifyOtp(email, otp);
-        localStorage.setItem("token", response.token);
-        localStorage.setItem("user", JSON.stringify(response.user));
-        dispatch(setUser(response.user));
+        localStorage.setItem("token", response?.token);
+        localStorage.setItem("user", JSON.stringify(response?.user));
         dispatch(setToken(response));
+        dispatch(setUser(response));
         setLoading(false);
         navigate("/menu");
       } catch (error) {

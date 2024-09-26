@@ -210,7 +210,7 @@ const MyAccount = () => {
                           height: "2.7rem",
                           border: "0px",
                         }}
-                        country="uk"
+                        country="gb"
                         enableSearch={true}
                         countryCodeEditable={false}
                         onChange={(phone, code) => {
@@ -294,7 +294,7 @@ const MyAccount = () => {
               <div className="p-2">
                 <Row>
                   <Col md={6}>
-                    <Form.Group className="mt-2 flex-grow-1">
+                    <Form.Group className=" flex-grow-1">
                       <Form.Label className="text-14 font-medium">
                         Current Password
                       </Form.Label>

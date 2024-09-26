@@ -117,7 +117,7 @@ const Registration = () => {
                     <PhoneInput
                       containerClass="input-border rounded-md"
                       inputClass=" w-100 m-0 border-0"
-                      country="uk"
+                      country="gb"
                       enableSearch={true}
                       countryCodeEditable={false}
                       onChange={(phone, code) => {
