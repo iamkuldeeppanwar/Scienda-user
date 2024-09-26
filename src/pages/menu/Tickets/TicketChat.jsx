@@ -147,7 +147,7 @@ const TicketChat = () => {
             Description:
             <span
               className="text-14 font-medium ms-2"
-              style={{ color: "#525252" }}
+              style={{ color: "#525252", wordBreak: "break-all" }}
             >
               {ticket?.subject && ticket?.description}
             </span>

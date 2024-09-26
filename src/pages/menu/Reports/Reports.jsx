@@ -231,7 +231,7 @@ const Reports = () => {
                     </p>
                     <div className="d-flex justify-content-center">
                       <BarChart
-                        height={300}
+                        height={225}
                         borderRadius={10}
                         series={[
                           {
@@ -286,7 +286,7 @@ const Reports = () => {
                         dataset={toatalQuestions}
                         xAxis={[{ scaleType: "band", dataKey: "month" }]}
                         series={[{ dataKey: "count" }]}
-                        height={300}
+                        height={225}
                         borderRadius={10}
                         colors={["#00008b"]}
                       />

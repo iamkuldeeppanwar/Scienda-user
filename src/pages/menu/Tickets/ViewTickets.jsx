@@ -305,7 +305,7 @@ const ViewTickets = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-start">
                   <p
                     className="text-14 font-medium"
-                    style={{ color: "#525252" }}
+                    style={{ color: "#525252", wordBreak: "break-all" }}
                   >
                     {ticket?.description}
                   </p>

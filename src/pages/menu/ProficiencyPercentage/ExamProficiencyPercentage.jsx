@@ -38,8 +38,8 @@ const ExamProficiencyPercentage = () => {
       <div className="px-4">
         <hr />
         <div>
-          <span className="text-18 font-medium">Overall Exam percentage</span>
-          <div style={{ width: "304px" }}>
+          <span className="text-16 font-medium">Overall Exam percentage</span>
+          <div className="mt-2" style={{ width: "304px" }}>
             <ProficiencyProgressBar
               current={proficiency?.overall_percentage}
               height="1.5rem"
@@ -49,7 +49,7 @@ const ExamProficiencyPercentage = () => {
         <hr />
 
         <Stack gap={4} className="mt-3">
-          <div className="d-flex flex-wrap gap-3 w-100">
+          <div className="d-flex justify-content-around flex-wrap gap-3 w-100">
             {!loading ? (
               proficiency?.topic_wise?.map((data, idx) => {
                 return (

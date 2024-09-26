@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
 import { userProciencys } from "./api/proficiencyAPI";
 import { setProficiencies } from "../../../features/proficiencySlice";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import HeaderContent from "../../../components/HeaderContent";
 import Skeleton from "react-loading-skeleton";
 
