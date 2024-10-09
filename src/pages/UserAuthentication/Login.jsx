@@ -55,7 +55,7 @@ const Login = () => {
           <Card.Body>
             <div className="text-center">
               <h3 className="wlcm_text">Welcome Back</h3>
-              <p>To continue please enter your details</p>
+              <p>To continue please enter your details.</p>
             </div>
 
             <Form onSubmit={submitHandler}>
@@ -99,15 +99,9 @@ const Login = () => {
                 </Link>
               </div>
               <div className="d-flex justify-content-center mb-3">
-                {!loading ? (
-                  <button type="submit" className="auth_button">
-                    Sign In
-                  </button>
-                ) : (
-                  <button type="submit" className="auth_button">
-                    <Spinner size="sm" />
-                  </button>
-                )}
+                <button type="submit" className="auth_button">
+                  {!loading ? "Sign In" : <Spinner size="sm" />}
+                </button>
               </div>
             </Form>
             <div className="text-center">

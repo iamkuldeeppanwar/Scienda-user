@@ -72,9 +72,10 @@ function CreateTicketModal(props) {
     };
     try {
       setLoading(true);
-      await createTickets(createTicket, token);
+      const data = await createTickets(createTicket, token);
       setLoading(false);
       getAllTickets();
+      toast.success(data?.message);
       props.closeCreateTicketModal(true);
     } catch (error) {
       toast.error(getError(error));
@@ -90,8 +91,7 @@ function CreateTicketModal(props) {
       centered
       show={props.createTicketModalShow}
     >
-      <ToastContainer />
-      <div className="">
+      <div>
         <Form
           className="create-ticket-container"
           onSubmit={createTicketHandler}

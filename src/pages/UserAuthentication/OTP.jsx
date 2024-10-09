@@ -85,23 +85,14 @@ const OTP = ({ length = 4, onChange, onVerify, loading }) => {
               ))}
             </div>
             <div className="d-flex justify-content-center mb-3">
-              {!loading ? (
-                <button
-                  type="button"
-                  className="auth_button"
-                  onClick={handleVerifyClick}
-                >
-                  Verify Email
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="auth_button"
-                  onClick={handleVerifyClick}
-                >
-                  <Spinner size="sm" />
-                </button>
-              )}
+              <button
+                style={{ width: "75%" }}
+                type="button"
+                className="auth_button"
+                onClick={handleVerifyClick}
+              >
+                {!loading ? "Verify Email" : <Spinner size="sm" />}
+              </button>
             </div>
             <div className="resend_txt text-center">
               Didn’t receive the email?{" "}

@@ -97,9 +97,10 @@ const Tickets = () => {
 
     try {
       setLoading(true);
-      await createTickets(createTicket, token);
+      const data = await createTickets(createTicket, token);
       setLoading(false);
       getAllTickets();
+      toast.success(data?.message);
     } catch (error) {
       toast.error(getError(error));
       setLoading(false);

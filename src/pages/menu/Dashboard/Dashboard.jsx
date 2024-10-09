@@ -299,7 +299,7 @@ const Dashboard = () => {
                               <Link
                                 to={`/menu/tests/check-answers/${report?._id}?viewScore=true`}
                               >
-                                <IoEyeOutline />
+                                <IoEyeOutline color="var(--primary-color)" />
                               </Link>
                             </td>
                           </tr>

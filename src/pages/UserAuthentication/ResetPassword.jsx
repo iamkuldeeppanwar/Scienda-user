@@ -79,15 +79,9 @@ export const ResetPassword = () => {
               </Form.Group>
 
               <div className="d-flex justify-content-center mb-3">
-                {!loading ? (
-                  <button type="submit" className="auth_button">
-                    Submit
-                  </button>
-                ) : (
-                  <button type="submit" className="auth_button">
-                    <Spinner size="sm" />
-                  </button>
-                )}
+                <button type="submit" className="auth_button">
+                  {!loading ? "Submit" : <Spinner size="sm" />}
+                </button>
               </div>
             </Form>
             <div className="resent_otp_btn text-center mt-2">

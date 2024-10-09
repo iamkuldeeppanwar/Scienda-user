@@ -45,7 +45,7 @@ const FogetPassword = () => {
                 <img src={messageIcon} alt="Message icon" />
               </div>
               <h3 className="otp_text">Check Your Email</h3>
-              <div>We will sent a verification link to </div>
+              {/* <div>We will sent a verification link to </div> */}
               <div className="otp_mail">{email}</div>
             </div>
 
@@ -63,15 +63,9 @@ const FogetPassword = () => {
               </Form.Group>
 
               <div className="d-flex justify-content-center mb-3">
-                {!loading ? (
-                  <button type="submit" className="auth_button">
-                    Submit
-                  </button>
-                ) : (
-                  <button type="submit" className="auth_button">
-                    <Spinner size="sm" />
-                  </button>
-                )}
+                <button type="submit" className="auth_button">
+                  {!loading ? "Submit" : <Spinner size="sm" />}
+                </button>
               </div>
             </Form>
             <div className="resent_otp_btn text-center mt-2">
