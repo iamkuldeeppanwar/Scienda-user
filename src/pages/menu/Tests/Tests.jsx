@@ -83,7 +83,7 @@ const TestCard = ({
     >
       <h6
         style={{ color: "#475467" }}
-        className="text-center text-15 font-bold"
+        className="text-center text-15 font-bold text-truncate"
       >
         {testName}
       </h6>

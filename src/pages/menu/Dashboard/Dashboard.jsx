@@ -280,7 +280,7 @@ const Dashboard = () => {
                         dashboard?.reports?.length > 0 &&
                         dashboard?.reports?.map((report) => (
                           <tr key={report?._id}>
-                            <td className="text-center">
+                            <td className="text-center ">
                               {report?.test?.test_name}
                             </td>
                             <td className="text-center">
@@ -477,7 +477,7 @@ const Dashboard = () => {
                         dashboard?.tests?.length > 0 &&
                         dashboard?.tests?.map((test) => (
                           <tr key={test?._id}>
-                            <td className="text-center font-medium ">
+                            <td className="text-center font-medium">
                               {test?.test_name}
                             </td>
                             <td className="text-center font-medium ">

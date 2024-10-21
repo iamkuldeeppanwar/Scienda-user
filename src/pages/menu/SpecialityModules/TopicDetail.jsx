@@ -116,7 +116,7 @@ const TopicDetail = () => {
               </div>
             </div>
 
-            <p className="px-3" style={{ color: "#292929" }}>
+            <p className="px-3 mt-2" style={{ color: "#292929" }}>
               <CreateMarkup content={speciality?.description} />
             </p>
 
@@ -129,7 +129,7 @@ const TopicDetail = () => {
               <h4 className="text-center text-20 font-bold">Subtopics List</h4>
               {speciality?.subtopics?.map((subTopics, idx) => {
                 return (
-                  <Card key={idx} className="shadow">
+                  <Card key={idx} className="shadow mt-2">
                     <Card.Body className="d-flex justify-content-between gap-2 align-items-start">
                       <p className="m-0 text-14 font-normal w-75">
                         <span className="font-semibold">

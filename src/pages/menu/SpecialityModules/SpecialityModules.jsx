@@ -71,7 +71,7 @@ const TopicCard = ({
           Subtopics: {subTopicCount}
         </div>
       </Stack>
-      <p className="d-flex justify-content-center align-items-center gap-2 text-12 font-medium my-2">
+      <p className="d-flex justify-content-center align-items-center font-bold gap-2 text-12 font-medium my-2">
         <QuestionsIcon /> No. of questions:{" "}
         <span className="font-medium">{questionCount} Questions</span>
       </p>

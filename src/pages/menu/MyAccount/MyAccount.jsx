@@ -11,11 +11,12 @@ import {
 } from "./apis/UserProfileAPIs";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../../features/userSlice";
-import { Col, Row, Spinner } from "react-bootstrap";
+import { Col, InputGroup, Row, Spinner } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
 import PhoneInput from "react-phone-input-2";
 import HeaderContent from "../../../components/HeaderContent";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const MyAccount = () => {
   const token = localStorage.getItem("token");
@@ -34,6 +35,9 @@ const MyAccount = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confrimPassword, setConfirmPassword] = useState("");
+  const [checkCurrentPass, setCheckCurrentPass] = useState(false);
+  const [checkNewPass, setCheckNewPass] = useState(false);
+  const [checkConNewPass, setCheckConNewPass] = useState(false);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -280,7 +284,7 @@ const MyAccount = () => {
           </div>
         </div>
 
-        <div className="px-5">
+        <div className="px-3">
           <hr />
         </div>
 
@@ -294,52 +298,82 @@ const MyAccount = () => {
               <div className="p-2">
                 <Row>
                   <Col md={6}>
-                    <Form.Group className=" flex-grow-1">
-                      <Form.Label className="text-14 font-medium">
-                        Current Password
-                      </Form.Label>
+                    <Form.Label className="text-14 font-medium">
+                      Current Password
+                    </Form.Label>
+                    <Form.Group className="input-group input-border rounded-md mb-3">
                       <Form.Control
-                        className="py-2 px-3 input-border"
-                        type="password"
+                        className="py-2 px-3"
+                        type={checkCurrentPass ? "text" : "password"}
                         placeholder="**************"
                         value={currentPassword}
                         required
                         onChange={(e) => setCurrentPassword(e.target.value)}
                       />
+
+                      <InputGroup.Text
+                        onClick={() => setCheckCurrentPass((p) => !p)}
+                      >
+                        {!checkCurrentPass ? (
+                          <FaEye style={{ cursor: "pointer" }} />
+                        ) : (
+                          <FaEyeSlash style={{ cursor: "pointer" }} />
+                        )}
+                      </InputGroup.Text>
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="text-14 font-medium">
-                        New Password
-                      </Form.Label>
+                    <Form.Label className="text-14 font-medium">
+                      New Password
+                    </Form.Label>
+                    <Form.Group className="input-group input-border rounded-md mb-3">
                       <Form.Control
-                        className="py-2 px-3 input-border"
-                        type="password"
+                        className="py-2 px-3"
+                        type={checkNewPass ? "text" : "password"}
                         value={newPassword}
                         placeholder="**************"
                         required
                         onChange={(e) => setNewPassword(e.target.value)}
                       />
+
+                      <InputGroup.Text
+                        onClick={() => setCheckNewPass((p) => !p)}
+                      >
+                        {!checkNewPass ? (
+                          <FaEye style={{ cursor: "pointer" }} />
+                        ) : (
+                          <FaEyeSlash style={{ cursor: "pointer" }} />
+                        )}
+                      </InputGroup.Text>
                     </Form.Group>
                   </Col>
                 </Row>
 
                 <Row className="mt-2">
                   <Col md={6}>
-                    <Form.Group>
-                      <Form.Label className="text-14 font-medium">
-                        Confirm New Password
-                      </Form.Label>
+                    <Form.Label className="text-14 font-medium">
+                      Confirm New Password
+                    </Form.Label>
+                    <Form.Group className="input-group input-border rounded-md mb-3">
                       <Form.Control
-                        className="py-2 px-3 input-border"
-                        type="password"
+                        className="py-2 px-3"
+                        type={checkConNewPass ? "text" : "password"}
                         required
                         placeholder="**************"
                         value={confrimPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
+
+                      <InputGroup.Text
+                        onClick={() => setCheckConNewPass((p) => !p)}
+                      >
+                        {!checkConNewPass ? (
+                          <FaEye style={{ cursor: "pointer" }} />
+                        ) : (
+                          <FaEyeSlash style={{ cursor: "pointer" }} />
+                        )}
+                      </InputGroup.Text>
                     </Form.Group>
                   </Col>
                 </Row>

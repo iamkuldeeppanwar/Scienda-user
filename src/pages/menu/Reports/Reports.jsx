@@ -108,7 +108,7 @@ const Reports = () => {
                         fontWeight: 500,
                       }}
                     >
-                      Number of Test Given
+                      Number of Test Taken
                     </p>
                     <div className="d-flex justify-content-center">
                       <BarChart
@@ -148,7 +148,7 @@ const Reports = () => {
                             fontWeight: 500,
                           }}
                         >
-                          Overall Confidence Level{" "}
+                          Confidence{" "}
                           {pieGraph?.confidence ? pieGraph?.confidence : 0} %
                         </p>
                       </div>

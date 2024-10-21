@@ -377,11 +377,11 @@ const Membership = () => {
                   </div>
                 </div>
 
-                <div className="px-5 mt-3">
+                <div className="px-4 mt-3">
                   <div
-                    className="font-normal  rounded-md p-2"
+                    className="font-normal rounded-md p-2"
                     style={{
-                      width: "52%",
+                      width: "53%",
                       backgroundColor: "#FF16160A",
                       color: "#C00000",
                     }}
@@ -401,7 +401,7 @@ const Membership = () => {
                   Why Upgrade ?
                 </h4>
 
-                <div className="d-flex align-items-center gap-2 mt-4 mb-1 px-5">
+                <div className="d-flex align-items-center gap-4 mt-4 mb-1 px-4">
                   <Card className="rounded-xl">
                     <Card.Body>
                       <div className="border-1 text-center">
