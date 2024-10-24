@@ -25,7 +25,7 @@ const TestStartModal = (props) => {
         </div>
         <hr />
         <h4
-          className="text-center text-18 font-bold"
+          className="text-center text-18 font-bold text-truncate"
           style={{ color: "#4D4D4D" }}
         >
           {props.testName}

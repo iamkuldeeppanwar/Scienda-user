@@ -38,7 +38,7 @@ const ExamProficiencyPercentage = () => {
       <div className="px-4">
         <hr />
         <div>
-          <span className="text-16 font-medium">Overall Exam percentage</span>
+          <span className="text-16 font-medium">Percentage</span>
           <div className="mt-2" style={{ width: "304px" }}>
             <ProficiencyProgressBar
               current={proficiency?.overall_percentage}

@@ -19,7 +19,7 @@ import {
   NoIdeaIcon,
 } from "./icons/take-test-icons";
 import { convertToTwoDigits } from "../lib/TakeTest";
-import { Button, Carousel, Modal } from "react-bootstrap";
+import { Carousel, Modal } from "react-bootstrap";
 import CreateMarkup from "../Utils/CreateMarkup";
 import Calc from "./Calc";
 import { submitTest } from "../pages/menu/Tests/apis/TestAPIs";
@@ -355,7 +355,7 @@ const TakeTestComponent = (props) => {
                 className="text-14 font-medium"
                 style={{ color: "#2D3282" }}
               >
-                Time Allotted:
+                Allotted Time:
               </span>
               <span className="text-12 font-medium">
                 {convertMinutesToHHMM(props.timeAlloted)}

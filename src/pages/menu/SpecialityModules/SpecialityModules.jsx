@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import ModuleLayout from "../../../layout/ModuleLayout";
-import ViewSummaryBtn from "./components/ViewSummaryBtn";
 import { SearchIcon } from "./components/speciality-modules-icons";
 import { QuestionsIcon } from "../Tests/components/test-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getError } from "../../../Utils/error";
 import { toast, ToastContainer } from "react-toastify";
@@ -61,7 +60,7 @@ const TopicCard = ({
         className="text-center mt-2"
         style={{ color: "#475467", fontWeight: 500, fontSize: "16px" }}
       >
-        Topic Name {topicName}
+        Topic Name: {topicName}
       </h5>
       <Stack direction="horizontal" gap={2} className="justify-content-between">
         <div className="flex-grow-1 text-center rounded-sm bg-color-yellow-100 text-12 font-medium p-1">

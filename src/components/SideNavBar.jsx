@@ -43,7 +43,7 @@ const menuBarOptions1 = [
   },
   {
     url: "/menu/proficiency-percentage",
-    text: "Proficiency Percentage",
+    text: "Proficiency",
     icon: <ProficiencyPercentageIcon />,
     activeIcon: <ProficiencyPercentageIcon fillColor="white" />,
   },
@@ -223,7 +223,7 @@ export default function SideNavbar({
                   className="d-block user_profile"
                 />
                 <div>
-                  <p className="profile-name">
+                  <p className="profile-name text-capitalize">
                     {user && user.first_name} {user && user.last_name}
                   </p>
                   <p className="profile-email text-center text-10 font-medium text-truncate">

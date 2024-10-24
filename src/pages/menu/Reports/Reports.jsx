@@ -103,9 +103,10 @@ const Reports = () => {
                   <Card.Body>
                     <p
                       style={{
-                        fontSize: "14px",
+                        fontSize: "18px",
                         color: "#475467",
                         fontWeight: 500,
+                        color: "#8098F9",
                       }}
                     >
                       Number of Test Taken
@@ -143,9 +144,10 @@ const Reports = () => {
                       <div>
                         <p
                           style={{
-                            fontSize: "14px",
+                            fontSize: "18px",
                             color: "#475467",
                             fontWeight: 500,
+                            color: "#8098F9",
                           }}
                         >
                           Confidence{" "}
@@ -159,7 +161,7 @@ const Reports = () => {
                         className="text-capitalize font-medium text-14"
                         style={{
                           color: "#1F2A37",
-                          fontWeight: 700,
+                          fontWeight: 500,
                         }}
                       >
                         {pieGraph?.test_name}
@@ -222,9 +224,10 @@ const Reports = () => {
                   <Card.Body>
                     <p
                       style={{
-                        fontSize: "14px",
+                        fontSize: "18px",
                         color: "#475467",
                         fontWeight: 500,
+                        color: "#8098F9",
                       }}
                     >
                       Confidence VS Performance
@@ -274,9 +277,10 @@ const Reports = () => {
                   <Card.Body>
                     <p
                       style={{
-                        fontSize: "14px",
+                        fontSize: "18px",
                         color: "#475467",
                         fontWeight: 500,
+                        color: "#8098F9",
                       }}
                     >
                       Number of Questions Attempted

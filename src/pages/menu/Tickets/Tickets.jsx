@@ -40,7 +40,6 @@ const Tickets = () => {
   const [topicName, setTopicName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [ticketImage, setTicketImage] = useState("");
 
   useEffect(() => {
     getAllTickets();
@@ -92,7 +91,6 @@ const Tickets = () => {
       subject: subject,
       description: description,
       topic: !topicName ? topics[0]?._id : topicName,
-      image: ticketImage,
     };
 
     try {
@@ -126,7 +124,7 @@ const Tickets = () => {
             <div>
               <div className="font-bold text-16">My Tickets</div>
             </div>
-            <Link to="view-all">
+            <Link style={{ textDecoration: "none" }} to="view-all">
               <div
                 style={{
                   color: "#00009b",
@@ -187,7 +185,11 @@ const Tickets = () => {
                           className="text-14 font-medium"
                           style={{ color: "#475467" }}
                         >
-                          {formatDate(data?.createdAt.split("T")[0])}
+                          {data?.createdAt
+                            .split("T")[0]
+                            .split("-")
+                            .reverse()
+                            .join("-")}
                         </div>
                       </div>
 

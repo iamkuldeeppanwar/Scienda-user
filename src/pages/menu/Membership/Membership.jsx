@@ -71,7 +71,7 @@ const MembershipCard = ({
           style={{ color: "#424242" }}
           className="text-12 font-medium text-center my-0"
         >
-          {dayAccess} Days Access
+          {dayAccess} Access
         </p>
       </div>
 
@@ -346,7 +346,7 @@ const Membership = () => {
             <Card style={{ height: "440px" }} className="rounded-xl shadow">
               <Card.Body className="p-0">
                 <h3 className="text-18 text-center font-bold mt-3">
-                  Your Active Plan
+                  Active Plan
                 </h3>
 
                 <div
@@ -356,9 +356,7 @@ const Membership = () => {
                   }}
                 >
                   <div className="d-flex gap-2 align-items-center ">
-                    <div className="text-20 font-bold">
-                      My Subscription Plan
-                    </div>
+                    <div className="text-20 font-bold">My Subscription</div>
                     <div
                       className="py-0 px-2"
                       style={{
@@ -387,10 +385,12 @@ const Membership = () => {
                     }}
                   >
                     Plan Expiring On :{" "}
-                    {formatDate(
-                      transactions?.subscription &&
-                        transactions?.subscription.expiry
-                    )}
+                    {transactions?.subscription &&
+                      transactions?.subscription?.expiry
+                        ?.split("T")[0]
+                        ?.split("-")
+                        ?.reverse()
+                        ?.join("-")}
                   </div>
                 </div>
 

@@ -212,14 +212,17 @@ const Dashboard = () => {
                     fontWeight: 600,
                   }}
                 >
-                  Recently Completed Exams
+                  Completed Exams
                 </div>
-                <Link to="/menu/proficiency-percentage">
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/menu/proficiency-percentage"
+                >
                   <div
                     style={{
                       color: "#00009b",
                       fontWeight: 500,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       cursor: "pointer",
                     }}
                   >
@@ -245,7 +248,7 @@ const Dashboard = () => {
                           style={{ backgroundColor: "#E5E7EB" }}
                           className="text-center"
                         >
-                          Test Type
+                          Type
                         </th>
                         <th
                           style={{ backgroundColor: "#E5E7EB" }}
@@ -290,7 +293,11 @@ const Dashboard = () => {
                               {report?.test?.number_of_questions}
                             </td>
                             <td className="text-center">
-                              {report?.test?.updatedAt.split("T")[0]}
+                              {report?.test?.updatedAt
+                                .split("T")[0]
+                                ?.split("-")
+                                ?.reverse()
+                                ?.join("-")}
                             </td>
                             <td className="text-center">
                               {report?.correct_answers}
@@ -364,7 +371,11 @@ const Dashboard = () => {
                                   color: "rgba(108, 108, 108, 1)",
                                 }}
                               >
-                                {formatDate(ticket?.createdAt)}
+                                {ticket?.createdAt
+                                  ?.split("T")[0]
+                                  ?.split("-")
+                                  ?.reverse()
+                                  ?.join("-")}
                               </div>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
@@ -375,7 +386,7 @@ const Dashboard = () => {
                                   fontSize: "12px",
                                 }}
                               >
-                                Recieved new message
+                                new message
                               </div>
                               <div
                                 className="text-end"
@@ -417,12 +428,12 @@ const Dashboard = () => {
                 >
                   Recently Created Tests
                 </div>
-                <Link to="/menu/tests">
+                <Link style={{ textDecoration: "none" }} to="/menu/tests">
                   <div
                     style={{
                       color: "#00009b",
                       fontWeight: 500,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       cursor: "pointer",
                     }}
                   >
@@ -477,7 +488,7 @@ const Dashboard = () => {
                         dashboard?.tests?.length > 0 &&
                         dashboard?.tests?.map((test) => (
                           <tr key={test?._id}>
-                            <td className="text-center font-medium">
+                            <td className="text-center font-medium ">
                               {test?.test_name}
                             </td>
                             <td className="text-center font-medium ">
@@ -527,7 +538,7 @@ const Dashboard = () => {
                       fontWeight: 600,
                     }}
                   >
-                    Your Membership Plan
+                    Your Membership
                   </div>
 
                   <div
@@ -539,7 +550,7 @@ const Dashboard = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    Active plan
+                    Active Plan
                   </div>
                 </div>
 
@@ -588,7 +599,11 @@ const Dashboard = () => {
                   >
                     Membership Expires on:{" "}
                     <span style={{ color: "rgba(255, 68, 64, 1)" }}>
-                      {formatDate(dashboard?.subscription?.expiry)}
+                      {dashboard?.subscription?.expiry
+                        ?.split("T")[0]
+                        ?.split("-")
+                        ?.reverse()
+                        ?.join("-")}
                     </span>
                   </div>
                 )}

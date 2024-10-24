@@ -266,7 +266,7 @@ const ViewTickets = () => {
                 onClick={() => navigate(`/menu/tickets/chat/${ticket?._id}`)}
               >
                 <div className="d-flex justify-content-between align-items-center">
-                  <p className="text-14 font-bold" style={{ color: "#525252" }}>
+                  <p className="text-14 font-medium">
                     Topic: {ticket?.topic?.topic_name}
                   </p>
 
@@ -313,7 +313,11 @@ const ViewTickets = () => {
                     className="text-12 font-medium"
                     style={{ color: "#475467" }}
                   >
-                    {formatDate(ticket?.createdAt.split("T")[0])}
+                    {ticket?.createdAt
+                      ?.split("T")[0]
+                      .split("-")
+                      .reverse()
+                      .join("-")}
                   </p>
                 </div>
               </div>

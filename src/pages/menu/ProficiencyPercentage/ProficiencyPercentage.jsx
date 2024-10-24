@@ -28,23 +28,17 @@ const ProficiencyPercentageCard = ({
 }) => {
   const navigate = useNavigate();
 
-  const formatDateTime = (isoString) => {
-    const date = new Date(isoString);
+  // const formatTime = (isoString) => {
+  //   const date = new Date(isoString);
 
-    const formattedDate = new Intl.DateTimeFormat("en-US", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(date);
+  //   const formattedTime = new Intl.DateTimeFormat("en-US", {
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //     hour12: true,
+  //   }).format(date);
 
-    const formattedTime = new Intl.DateTimeFormat("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    }).format(date);
-
-    return `${formattedDate}, ${formattedTime}`;
-  };
+  //   return `${formattedTime}`;
+  // };
 
   const formatDuration = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -75,7 +69,7 @@ const ProficiencyPercentageCard = ({
       <div className="d-flex flex-column gap-2 mt-4 mb-3">
         <div className="d-flex justify-content-between align-items-center">
           <div className="text-14 font-medium">
-            <StopwatchIcon /> Time Allotted:
+            <StopwatchIcon /> Allotted Time:
           </div>
           <div className="text-14 font-medium">
             {formatDuration(timeAlloted)}
@@ -83,10 +77,10 @@ const ProficiencyPercentageCard = ({
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <div className="text-14 font-medium">
-            <CalendarIcon /> Completed On::
+            <CalendarIcon /> Date:
           </div>
           <div className="text-14 font-medium">
-            {formatDateTime(completedOn)}
+            {completedOn?.split("T")[0].split("-").reverse().join("-")}
           </div>
         </div>
         <div className="d-flex justify-content-between align-items-center">
@@ -146,7 +140,7 @@ const ProficiencyPercentage = () => {
 
   return (
     <>
-      <HeaderContent content={"Proficiency Percentage"} />
+      <HeaderContent content={"Proficiency"} />
       <ModuleLayout className="ps-3">
         <Container>
           <Row className="g-3">

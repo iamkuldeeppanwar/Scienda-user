@@ -111,30 +111,29 @@ const TicketChat = () => {
         <div>
           <p className="text-16 font-medium">
             Topic Name:{" "}
-            <span
-              className="text-14 font-semibold"
-              style={{ color: "#525252" }}
-            >
+            <span className="text-14 font-medium" style={{ color: "#525252" }}>
               {ticket?.subject && ticket?.topic?.topic_name}
             </span>
           </p>
           <p className="text-16 font-medium">
             Subject:{" "}
-            <span
-              className="text-14 font-semibold"
-              style={{ color: "#525252" }}
-            >
+            <span className="text-14 font-medium" style={{ color: "#525252" }}>
               {ticket?.subject && ticket?.subject}
             </span>
           </p>
         </div>
 
         <div className="d-flex flex-column justify-content-between">
-          <div className="text-end text-16">
-            <p className="my-0 font-semibold">
+          <div className="text-end text-14">
+            <p className="my-0 font-medium">
               Raised On:{" "}
               <span className="text-color-secondary">
-                {ticket?.subject && formatDateTime(ticket?.createdAt)}
+                {ticket?.subject &&
+                  ticket?.createdAt
+                    ?.split("T")[0]
+                    .split("-")
+                    .reverse()
+                    .join("-")}
               </span>
             </p>
           </div>
@@ -156,19 +155,19 @@ const TicketChat = () => {
 
         <div>
           {ticket?.subject && ticket?.status === "Closed" && (
-            <p className="text-end text-12 font-normal text-color-progress">
+            <p className="text-end text-14 font-normal text-color-progress">
               {ticket?.status} <IssueResolvedIcon />
             </p>
           )}
           {ticket?.subject && ticket?.status === "Open" && (
             <div>
-              <p className="text-end text-12 font-normal text-color-progress">
+              <p className="text-end text-14 font-normal text-color-progress">
                 {ticket?.status} <InProgressIcon />
               </p>
             </div>
           )}
           {ticket?.subject && ticket?.status === "Pending" && (
-            <p className="text-end text-12 font-normal text-color-progress">
+            <p className="text-end text-14 font-normal text-color-progress">
               {ticket?.status} <UnResolvedIcon />
             </p>
           )}
@@ -236,11 +235,11 @@ const TicketChat = () => {
               );
             })
           ) : (
-            <div className="text-center">No Chats Found!</div>
+            <div className="text-center font-medium">No Chats Found!</div>
           )}
         </div>
       </div>
-      <div className=" rounded-xl">
+      <div className="rounded-xl">
         {ticket && ticket?.status === "Open" && (
           <Form onSubmit={handleChat}>
             <Form.Group className="px-4 mx-auto">

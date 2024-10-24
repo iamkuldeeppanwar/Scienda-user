@@ -90,7 +90,7 @@ const TestCard = ({
       <div className="d-flex flex-column gap-2 mt-4 mb-3">
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex justify-content-between align-items-center gap-1 text-14 font-semibold">
-            <TimerIcon /> Time Allotted:
+            <TimerIcon /> Allotted Time:
           </div>
           <div className="text-14 font-medium">
             {formatDuration(timeAlloted)}

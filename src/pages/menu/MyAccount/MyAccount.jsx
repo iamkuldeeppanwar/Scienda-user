@@ -132,10 +132,15 @@ const MyAccount = () => {
   return (
     <>
       <HeaderContent content={"My Account"} />
-      <ModuleLayout className="px-4" style={{ padding: 0 }}>
+      <ModuleLayout style={{ padding: 0 }}>
         <div className="px-3  account-details-container">
           <div className="form-container">
-            <p className="ms-2 text-18 font-semibold">Upload Profile Picture</p>
+            <p
+              style={{ color: "#8098F9" }}
+              className="ms-2 text-18 font-semibold"
+            >
+              Upload Profile Picture
+            </p>
             <div className="d-flex align-items-center gap-3">
               <img
                 style={{
@@ -172,7 +177,12 @@ const MyAccount = () => {
             <hr />
             <Form onSubmit={profileUpdateHandler}>
               <div className="container">
-                <p className="text-18 font-semibold">Basic Details</p>
+                <p
+                  style={{ color: "#8098F9" }}
+                  className="text-18 font-semibold"
+                >
+                  Basic Details
+                </p>
                 <Row className="mt-2">
                   <Col md={4}>
                     <Form.Group className="flex-grow-1">
@@ -292,7 +302,12 @@ const MyAccount = () => {
           <div className="form-container">
             <Form onSubmit={updatePasswordHandler}>
               <div className="ms-2">
-                <p className="m-0 text-18 font-semibold">Password & Security</p>
+                <p
+                  style={{ color: "#8098F9" }}
+                  className="m-0 text-18 font-semibold"
+                >
+                  Password & Security
+                </p>
               </div>
 
               <div className="p-2">
