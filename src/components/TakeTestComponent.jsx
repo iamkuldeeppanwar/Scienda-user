@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   DateCalendarIcon,
   StopWatchIcon,
-  ClockIcon,
   RedFlagIcon,
   BlackFlagIcon,
   CalculatorIcon,
@@ -27,6 +26,8 @@ import { toast } from "react-toastify";
 import { getError } from "../Utils/error";
 import { useNavigate } from "react-router-dom";
 import CreateArea from "./CreateArea";
+import { useDispatch } from "react-redux";
+import { setRestriction } from "../features/TestSlice";
 
 const UnFlaggedOption = (props) => {
   return (
@@ -126,6 +127,7 @@ const TakeTestComponent = (props) => {
   const [openCalc, setOpenCalc] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [openNotes, setOpenNotes] = useState(false);
 
   useEffect(() => {
@@ -254,6 +256,7 @@ const TakeTestComponent = (props) => {
       const response = await submitTest(arr, props?.testID, token);
       localStorage.setItem("reportID", response?.reportcard);
       localStorage.removeItem(props?.testID);
+      dispatch(setRestriction(true));
       navigate(`/menu/tests/check-answers/${props?.testID}`);
     } catch (error) {
       toast.error(getError(error));
@@ -331,7 +334,6 @@ const TakeTestComponent = (props) => {
             className="bg-white d-flex flex-column justify-content-around align-items-center px-3 py-1"
             style={{
               borderLeft: "5px solid #A4BCFD",
-              // minWidth: "14rem",
               borderRadius: "10px",
             }}
           >
@@ -376,12 +378,6 @@ const TakeTestComponent = (props) => {
             ) : (
               <UnFlaggedOption toggleQuestionFlag={props?.toggleQuestionFlag} />
             )}
-
-            {/* {props.goToLastQuestion && (
-              <Button onClick={props.goToLastQuestion}>
-                Go to last question
-              </Button>
-            )} */}
           </div>
 
           <div className="d-flex flex-wrap justify-content-end align-items-center gap-3">
@@ -462,13 +458,7 @@ const TakeTestComponent = (props) => {
         <hr />
 
         <div>
-          <div
-            className="text-16 "
-            // style={{
-            //   textWrap: "stable",
-            //   overflowX: "hidden",
-            // }}
-          >
+          <div className="text-16 ">
             {currentQuestion && (
               <CreateMarkup content={currentQuestion?.question} />
             )}

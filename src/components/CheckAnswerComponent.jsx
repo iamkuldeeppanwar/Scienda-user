@@ -151,14 +151,8 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
           backgroundColor: "#C3D3FF33",
         }}
       >
-        <div className="d-flex flex-column justify-content-center align-items-center ">
-          <h5
-            style={{ color: "rgb(128, 152, 249)" }}
-            className="text-26 font-semibold"
-          >
-            {report?.test && report?.test?.test_name}
-          </h5>
-          <div
+        <div className="d-flex justify-content-center align-items-center gap-2">
+          {/* <div
             className="rounded text-14 font-medium text-center bg-white"
             style={{
               border: "1px solid #4AFF3A",
@@ -168,60 +162,17 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               color: "#14FF00",
             }}
           >
-            View score
-          </div>
+            Performance
+          </div> */}
+          <h5
+            style={{ color: "rgb(128, 152, 249)" }}
+            className="text-26 font-semibold"
+          >
+            {report?.test && report?.test?.test_name}
+          </h5>
         </div>
 
         <div className="d-flex align-items-center flex-wrap gap-2">
-          <div
-            className="bg-white py-1 px-2 rounded text-center"
-            style={{
-              borderLeft: "5px solid #A4BCFD",
-              height: "4rem",
-              width: "13.5rem",
-            }}
-          >
-            <div className="my-0 text-14 font-semibold mt-2">
-              Overall Confidence Level:{" "}
-              <span
-                className="my-0 text-14 font-bold"
-                style={{ color: "#12DD00" }}
-              >
-                {report?.confidence && report?.confidence}%
-              </span>
-            </div>
-          </div>
-
-          {!hideDateTimeAlloted && (
-            <div
-              className="bg-white py-1 px-2 rounded d-flex flex-column justify-content-between"
-              style={{
-                borderLeft: "5px solid #A4BCFD",
-                height: "4rem",
-              }}
-            >
-              <div className="d-flex gap-2 align-items-center">
-                <span>
-                  <DateCalendarIcon />
-                </span>
-                <span className="text-14 font-semibold">Date:</span>
-                <span className="text-12 font-medium text-color-primary">
-                  {report?.test && formattedDate}
-                </span>
-              </div>
-              <div className="d-flex gap-2 align-items-center">
-                <span>
-                  <ClockIcon />
-                </span>
-                <span className="text-14 font-semibold">Time Allotted: </span>
-                <span className="text-12 font-medium text-color-primary">
-                  {report?.test &&
-                    convertMinutesToHHMM(report?.test.duration_in_mins)}
-                </span>
-              </div>
-            </div>
-          )}
-
           <div
             className="bg-white py-1 px-2 rounded d-flex flex-column justify-content-between"
             style={{
@@ -269,6 +220,55 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
               <span className="text-14 font-semibold">Percentage:</span>
               <span className="text-16 font-bold" style={{ color: "#00B132" }}>
                 {report?.percentage && report?.percentage}%
+              </span>
+            </div>
+          </div>
+
+          {!hideDateTimeAlloted && (
+            <div
+              className="bg-white py-1 px-2 rounded d-flex flex-column justify-content-between"
+              style={{
+                borderLeft: "5px solid #A4BCFD",
+                height: "4rem",
+              }}
+            >
+              <div className="d-flex gap-2 align-items-center">
+                <span>
+                  <DateCalendarIcon />
+                </span>
+                <span className="text-14 font-semibold">Date:</span>
+                <span className="text-12 font-medium text-color-primary">
+                  {report?.test && formattedDate}
+                </span>
+              </div>
+              <div className="d-flex gap-2 align-items-center">
+                <span>
+                  <ClockIcon />
+                </span>
+                <span className="text-14 font-semibold">Allotted Time: </span>
+                <span className="text-12 font-medium text-color-primary">
+                  {report?.test &&
+                    convertMinutesToHHMM(report?.test.duration_in_mins)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div
+            className="bg-white py-1 px-2 rounded text-center"
+            style={{
+              borderLeft: "5px solid #A4BCFD",
+              height: "4rem",
+              width: "13.5rem",
+            }}
+          >
+            <div className="my-0 text-14 font-semibold mt-2">
+              Confidence:{" "}
+              <span
+                className="my-0 text-14 font-bold"
+                style={{ color: "#12DD00" }}
+              >
+                {report?.confidence && report?.confidence}%
               </span>
             </div>
           </div>
@@ -337,36 +337,38 @@ const CheckAnswerComponent = ({ hideDateTimeAlloted }) => {
         <div className="d-flex gap-4">
           <div className="flex-1">
             <div className="rounded-xl text-center py-1">
-              <Carousel
-                style={{ width: "550px" }}
-                className="d-flex justify-content-center"
-                prevIcon={false}
-                nextIcon={false}
-                touch={true}
-                slide={true}
-                interval={3000}
-                controls={false}
-              >
-                {report?.test && currentQuestion?.images?.length > 0 ? (
-                  currentQuestion?.images?.map((img, idx) => {
-                    return (
-                      <Carousel.Item key={idx}>
-                        <img
-                          style={{
-                            height: "200px",
-                            width: "100%",
-                            borderRadius: "15px",
-                          }}
-                          src={`https://creative-story.s3.amazonaws.com${img}`}
-                          alt="..."
-                        />
-                      </Carousel.Item>
-                    );
-                  })
-                ) : (
-                  <></>
-                )}
-              </Carousel>
+              {currentQuestion?.images?.length > 0 && (
+                <Carousel
+                  style={{ width: "550px" }}
+                  className="d-flex justify-content-center"
+                  prevIcon={false}
+                  nextIcon={false}
+                  touch={true}
+                  slide={true}
+                  interval={3000}
+                  controls={false}
+                >
+                  {report?.test && currentQuestion?.images?.length > 0 ? (
+                    currentQuestion?.images?.map((img, idx) => {
+                      return (
+                        <Carousel.Item key={idx}>
+                          <img
+                            style={{
+                              height: "200px",
+                              width: "100%",
+                              borderRadius: "15px",
+                            }}
+                            src={`https://creative-story.s3.amazonaws.com${img}`}
+                            alt="..."
+                          />
+                        </Carousel.Item>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </Carousel>
+              )}
             </div>
 
             <div className="my-2">

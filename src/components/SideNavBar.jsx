@@ -89,13 +89,23 @@ export default function SideNavbar({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  const { restriction } = useSelector((state) => state.tests);
   const token = localStorage.getItem("token");
   const location = useLocation();
   const pathname = location.pathname;
+  const [restrict, setRestrict] = useState(false);
 
   useEffect(() => {
     getProfile(token);
   }, []);
+
+  useEffect(() => {
+    if (restriction) {
+      setRestrict(true);
+    } else {
+      setRestrict(false);
+    }
+  }, [restriction]);
 
   const getProfile = async () => {
     try {
@@ -158,7 +168,13 @@ export default function SideNavbar({
       <hr style={{ borderBottom: "1px solid var(--primary-color)" }} />
 
       <div className="sidebar">
-        <nav className="h-100 d-flex flex-column justify-content-between">
+        <nav
+          style={{
+            pointerEvents: restrict ? "none" : "auto",
+            opacity: restrict ? 0.5 : 1,
+          }}
+          className="h-100 d-flex flex-column justify-content-between"
+        >
           <ul
             className="nav-pills nav-sidebar"
             data-widget="treeview"

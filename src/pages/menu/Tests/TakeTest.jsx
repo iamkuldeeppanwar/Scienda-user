@@ -6,7 +6,7 @@ import TakeTestSubmitModal from "./components/TakeTestSubmitModal";
 import CheckTestScoreModal from "./components/CheckTestScoreModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getTest } from "./apis/TestAPIs";
-import { setTest } from "../../../features/TestSlice";
+import { setRestriction, setTest } from "../../../features/TestSlice";
 import { toast } from "react-toastify";
 import { getError } from "../../../Utils/error";
 
@@ -39,6 +39,7 @@ export default function TakeTest() {
     try {
       const response = await getTest(testID, token);
       dispatch(setTest(response));
+      dispatch(setRestriction(true));
     } catch (error) {
       toast.error(getError(error));
     }

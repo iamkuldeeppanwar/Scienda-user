@@ -61,7 +61,7 @@ const ProficiencyPercentageCard = ({
     >
       <h6
         style={{ color: "#475467" }}
-        className="text-center text-15 font-bold"
+        className="text-center text-15 font-bold text-truncate"
       >
         {examName}
       </h6>
@@ -85,7 +85,7 @@ const ProficiencyPercentageCard = ({
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <div className="text-14 font-medium">
-            <QuestionsIcon /> No. of Questions:
+            <QuestionsIcon /> No. Of Questions:
           </div>
           <div className="text-14 font-medium">{noOfQuestions}</div>
         </div>

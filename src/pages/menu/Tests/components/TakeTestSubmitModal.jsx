@@ -1,8 +1,9 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-toastify";
 import { getError } from "../../../../Utils/error";
 import { submitTest } from "../apis/TestAPIs";
+import { useDispatch } from "react-redux";
+import { setRestriction } from "../../../../features/TestSlice";
 
 function TakeTestSubmitModal({
   testID,
@@ -12,10 +13,10 @@ function TakeTestSubmitModal({
   questionsLength,
   missingQuestions,
   attemptedQuestions,
-  openCheckScoreModal,
   CheckTestScoreButton,
 }) {
   const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
 
   const handleSubmitTest = async (e) => {
     const arr = questions.map((qnts) => {
@@ -41,10 +42,11 @@ function TakeTestSubmitModal({
     try {
       const response = await submitTest(arr, testID, token);
       localStorage.setItem("reportID", response?.reportcard);
+      dispatch(setRestriction(false));
       localStorage.removeItem(testID);
       closeTestSubmitModal();
     } catch (error) {
-      toast.error(getError(error));
+      getError(error);
     }
   };
 
@@ -55,7 +57,6 @@ function TakeTestSubmitModal({
       aria-labelledby="help-modal"
       centered
       className="help-modal"
-      // size='lg'
     >
       <div className="p-3">
         <h4 className="px-4 py-2 text-22 font-medium text-center">

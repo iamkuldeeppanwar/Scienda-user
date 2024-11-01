@@ -5,6 +5,7 @@ const testsSlice = createSlice({
   initialState: {
     tests: [],
     test: {},
+    restriction: false,
   },
   reducers: {
     setTests: (state, action) => {
@@ -13,8 +14,11 @@ const testsSlice = createSlice({
     setTest: (state, action) => {
       state.test = action.payload.test;
     },
+    setRestriction: (state, action) => {
+      state.restriction = action.payload;
+    },
   },
 });
 
-export const { setTests, setTest } = testsSlice.actions;
+export const { setTests, setTest, setRestriction } = testsSlice.actions;
 export default testsSlice.reducer;
