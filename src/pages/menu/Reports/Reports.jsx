@@ -157,15 +157,15 @@ const Reports = () => {
                     </div>
 
                     <div className="d-flex align-items-center justify-content-between">
-                      <p
-                        className="text-capitalize font-medium text-14"
+                      <div
+                        className="text-capitalize font-medium text-14 w-50 text-truncate"
                         style={{
                           color: "#1F2A37",
                           fontWeight: 500,
                         }}
                       >
                         {pieGraph?.test_name}
-                      </p>
+                      </div>
 
                       <div>
                         <span
@@ -195,7 +195,7 @@ const Reports = () => {
                       </div>
                     </div>
 
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center mt-3">
                       <PieChart
                         series={[{ data: pieGraphReport, innerRadius: 60 }]}
                         {...size}

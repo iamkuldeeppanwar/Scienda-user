@@ -87,7 +87,7 @@ const Tickets = () => {
     e.preventDefault();
 
     const createTicket = {
-      to: subAdmins[0]?._id,
+      // to: subAdmins[0]?._id,
       subject: subject,
       description: description,
       topic: !topicName ? topics[0]?._id : topicName,
@@ -103,16 +103,6 @@ const Tickets = () => {
       toast.error(getError(error));
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      weekday: "short", // "Mon"
-      day: "2-digit", // "23"
-      month: "short", // "May"
-      year: "numeric", // "2024"
-    });
   };
 
   return (
@@ -263,7 +253,7 @@ const Tickets = () => {
             <hr />
 
             <div className="ticket-form shadow">
-              <Form.Group>
+              {/* <Form.Group>
                 <Form.Label className="text-16 font-medium">To</Form.Label>
                 <Form.Control
                   disabled
@@ -275,7 +265,7 @@ const Tickets = () => {
                   placeholder="Enter subject"
                   required
                 />
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group className="mt-1">
                 <Form.Label className="text-16 font-medium">Topics</Form.Label>

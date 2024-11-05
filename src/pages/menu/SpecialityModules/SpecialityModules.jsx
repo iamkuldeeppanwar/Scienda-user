@@ -57,7 +57,7 @@ const TopicCard = ({
       }}
     >
       <h5
-        className="text-center mt-2"
+        className="text-center mt-2 "
         style={{ color: "#475467", fontWeight: 500, fontSize: "16px" }}
       >
         Topic Name: {topicName}
@@ -74,12 +74,12 @@ const TopicCard = ({
         <QuestionsIcon /> No. of questions:{" "}
         <span className="font-medium">{questionCount} Questions</span>
       </p>
-      <p
+      {/* <p
         className="text-center text-12 font-medium"
         style={{ color: "#475467" }}
       >
         <CreateMarkup content={description} />
-      </p>
+      </p> */}
       <hr />
       <div className="text-center mt-2">
         <Link

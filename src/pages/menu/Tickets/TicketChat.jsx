@@ -91,7 +91,7 @@ const TicketChat = () => {
       await postMessage(token, { message: chat }, ticketId);
       socket.emit("sendMessage", {
         chat,
-        to: ticket?.to,
+        to: ticket?.subdomain,
         from: user?._id,
         ticket: ticketId,
       });

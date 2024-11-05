@@ -41,6 +41,7 @@ const MembershipCard = ({
       planId,
       subdomain,
       userId,
+      redirect_url: window.locationbar.origin,
     };
     try {
       setLoading(true);
@@ -83,18 +84,15 @@ const MembershipCard = ({
         </h6>
 
         <div>
-          <p
-            className="d-flex align-items-center gap-2 my-2 text-12 font-normal"
-            style={{ color: "#475467" }}
-          >
+          <p className=" my-2 text-12 font-normal" style={{ color: "#475467" }}>
             {features?.map((fet, index) => {
               return (
-                <>
+                <div>
                   <span key={index}>
                     <CheckCircleIcon />
                   </span>{" "}
                   {fet}
-                </>
+                </div>
               );
             })}
           </p>
