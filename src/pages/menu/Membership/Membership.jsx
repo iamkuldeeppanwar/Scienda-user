@@ -41,7 +41,7 @@ const MembershipCard = ({
       planId,
       subdomain,
       userId,
-      redirect_url: window.locationbar.origin,
+      redirect_url: window.location.origin,
     };
     try {
       setLoading(true);
