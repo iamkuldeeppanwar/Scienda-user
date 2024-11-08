@@ -37,38 +37,38 @@ import { ResetPassword } from "./pages/UserAuthentication/ResetPassword";
 import PaymentFailed from "./pages/menu/Membership/PaymentFailed";
 
 function App() {
-  const [isRestricted, setIsRestricted] = useState(false);
+  // const [isRestricted, setIsRestricted] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsRestricted(window.innerWidth <= 1024);
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsRestricted(window.innerWidth <= 1024);
+  //   };
 
-    handleResize(); // Check on initial load
-    window.addEventListener("resize", handleResize);
+  //   handleResize(); // Check on initial load
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  if (isRestricted) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          color: "white",
-        }}
-      >
-        This application is not available on mobile or tablet devices. Please
-        use a desktop browser.
-      </div>
-    );
-  }
+  // if (isRestricted) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         height: "100vh",
+  //         backgroundColor: "rgba(0, 0, 0, 0.8)",
+  //         color: "white",
+  //       }}
+  //     >
+  //       This application is not available on mobile or tablet devices. Please
+  //       use a desktop browser.
+  //     </div>
+  //   );
+  // }
 
   return (
     <Suspense fallback={<div>Redirecting...</div>}>
